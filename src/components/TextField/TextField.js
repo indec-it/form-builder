@@ -18,7 +18,6 @@ function TextField({
         <Typography>{label}</Typography>
       </Box>
       <MuiTextField
-        variant="outlined"
         error={(form.submitCount > 0 || touched) && Boolean(error)}
         helperText={(form.submitCount > 0 || touched) && error}
         fullWidth
