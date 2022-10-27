@@ -11,6 +11,15 @@ const buildQuestions = section => section.questions.map(question => {
       [question.name]: []
     };
   }
+  if (question.type === questionTypes.RADIO_TABLE) {
+    const opts = {};
+    question.options.forEach(option => {
+      Object.assign(opts, {[option.name]: ''})
+    });
+    return {
+      [question.name]: opts
+    };
+  }
   return {[question.name]: ''};
 });
 

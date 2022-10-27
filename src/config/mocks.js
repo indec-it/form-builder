@@ -45,7 +45,7 @@ const sections = [
       {
         label: '¿El establecimiento es...',
         name: 'S1P3',
-        number: '3.',
+        number: '4.',
         placeholder: 'Seleccione una opcion',
         type: 3,
         options: [
@@ -77,7 +77,7 @@ const sections = [
       {
         label: 'Input multiple',
         name: 'S1P4',
-        number: '4.',
+        number: '5.',
         type: 1,
         multiple: true,
         favorite: false,
@@ -87,7 +87,7 @@ const sections = [
         id: 1,
         label: '¿Está asociado/a a...',
         name: 'S1P9',
-        number: '1',
+        number: '6.',
         type: 7,
         options: [
           {
@@ -155,7 +155,7 @@ const sections = [
         id: 1,
         label: 'prueba checkbox',
         name: 'var_check',
-        number: '1',
+        number: '7.',
         type: 5,
         options: [
           {
@@ -214,4 +214,4 @@ const sections = [
 ];
 
 // eslint-disable-next-line
-  export {sections}
+export {sections}
