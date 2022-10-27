@@ -1,10 +1,13 @@
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+
+import FormBuilder from '@components/FormBuilder';
+
+import {sections} from '@config/mocks';
 
 function Home() {
   return (
-    <Container>
-      <Typography>Welcome to Form Builder</Typography>
+    <Container maxWidth="md">
+      <FormBuilder sections={sections} />
     </Container>
   );
 }
