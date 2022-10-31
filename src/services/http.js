@@ -1,10 +1,24 @@
 const {BASE_URL} = process.env;
 
-const saveData = (url, data, method) => fetch(`${BASE_URL}${url}`, {
+const getBaseUrl = () => BASE_URL;
+
+const getHeaders = () => {
+  const token = localStorage.getItem('id_token');
+  const headers = {
+    'Content-Type': 'application/json',
+    accept: 'application/json'
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
+const saveData = (url, data, method) => fetch(`${getBaseUrl()}${url}`, {
   method,
-  headers: {
-    'Content-Type': 'application/json'
-  },
+  headers: getHeaders(),
   body: JSON.stringify(data)
 });
 
@@ -17,10 +31,8 @@ const handleResponse = response => {
 
 const http = {
   get: async url => {
-    const response = await fetch(`${BASE_URL}${url}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    const response = await fetch(`${getBaseUrl()}${url}`, {
+      headers: getHeaders()
     });
     return handleResponse(response);
   },

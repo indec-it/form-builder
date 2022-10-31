@@ -9,23 +9,28 @@ import {getIn} from 'formik';
 import {formikField, formikForm} from '@utils/propTypes';
 
 function Radio({
-  options, field, form, label
+  options, field, form, readOnlyMode, label
 }) {
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
   return (
     <FormControl>
       <Typography>{label}</Typography>
-      <RadioGroup {...field}>
-        {options.map(option => (
-          <FormControlLabel key={option.value} value={option.value} control={<MuiRadio />} label={option.label} />
-        ))}
-      </RadioGroup>
+      {readOnlyMode ? (
+        <Typography>{options.find(option => option.value === field.value)?.label || 'Sin respuesta'}</Typography>
+      ) : (
+        <RadioGroup {...field}>
+          {options.map(option => (
+            <FormControlLabel key={option.value} value={option.value} control={<MuiRadio />} label={option.label} />
+          ))}
+        </RadioGroup>
+      )}
     </FormControl>
   );
 }
 
 Radio.propTypes = {
+  readOnlyMode: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,

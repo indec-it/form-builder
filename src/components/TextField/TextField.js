@@ -8,7 +8,7 @@ import {getIn} from 'formik';
 import {formikField, formikForm} from '@utils/propTypes';
 
 function TextField({
-  form, field, placeholder, label, ...props
+  form, field, placeholder, label, readOnlyMode, ...props
 }) {
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
@@ -17,15 +17,19 @@ function TextField({
       <Box mb={0.5}>
         <Typography>{label}</Typography>
       </Box>
-      <MuiTextField
-        error={(form.submitCount > 0 || touched) && Boolean(error)}
-        helperText={(form.submitCount > 0 || touched) && error}
-        fullWidth
-        {...field}
-        {...props}
-        id={`field-${field.name}`}
-        placeholder={placeholder}
-      />
+      {readOnlyMode ? (
+        <Typography>{field.value || 'Sin respuesta'}</Typography>
+      ) : (
+        <MuiTextField
+          error={(form.submitCount > 0 || touched) && Boolean(error)}
+          helperText={(form.submitCount > 0 || touched) && error}
+          fullWidth
+          {...field}
+          {...props}
+          id={`field-${field.name}`}
+          placeholder={placeholder}
+        />
+      )}
     </>
   );
 }
@@ -33,6 +37,7 @@ function TextField({
 TextField.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
+  readOnlyMode: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string
 };

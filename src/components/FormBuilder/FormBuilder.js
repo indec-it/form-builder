@@ -1,13 +1,15 @@
 import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {
-  FastField, FieldArray, Formik
-} from 'formik';
+import {FastField, Formik} from 'formik';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import Checkbox from '@components/Checkbox';
 import NavigationButtons from '@components/NavigationButtons';
@@ -17,13 +19,15 @@ import Select from '@components/Select';
 import TextField from '@components/TextField';
 import questionTypes from '@constants/questionTypes';
 import buildQuestions from '@utils/buildQuestions';
+import sectionPropTypes from '@utils/propTypes/section';
 
-const getComponent = (section, questionIndex, values) => {
+const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
   }
   let QuestionComponent;
+  const questionName = `${section.name}.${sectionIndex}.${question.name}`;
   switch (question.type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
@@ -33,8 +37,9 @@ const getComponent = (section, questionIndex, values) => {
         label={`${question.number} ${question.label}`}
         placeholder={question.placeholder}
         required={question.required}
-        name={`questions.${questionIndex}.${question.name}`}
-        type={questionTypes.TEXT_FIELD ? 'text' : 'number'}
+        name={questionName}
+        type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
+        readOnlyMode={readOnlyMode}
       />
     );
     break;
@@ -46,7 +51,8 @@ const getComponent = (section, questionIndex, values) => {
         placeholder={question.placeholder}
         required={question.required}
         options={question.options}
-        name={`questions.${questionIndex}.${question.name}`}
+        name={questionName}
+        readOnlyMode={readOnlyMode}
       />
     );
     break;
@@ -56,7 +62,8 @@ const getComponent = (section, questionIndex, values) => {
         component={Radio}
         options={question.options}
         label={`${question.number} ${question.label}`}
-        name={`questions.${questionIndex}.${question.name}`}
+        name={questionName}
+        readOnlyMode={readOnlyMode}
       />
     );
     break;
@@ -64,9 +71,10 @@ const getComponent = (section, questionIndex, values) => {
     QuestionComponent = (
       <FastField
         component={Checkbox}
-        name={`questions.${questionIndex}.${question.name}`}
+        name={questionName}
         options={question.options}
         label={`${question.number} ${question.label}`}
+        readOnlyMode={readOnlyMode}
       />
     );
     break;
@@ -76,63 +84,33 @@ const getComponent = (section, questionIndex, values) => {
         component={RadioTable}
         options={question.options}
         label={`${question.number} ${question.label}`}
-        name={`questions.${questionIndex}.${question.name}`}
+        name={questionName}
+        readOnlyMode={readOnlyMode}
       />
     );
     break;
   default:
     QuestionComponent = <Typography>Invalid component.</Typography>;
   }
-  return (
-    <>
-      {question.introduction && <Typography fontWeight="bold">{question.introduction}</Typography>}
-      {question.multiple ? (
-        <Box sx={{
-          display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
-        }}
-        >
-          <FieldArray
-            name={`questions.${questionIndex}.${question.name}`}
-            render={questionHelpers => (
-              <>
-                {values.questions[questionIndex][question.name].map((currentQuestion, index) => (
-                  <Box key={currentQuestion.id} sx={{width: '100%', mt: 2, mb: 2}}>
-                    {QuestionComponent}
-                    {values.questions[questionIndex][question.name].length === index + 1 && (
-                      <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                        <IconButton
-                          onClick={() => questionHelpers.push({id: currentQuestion.id + 1})}
-                          color="primary"
-                          sx={{fontSize: '14px'}}
-                        >
-                          <AddIcon />
-                          {' '}
-                          Agregar más
-                        </IconButton>
-                      </Box>
-                    )}
-                  </Box>
-                ))}
-              </>
-            )}
-          />
-        </Box>
-      ) : (
-        QuestionComponent
-      )}
-    </>
-  );
+  return QuestionComponent;
 };
 
 function FormBuilder({sections}) {
   const [page, setPage] = useState(0);
   const [initialValues, setInitialValues] = useState();
+  const [readOnlyMode, setReadOnlyMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const currentSection = sections[page];
 
   useEffect(() => {
-    const section = currentSection;
-    setInitialValues({questions: buildQuestions(section)});
+    const section = sections[page];
+    setInitialValues(buildQuestions(section));
   }, [page]);
+
+  const handleOpenModal = readOnly => {
+    setShowModal(true);
+    setReadOnlyMode(readOnly);
+  };
 
   return (
     <Formik
@@ -144,45 +122,72 @@ function FormBuilder({sections}) {
       {({
         handleSubmit, values, isValid
       }) => (
-        <Box
-          component="form"
-          onSubmit={handleSubmit}
-          noValidate
-          sx={{
-            backgroundColor: '#fff', padding: 4, boxShadow: 2, borderRadius: 2, height: '100vh'
-          }}
-        >
-          {values && values.questions && (
+        <Box component="form" onSubmit={handleSubmit} sx={{width: '100%'}}>
+          {values && (
             <>
-              <Box sx={{display: 'flex', justifyContent: 'center', mb: 3}}>
-                <Typography variant="h6" fontWeight="bold">{currentSection.label}</Typography>
-              </Box>
-              {currentSection.introduction && (
-                <Typography fontWeight="bold" color="gray">{currentSection.introduction}</Typography>
-              )}
-              <Grid container direction="column" spacing={2}>
-                <FieldArray
-                  name="questions"
-                  render={questionsHelpers => (
-                    <>
-                      {values.questions.map((question, index) => (
-                        <Grid item key={Object.keys(question)[0]}>
-                          {getComponent(currentSection, index, values)}
-                        </Grid>
-                      ))}
-                      {JSON.stringify(values.questions)}
-                    </>
-                  )}
-                />
-                <Grid item>
-                  <NavigationButtons
-                    onPrevious={() => setPage(page - 1)}
-                    onNext={() => setPage(page + 1)}
-                    disableNextButton={!isValid || sections.length === page + 1}
-                    disablePreviousButton={page === 0}
-                  />
-                </Grid>
-              </Grid>
+              {values[currentSection.name].map((section, index) => (
+                <>
+                  <Box sx={{
+                    display: 'flex',
+                    backgroundColor: '#fff',
+                    boxShadow: 2,
+                    p: 5,
+                    justifyContent: 'space-between'
+                  }}
+                  >
+                    <Box>
+                      <Typography variant="h6" fontWeight="bold">{currentSection.label}</Typography>
+                      {currentSection.introduction && (
+                        <Typography fontWeight="bold" color="gray">{currentSection.introduction}</Typography>
+                      )}
+                    </Box>
+                    <Box>
+                      <IconButton color="success" onClick={() => handleOpenModal(true)}>
+                        <VisibilityIcon />
+                      </IconButton>
+                      <IconButton color="primary" onClick={() => handleOpenModal(false)}>
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton color="error">
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                  <Modal
+                    open={showModal}
+                    onClose={() => setShowModal(false)}
+                  >
+                    <Box sx={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      width: '100%',
+                      bgcolor: 'background.paper',
+                      border: '2px solid #000',
+                      boxShadow: 24,
+                      p: 4
+                    }}
+                    >
+                      <Grid key={section.id} container direction="column" spacing={2}>
+                        {Object.values(section).map((question, questionIndex) => (
+                          <Grid item key={questionIndex}>
+                            {getComponent(currentSection, index, questionIndex, readOnlyMode)}
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </Box>
+                  </Modal>
+                </>
+              ))}
+              <NavigationButtons
+                onPrevious={() => setPage(page - 1)}
+                onNext={() => setPage(page + 1)}
+                disableNextButton={!isValid}
+                disablePreviousButton={page === 0}
+                nextButtonLabel={sections.length === page + 1 ? 'Finalizar' : 'Siguiente'}
+                onAddNew={() => {}}
+              />
             </>
           )}
         </Box>
@@ -192,22 +197,7 @@ function FormBuilder({sections}) {
 }
 
 FormBuilder.propTypes = {
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      introduction: PropTypes.string,
-      questions: PropTypes.arrayOf(
-        PropTypes.shape({
-          label: PropTypes.string.isRequired,
-          name: PropTypes.string.isRequired,
-          introduction: PropTypes.string,
-          type: PropTypes.number.isRequired,
-          placeholder: PropTypes.string,
-          required: PropTypes.bool.isRequired
-        })
-      )
-    })
-  ).isRequired
+  sections: PropTypes.arrayOf(sectionPropTypes).isRequired
 };
 
 export default FormBuilder;
