@@ -8,6 +8,11 @@ import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
 import optionPropTypes from '@utils/propTypes/option';
 
+const getSelectedOptions = (options, value) => options
+  .filter(option => value.includes(option.value))
+  .map(selectedOption => selectedOption.label)
+  .join(', ') || 'Sin respuesta';
+
 const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
   if (e.target.checked) {
     setFieldValue(name, [...value, selectedValue]);
@@ -18,25 +23,31 @@ const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
 };
 
 function Checkbox({
-  options, label, field, form
+  options, label, field, form, readOnlyMode
 }) {
   return (
     <>
       <Typography>{label}</Typography>
-      <FormGroup>
-        {options.map(option => (
-          <FormControlLabel
-            key={option.value}
-            control={(
-              <MuiCheckbox
-                checked={field.value.includes(option.value)}
-                onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
-              />
-            )}
-            label={option.label}
-          />
-        ))}
-      </FormGroup>
+      {readOnlyMode ? (
+        <Typography>
+          {getSelectedOptions(options, field.value)}
+        </Typography>
+      ) : (
+        <FormGroup>
+          {options.map(option => (
+            <FormControlLabel
+              key={option.value}
+              control={(
+                <MuiCheckbox
+                  checked={field.value.includes(option.value)}
+                  onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
+                />
+              )}
+              label={option.label}
+            />
+          ))}
+        </FormGroup>
+      )}
     </>
   );
 }
@@ -45,7 +56,8 @@ Checkbox.propTypes = {
   label: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(optionPropTypes).isRequired,
   field: formikField.isRequired,
-  form: formikForm.isRequired
+  form: formikForm.isRequired,
+  readOnlyMode: PropTypes.bool.isRequired
 };
 
 export default Checkbox;

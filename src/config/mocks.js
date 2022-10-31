@@ -75,15 +75,6 @@ const sections = [
         id: 3
       },
       {
-        label: 'Input multiple',
-        name: 'S1P4',
-        number: '5.',
-        type: 1,
-        multiple: true,
-        favorite: false,
-        id: 4
-      },
-      {
         id: 1,
         label: '¿Está asociado/a a...',
         name: 'S1P9',
@@ -185,9 +176,11 @@ const sections = [
     ],
     multiple: true,
     favorite: false,
-    introduction: 'Aca debe ingresar todos los componentes del hogar'
+    introduction: 'Aca debe ingresar todos los componentes del hogar',
+    name: 'S1'
   },
   {
+    name: 'S2',
     label: '10. Cuidado de personas de 65 años y más fuera del hogar (AH)',
     questions: [
       {

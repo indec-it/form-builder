@@ -1,4 +1,4 @@
-import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
 
 import FormBuilder from '@components/FormBuilder';
 
@@ -6,9 +6,9 @@ import {sections} from '@config/mocks';
 
 function Home() {
   return (
-    <Container maxWidth="md">
+    <Stack direction={{xs: 'column', md: 'row'}}>
       <FormBuilder sections={sections} />
-    </Container>
+    </Stack>
   );
 }
 

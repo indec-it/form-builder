@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
+import Typography from '@mui/material/Typography';
 
 import {formikField, formikForm} from '@utils/propTypes';
 
 import TextField from '../TextField';
 
 function Select({
-  options, field, label, form, required, loading, onClean, placeholder, ...props
+  options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, ...props
 }) {
   const handleChange = selectedValue => {
     form.setFieldValue(field.name, selectedValue.id);
@@ -14,7 +15,14 @@ function Select({
   };
   const selectedValue = options.find(option => option.id === field.value) || {};
 
-  return (
+  return readOnlyMode ? (
+    <>
+      <Typography>{label}</Typography>
+      <Typography>
+        <Typography>{options.find(option => option.id === field.value)?.label || 'Sin respuesta'}</Typography>
+      </Typography>
+    </>
+  ) : (
     <Autocomplete
       {...props}
       disableClearable
@@ -48,6 +56,7 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   field: formikField.isRequired,
   form: formikForm.isRequired,
+  readOnlyMode: PropTypes.bool.isRequired,
   required: PropTypes.bool,
   loading: PropTypes.bool
 };
