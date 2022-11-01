@@ -77,7 +77,7 @@ const sections = [
       {
         id: 1,
         label: '¿Está asociado/a a...',
-        name: 'S1P9',
+        name: 'S1P10',
         number: '6.',
         type: 7,
         options: [

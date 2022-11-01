@@ -3,6 +3,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 
 import {formikField, formikForm} from '@utils/propTypes';
+import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 import TextField from '../TextField';
 
@@ -19,7 +20,7 @@ function Select({
     <>
       <Typography>{label}</Typography>
       <Typography>
-        <Typography>{options.find(option => option.id === field.value)?.label || 'Sin respuesta'}</Typography>
+        <Typography>{getSelectedOptionLabel(options, field.value, 'id')}</Typography>
       </Typography>
     </>
   ) : (

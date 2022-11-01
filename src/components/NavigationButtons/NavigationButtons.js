@@ -6,7 +6,7 @@ function NavigationButtons({
   onPrevious, onNext, disableNextButton, disablePreviousButton, nextButtonLabel, onAddNew, addButtonLabel
 }) {
   return (
-    <Stack direction="row" justifyContent="space-between" p={2}>
+    <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
       <Button onClick={onPrevious} variant="outlined" disabled={disablePreviousButton}>Anterior</Button>
       {onAddNew && <Button onClick={onAddNew} variant="outlined">{addButtonLabel}</Button>}
       <Button type="submit" onClick={onNext} variant="contained" disabled={disableNextButton}>{nextButtonLabel}</Button>
