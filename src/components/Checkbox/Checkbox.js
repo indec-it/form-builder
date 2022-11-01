@@ -4,6 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
+import defaultMessages from '@constants/defaultMessages';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
 import optionPropTypes from '@utils/propTypes/option';
@@ -11,7 +12,7 @@ import optionPropTypes from '@utils/propTypes/option';
 const getSelectedOptions = (options, value) => options
   .filter(option => value.includes(option.value))
   .map(selectedOption => selectedOption.label)
-  .join(', ') || 'Sin respuesta';
+  .join(', ') || defaultMessages.UNANSWERED;
 
 const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
   if (e.target.checked) {

@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import {getIn} from 'formik';
 
 import {formikField, formikForm} from '@utils/propTypes';
+import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 function Radio({
   options, field, form, readOnlyMode, label
@@ -17,7 +18,7 @@ function Radio({
     <FormControl>
       <Typography>{label}</Typography>
       {readOnlyMode ? (
-        <Typography>{options.find(option => option.value === field.value)?.label || 'Sin respuesta'}</Typography>
+        <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       ) : (
         <RadioGroup {...field}>
           {options.map(option => (

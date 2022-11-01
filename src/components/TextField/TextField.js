@@ -5,6 +5,7 @@ import MuiTextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {getIn} from 'formik';
 
+import defaultMessages from '@constants/defaultMessages';
 import {formikField, formikForm} from '@utils/propTypes';
 
 function TextField({
@@ -18,7 +19,7 @@ function TextField({
         <Typography>{label}</Typography>
       </Box>
       {readOnlyMode ? (
-        <Typography>{field.value || 'Sin respuesta'}</Typography>
+        <Typography>{field.value || defaultMessages.UNANSWERED}</Typography>
       ) : (
         <MuiTextField
           error={(form.submitCount > 0 || touched) && Boolean(error)}
