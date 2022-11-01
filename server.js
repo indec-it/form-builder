@@ -1,13 +1,14 @@
 const path = require('path');
 const express = require('express');
+require('dotenv').config({path: path.join(__dirname, '.env')});
 
 const app = express();
 
-const PORT = process.argv[2];
+const {PORT} = process.env;
 
 app.use(express.static(__dirname));
 
-app.get('*', (req, res) => {
+app.get('*', (_, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
