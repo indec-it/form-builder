@@ -13,5 +13,11 @@ export default PropTypes.shape({
       placeholder: PropTypes.string
     })
   ),
-  multiple: PropTypes.bool.isRequired
+  multiple: PropTypes.bool.isRequired,
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      question: PropTypes.number
+    })
+  )
 });

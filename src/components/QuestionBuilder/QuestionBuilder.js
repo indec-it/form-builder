@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
 import {FastField} from 'formik';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -89,51 +85,31 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
   return QuestionComponent;
 };
 
-function QuestionsModal({
-  open, onClose, section, currentSection, readOnlyMode, index
+function QuestionBuilder({
+  section, currentSection, index, readOnlyMode
 }) {
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-    >
-      <Box sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        p: 4,
-        borderRadius: '20px',
-        overflowY: 'scroll',
-        height: '100%',
-        maxHeight: 600,
-        width: '100%',
-        maxWidth: 900
-      }}
-      >
-        <Container maxWidth="md">
-          <Grid key={section.id} container direction="column" spacing={2}>
-            {Object.values(section).map((question, questionIndex) => (
-              <Grid item key={questionIndex}>
-                {getComponent(currentSection, index, questionIndex, readOnlyMode)}
-              </Grid>
-            ))}
-            <Button fullWidth variant="contained" onClick={onClose}>Cerrar</Button>
-          </Grid>
-        </Container>
-      </Box>
-    </Modal>
+    <Grid container direction="column" spacing={2}>
+      {Object.values(section).map((question, questionIndex) => (
+        <Grid item key={questionIndex}>
+          {getComponent(currentSection, index, questionIndex, readOnlyMode)}
+        </Grid>
+      ))}
+    </Grid>
   );
 }
 
-QuestionsModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  section: sectionPropTypes.isRequired,
-  open: PropTypes.bool.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired,
-  currentSection: PropTypes.shape({}).isRequired,
+QuestionBuilder.propTypes = {
+  currentSection: sectionPropTypes.isRequired,
+  readOnlyMode: PropTypes.bool,
+  section: PropTypes.shape({
+    id: PropTypes.number.isRequired
+  }).isRequired,
   index: PropTypes.number.isRequired
 };
 
-export default QuestionsModal;
+QuestionBuilder.defaultProps = {
+  readOnlyMode: false
+};
+
+export default QuestionBuilder;

@@ -11,10 +11,10 @@ function Select({
   options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, ...props
 }) {
   const handleChange = selectedValue => {
-    form.setFieldValue(field.name, selectedValue.id);
+    form.setFieldValue(field.name, selectedValue.value);
     onClean(form);
   };
-  const selectedValue = options.find(option => option.id === field.value) || {};
+  const selectedValue = options.find(option => option.value === field.value) || {};
 
   return readOnlyMode ? (
     <>
@@ -38,6 +38,7 @@ function Select({
           required={required}
           field={{name: field.name}}
           placeholder={placeholder}
+          readOnlyMode={readOnlyMode}
         />
       )}
       name={field.name}

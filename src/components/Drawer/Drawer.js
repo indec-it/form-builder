@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-const drawerWidth = 600;
+const drawerWidth = 300;
 
 const openedMixin = theme => ({
   width: drawerWidth,
