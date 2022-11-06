@@ -3,6 +3,28 @@ const sections = [
     id: 1,
     name: 'COMPONENTES_DEL_HOGAR',
     label: 'Componentes del hogar',
+    interruption: {
+      name: 'interruptReason',
+      interruptible: true,
+      reason: 'Seleccione el motivo de interrupcion',
+      options: [
+        {
+          id: 1,
+          value: '1',
+          label: 'El hogar no quiso responder'
+        },
+        {
+          id: 2,
+          value: '2',
+          label: 'No habia nadie'
+        },
+        {
+          id: 3,
+          value: '3',
+          label: 'Vivienda demolida'
+        }
+      ]
+    },
     questions: [
       {
         label: 'Ingrese su edad',
