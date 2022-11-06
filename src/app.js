@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {Provider} from 'react-redux';
 import {HistoryRouter as Router} from 'redux-first-history/rr6';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,14 +12,15 @@ import Routes from '@routes';
 import theme from '@styles/theme';
 
 function App() {
+  const [isFormDirty, setIsFormDirty] = useState(false);
   return (
     <Provider store={store}>
       <Router history={history}>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <CssBaseline />
-            <Drawer>
-              <Routes />
+            <Drawer isFormDirty={isFormDirty}>
+              <Routes onSetDirty={setIsFormDirty} />
             </Drawer>
           </LocalizationProvider>
         </ThemeProvider>

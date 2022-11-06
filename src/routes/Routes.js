@@ -1,14 +1,18 @@
+import PropTypes from 'prop-types';
 import {Routes as ReactRouterRoutes, Route} from 'react-router-dom';
 
 import Home from '@pages/Home';
-import {routes} from '@constants';
 
-function Routes() {
+function Routes({onSetDirty}) {
   return (
     <ReactRouterRoutes>
-      <Route path={routes.HOME} element={<Home />} />
+      <Route path="*" element={<Home onSetDirty={onSetDirty} />} />
     </ReactRouterRoutes>
   );
 }
+
+Routes.propTypes = {
+  onSetDirty: PropTypes.func.isRequired
+};
 
 export default Routes;
