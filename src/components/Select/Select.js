@@ -20,7 +20,7 @@ function Select({
     <>
       <Typography>{label}</Typography>
       <Typography>
-        <Typography>{getSelectedOptionLabel(options, field.value, 'id')}</Typography>
+        <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       </Typography>
     </>
   ) : (
