@@ -1,5 +1,5 @@
 {
-  "name": "form-builder",
+  "name": "form_builder",
   "version": "1.0.0",
   "description": "Form builder",
   "main": "index.js",

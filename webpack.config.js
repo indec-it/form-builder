@@ -5,10 +5,13 @@ const path = require('path');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const fs = require('fs');
+const {ModuleFederationPlugin} = require('webpack').container;
 
 const {NODE_ENV, PORT} = process.env;
 
 const isProduction = NODE_ENV === 'production';
+
+const {dependencies} = require('./package.json');
 
 const rules = [
   {
@@ -44,7 +47,20 @@ const plugins = [
     favicon: 'public/favicon.png',
     hash: true
   }),
-  new Dotenv()
+  new Dotenv(),
+  new ModuleFederationPlugin({
+    name: 'form_builder',
+    filename: 'remoteEntry.js',
+    exposes: {
+      './FormBuilder': './src/components/FormBuilder',
+      './state': './src/state'
+    },
+    shared: {
+      react: {singleton: true, requiredVersion: dependencies.react},
+      'react-dom': {singleton: true, requiredVersion: dependencies['react-dom']},
+      'react-redux': {singleton: true, requiredVersion: dependencies['react-redux']}
+    }
+  })
 ];
 
 const buildAlias = () => {
@@ -77,9 +93,7 @@ module.exports = () => {
     },
     module: {rules},
     optimization: {
-      splitChunks: {
-        chunks: 'all'
-      }
+      splitChunks: false
     },
     devServer: {
       open: true,
