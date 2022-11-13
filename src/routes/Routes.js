@@ -1,18 +1,30 @@
 import PropTypes from 'prop-types';
-import {Routes as ReactRouterRoutes, Route} from 'react-router-dom';
+import {useRoutes} from 'react-router-dom';
 
-import Home from '@pages/Home';
+import FormBuilder from '@components/FormBuilder';
+import sectionPropTypes from '@utils/propTypes/section';
 
-function Routes({onSetDirty}) {
-  return (
-    <ReactRouterRoutes>
-      <Route path="*" element={<Home onSetDirty={onSetDirty} />} />
-    </ReactRouterRoutes>
-  );
+const buildRoutes = sections => {
+  const sectionsRoutes = sections.map((section, index) => ({
+    path: section.name,
+    element: <FormBuilder
+      section={section}
+      previousSection={sections[index - 1]?.name}
+      nextSection={sections[index + 1]?.name}
+      page={index}
+    />
+  }));
+  sectionsRoutes.push({path: '*', element: <FormBuilder section={sections[0]} nextSection={sections[1]?.name} page={0} />});
+  return sectionsRoutes;
+};
+
+function Routes({sections}) {
+  const element = useRoutes(buildRoutes(sections));
+  return element;
 }
 
 Routes.propTypes = {
-  onSetDirty: PropTypes.func.isRequired
+  sections: PropTypes.arrayOf(sectionPropTypes).isRequired
 };
 
 export default Routes;

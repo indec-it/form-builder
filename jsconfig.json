@@ -7,6 +7,7 @@
       "@app/*": ["app/*"],
       "@components": ["components"],
       "@components/*": ["components/*"],
+      "@config": ["config"],
       "@constants": ["constants"],
       "@constants/*": ["constants/*"],
       "@models/*": ["models/*"],

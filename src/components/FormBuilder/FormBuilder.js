@@ -15,19 +15,16 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 
 function FormBuilder({
-  sections, onSetDirty, openModal, modalOpened
+  section, openModal, modalOpened, previousSection, nextSection, page, changeSection, onNext, onPrevious
 }) {
-  const [page, setPage] = useState(0);
   const [initialValues, setInitialValues] = useState();
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
-  const currentSection = sections[page];
 
   useEffect(() => {
-    const section = sections[page];
     setInitialValues(buildQuestions(section));
-  }, [page]);
+  }, [section]);
 
   const handleShowSurvey = (sectionId, readOnly) => {
     setShowSurvey(sectionId);
@@ -41,7 +38,7 @@ function FormBuilder({
 
   const handleAcceptModal = (allSections, sectionHelpers) => {
     if (modalOpened === modals.CONFIRM_DELETE_SECTION_MODAL) {
-      const index = allSections.findIndex(section => section.id === selectedSectionId);
+      const index = allSections.findIndex(currentSection => currentSection.id === selectedSectionId);
       sectionHelpers.remove(index);
     }
     openModal(undefined);
@@ -50,30 +47,28 @@ function FormBuilder({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => console.log({...values, [values[currentSection.name].status]: formStatuses.COMPLETED})}
+      onSubmit={values => console.log({...values, [values[section.name].status]: formStatuses.COMPLETED})}
       validateOnMount
       enableReinitialize
     >
       {({
-        handleSubmit, values, isValid, setFieldValue, dirty
-      }) => {
-        setTimeout(() => onSetDirty(dirty), 0);
-        return (
-          <Box component="form" onSubmit={handleSubmit} sx={{width: '100%'}}>
-            <>
-              <FieldArray
-                name={`${currentSection.name}`}
-                render={
-                  sectionHelpers => values
-                && values[currentSection.name]
-                && values[currentSection.name].map((section, index) => (
+        handleSubmit, values, isValid, setFieldValue
+      }) => (
+        <Box component="form" onSubmit={handleSubmit} sx={{width: '100%'}}>
+          <>
+            <FieldArray
+              name={`${section.name}`}
+              render={
+                sectionHelpers => values
+                && values[section.name]
+                && values[section.name].map((currentSection, index) => (
                   <Box key={section.id} mb={2}>
                     <SectionHeader
                       onView={() => handleOpenModal(modals.PREVIEW_MODAL, section.id)}
                       onEdit={() => handleShowSurvey(section.id, false)}
                       onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, section.id)}
-                      sectionsLength={values[currentSection.name].length}
-                      section={currentSection}
+                      sectionsLength={values[section.name].length}
+                      section={section}
                       answers={section}
                     />
                     {showSurvey === section.id && (
@@ -93,57 +88,65 @@ function FormBuilder({
                       currentSection={currentSection}
                       readOnlyMode
                       cancelButtonLabel="Cerrar"
-                      options={currentSection.interruption.options}
-                      label={currentSection.interruption.reason}
-                      name={`${currentSection.name}.${index}.${currentSection.interruption.name}`}
+                      options={section.interruption.options}
+                      label={section.interruption.reason}
+                      name={`${section.name}.${index}.${section.interruption.name}`}
                       onAccept={
                         [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(modalOpened)
-                          ? () => handleAcceptModal(values[currentSection.name], sectionHelpers)
+                          ? () => handleAcceptModal(values[section.name], sectionHelpers)
                           : undefined
                       }
                     />
                   </Box>
                 ))
-                }
-              />
-              <NavigationButtons
-                onPrevious={() => setPage(page - 1)}
-                onNext={() => setPage(page + 1)}
-                disableNextButton={!isValid}
-                disablePreviousButton={page === 0}
-                nextButtonLabel={sections.length === page + 1 ? 'Finalizar' : 'Siguiente'}
-                isLastSection={sections.length === page + 1}
-                onAddNew={currentSection.multiple
-                  ? () => setFieldValue(
-                    `${currentSection.name}.${values[currentSection.name][values[currentSection.name].length - 1].id}`,
-                    {
-                      ...buildQuestions(currentSection)[currentSection.name][0],
-                      id: values[currentSection.name][values[currentSection.name].length - 1].id + 1
-                    }
-                  ) : undefined}
-                onInterrupt={
-                  currentSection.interruption.interruptible
-                    ? () => handleOpenModal(modals.INTERRUPTION_MODAL, currentSection.id)
-                    : undefined
-                }
-              />
-            </>
-          </Box>
-        );
-      }}
+              }
+            />
+            <NavigationButtons
+              onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
+              onNext={() => (onNext ? onNext() : changeSection(nextSection))}
+              disableNextButton={!isValid}
+              disablePreviousButton={page === 0}
+              nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
+              isLastSection={!nextSection}
+              onAddNew={section.multiple
+                ? () => setFieldValue(
+                  `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
+                  {
+                    ...buildQuestions(section)[section.name][0],
+                    id: values[section.name][values[section.name].length - 1].id + 1
+                  }
+                ) : undefined}
+              onInterrupt={
+                section.interruption.interruptible
+                  ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                  : undefined
+              }
+            />
+          </>
+        </Box>
+      )}
     </Formik>
   );
 }
 
 FormBuilder.propTypes = {
-  onSetDirty: PropTypes.func.isRequired,
   openModal: PropTypes.func.isRequired,
-  sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
+  changeSection: PropTypes.func.isRequired,
+  onNext: PropTypes.func,
+  onPrevious: PropTypes.func,
+  section: sectionPropTypes.isRequired,
+  page: PropTypes.number.isRequired,
+  nextSection: PropTypes.string,
+  previousSection: PropTypes.string,
   modalOpened: PropTypes.oneOf(Object.values(modals))
 };
 
 FormBuilder.defaultProps = {
-  modalOpened: undefined
+  modalOpened: undefined,
+  previousSection: undefined,
+  nextSection: undefined,
+  onNext: undefined,
+  onPrevious: undefined
 };
 
 export default FormBuilder;
