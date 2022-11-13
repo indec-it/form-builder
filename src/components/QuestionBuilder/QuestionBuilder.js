@@ -26,7 +26,6 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         component={TextField}
         label={`${question.number} ${question.label}`}
         placeholder={question.placeholder}
-        required={question.required}
         name={questionName}
         type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         readOnlyMode={readOnlyMode}
@@ -39,7 +38,6 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         component={Select}
         label={`${question.number} ${question.label}`}
         placeholder={question.placeholder}
-        required={question.required}
         options={question.options}
         name={questionName}
         readOnlyMode={readOnlyMode}

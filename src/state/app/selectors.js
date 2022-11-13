@@ -2,10 +2,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import SyncIcon from '@mui/icons-material/Sync';
 
-import {sections as mocks} from '@config/mocks';
-
 export const getModal = state => state.app.modal;
-export const getSections = () => mocks;
 export const getDrawerList = () => [
   {
     id: 1,
@@ -23,3 +20,4 @@ export const getDrawerList = () => [
     icon: <SyncIcon />
   }
 ];
+export const getSections = state => state.app.sections;

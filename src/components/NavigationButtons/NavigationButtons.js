@@ -38,7 +38,6 @@ function NavigationButtons({
         )}
       </Stack>
       <Button
-        type="submit"
         startIcon={isLastSection ? <DoneIcon /> : undefined}
         endIcon={isLastSection ? undefined : <ArrowRightIcon />}
         onClick={onNext}

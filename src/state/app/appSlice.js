@@ -1,7 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+import {sections} from '@config/mocks';
+
 const initialState = {
-  modal: ''
+  modal: '',
+  sections
 };
 
 export const appSlice = createSlice({
