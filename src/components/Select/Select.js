@@ -8,13 +8,13 @@ import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 import TextField from '../TextField';
 
 function Select({
-  options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, ...props
+  options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, keyValue, ...props
 }) {
   const handleChange = selectedValue => {
-    form.setFieldValue(field.name, selectedValue.value);
+    form.setFieldValue(field.name, selectedValue[keyValue]);
     onClean(form);
   };
-  const selectedValue = options.find(option => option.value === field.value) || {};
+  const selectedValue = options.find(option => option[keyValue] === field.value) || {};
 
   return readOnlyMode ? (
     <>
@@ -56,6 +56,7 @@ Select.propTypes = {
   label: PropTypes.string.isRequired,
   loadingText: PropTypes.string,
   placeholder: PropTypes.string,
+  keyValue: PropTypes.string,
   field: formikField.isRequired,
   form: formikForm.isRequired,
   readOnlyMode: PropTypes.bool.isRequired,
@@ -69,7 +70,8 @@ Select.defaultProps = {
   required: false,
   loading: false,
   onClean: () => {},
-  placeholder: '[Seleccione]'
+  placeholder: '[Seleccione]',
+  keyValue: 'value'
 };
 
 export default Select;

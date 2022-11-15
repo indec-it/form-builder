@@ -57,7 +57,7 @@ function FormBuilder({
         <Box component="form" onSubmit={handleSubmit} sx={{width: '100%'}}>
           <>
             <FieldArray
-              name={`${section.name}`}
+              name={section.name}
               render={
                 sectionHelpers => values
                 && values[section.name]
@@ -74,9 +74,9 @@ function FormBuilder({
                     {showSurvey === section.id && (
                       <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
                         <QuestionBuilder
-                          section={section}
+                          section={currentSection}
                           index={index}
-                          currentSection={currentSection}
+                          currentSection={section}
                           readOnlyMode={readOnlyMode === section.id}
                         />
                       </Box>
