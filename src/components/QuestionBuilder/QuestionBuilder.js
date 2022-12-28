@@ -18,17 +18,20 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
   }
   let QuestionComponent;
   const questionName = `${section.name}.${sectionIndex}.${question.name}`;
+  const isRequired = question.validations.some(validation => validation.type === 'required');
+  const label = `${question.number} - ${question.label}`;
   switch (question.type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
     QuestionComponent = (
       <FastField
         component={TextField}
-        label={`${question.number} ${question.label}`}
+        label={label}
         placeholder={question.placeholder}
         name={questionName}
         type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         readOnlyMode={readOnlyMode}
+        required={isRequired}
       />
     );
     break;
@@ -36,11 +39,12 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
     QuestionComponent = (
       <FastField
         component={Select}
-        label={`${question.number} ${question.label}`}
+        label={label}
         placeholder={question.placeholder}
         options={question.options}
         name={questionName}
         readOnlyMode={readOnlyMode}
+        required={isRequired}
       />
     );
     break;
@@ -49,9 +53,10 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
       <FastField
         component={Radio}
         options={question.options}
-        label={`${question.number} ${question.label}`}
+        label={label}
         name={questionName}
         readOnlyMode={readOnlyMode}
+        required={isRequired}
       />
     );
     break;
@@ -61,8 +66,9 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         component={Checkbox}
         name={questionName}
         options={question.options}
-        label={`${question.number} ${question.label}`}
+        label={label}
         readOnlyMode={readOnlyMode}
+        required={isRequired}
       />
     );
     break;
@@ -71,9 +77,10 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
       <FastField
         component={RadioTable}
         options={question.options}
-        label={`${question.number} ${question.label}`}
+        label={label}
         name={questionName}
         readOnlyMode={readOnlyMode}
+        required={isRequired}
       />
     );
     break;

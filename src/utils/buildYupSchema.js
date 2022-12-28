@@ -1,18 +1,68 @@
 import * as Yup from 'yup';
 
-export default function buildYupSchema(schema, config) {
-  const {
-    name, type, required, requiredLabel
-  } = config;
+import questionTypes from '@constants/questionTypes';
+
+const getValidatorType = (type, options, {isRequired, message}) => {
   let validator;
-  if ([1, 3, 4, 6].includes(type)) {
+  switch (type) {
+  case questionTypes.TEXT_FIELD:
+  case questionTypes.DROPDOWN:
+  case questionTypes.RADIO:
     validator = Yup.string();
-  } else {
+    break;
+  case questionTypes.NUMERIC_FIELD:
     validator = Yup.number();
+    break;
+  case questionTypes.CHECKBOX:
+    validator = Yup.array().of(Yup.string());
+    break;
+  case questionTypes.RADIO_TABLE: {
+    const opts = options.reduce((accumulator, currentValue) => {
+      accumulator[currentValue.name] = isRequired ? Yup.string().required(message) : Yup.string();
+      return accumulator;
+    }, {});
+    validator = Yup.object(opts);
+    break;
   }
-  if (required) {
-    validator = validator.required(requiredLabel);
+  default:
+    return validator;
   }
-  schema[name] = validator;
-  return schema;
+  return validator;
+};
+
+export default function buildYupSchema(schema, config) {
+  const schemaWithValidations = schema;
+  const {
+    name, type, validations, options
+  } = config;
+  const requiredField = validations.find(validation => validation.type === 'required');
+  let validator = getValidatorType(
+    type,
+    options,
+    {isRequired: !!requiredField, message: requiredField?.params?.[0]?.message}
+  );
+  if (!validator) {
+    return schemaWithValidations;
+  }
+  validations.forEach(validation => {
+    let validationType = validation.type;
+    if (validationType === 'required' && type === questionTypes.RADIO_TABLE) {
+      return;
+    }
+    const newParams = [];
+    const isCheckboxRequired = validationType === 'required' && type === questionTypes.CHECKBOX;
+    validation.params.forEach(param => {
+      if (param.value || isCheckboxRequired) {
+        newParams.push(isCheckboxRequired ? 1 : param.value, param.message);
+      } else {
+        newParams.push(param.message);
+      }
+    });
+    if (isCheckboxRequired) {
+      validationType = 'min';
+    }
+    validator = validator[validationType](...newParams);
+  });
+  schemaWithValidations[name] = validator;
+  return schemaWithValidations;
 }

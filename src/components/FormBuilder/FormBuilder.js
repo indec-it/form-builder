@@ -2,12 +2,13 @@ import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray} from 'formik';
 import Box from '@mui/material/Box';
+import * as Yup from 'yup';
 
-import formStatuses from '@constants/formStatuses';
 import modals from '@constants/modals';
 import NavigationButtons from '@components/NavigationButtons';
 import QuestionBuilder from '@components/QuestionBuilder';
 import buildQuestions from '@utils/buildQuestions';
+import buildYupSchema from '@utils/buildYupSchema';
 import sectionPropTypes from '@utils/propTypes/section';
 
 import Modals from './Modals';
@@ -15,12 +16,28 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 
 function FormBuilder({
-  section, openModal, modalOpened, previousSection, nextSection, page, changeSection, onNext, onPrevious
+  section,
+  openModal,
+  modalOpened,
+  previousSection,
+  nextSection,
+  page,
+  changeSection,
+  onNext,
+  onPrevious,
+  isSurvey,
+  components
 }) {
   const [initialValues, setInitialValues] = useState();
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
+  const yepSchema = section.questions.reduce(buildYupSchema, {});
+  const validateSchema = Yup.object({
+    [section.name]: Yup.array().of(
+      Yup.object(yepSchema)
+    )
+  });
 
   useEffect(() => {
     setInitialValues(buildQuestions(section));
@@ -47,14 +64,13 @@ function FormBuilder({
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => console.log({...values, [values[section.name].status]: formStatuses.COMPLETED})}
       validateOnMount
       enableReinitialize
+      validationSchema={validateSchema}
+      onSubmit={() => (onNext ? onNext() : changeSection(nextSection))}
     >
-      {({
-        handleSubmit, values, isValid, setFieldValue
-      }) => (
-        <Box component="form" onSubmit={handleSubmit} sx={{width: '100%'}}>
+      {({values, setFieldValue}) => (
+        <Box component="form" noValidate sx={{width: '100%'}}>
           <>
             <FieldArray
               name={section.name}
@@ -63,15 +79,22 @@ function FormBuilder({
                 && values[section.name]
                 && values[section.name].map((currentSection, index) => (
                   <Box key={section.id} mb={2}>
-                    <SectionHeader
-                      onView={() => handleOpenModal(modals.PREVIEW_MODAL, section.id)}
-                      onEdit={() => handleShowSurvey(section.id, false)}
-                      onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, section.id)}
-                      sectionsLength={values[section.name].length}
-                      section={section}
-                      answers={section}
-                    />
-                    {showSurvey === section.id && (
+                    {
+                      components.SectionHeader
+                        ? <components.SectionHeader values={currentSection} />
+                        : (
+                          <SectionHeader
+                            onView={() => handleOpenModal(modals.PREVIEW_MODAL, section.id)}
+                            onEdit={() => handleShowSurvey(section.id, false)}
+                            onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, section.id)}
+                            sectionsLength={values[section.name].length}
+                            section={section}
+                            answers={section}
+                            isSurvey={isSurvey}
+                          />
+                        )
+                    }
+                    {(!isSurvey || showSurvey === section.id) && (
                       <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
                         <QuestionBuilder
                           section={currentSection}
@@ -101,27 +124,32 @@ function FormBuilder({
                 ))
               }
             />
-            <NavigationButtons
-              onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
-              onNext={() => (onNext ? onNext() : changeSection(nextSection))}
-              disableNextButton={!isValid}
-              disablePreviousButton={page === 0}
-              nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
-              isLastSection={!nextSection}
-              onAddNew={section.multiple
-                ? () => setFieldValue(
-                  `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
-                  {
-                    ...buildQuestions(section)[section.name][0],
-                    id: values[section.name][values[section.name].length - 1].id + 1
-                  }
-                ) : undefined}
-              onInterrupt={
-                section.interruption.interruptible
-                  ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                  : undefined
-              }
-            />
+            {
+              components.NavigationButtons
+                ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
+                : (
+                  <NavigationButtons
+                    onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
+                    disablePreviousButton={page === 0}
+                    nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
+                    isLastSection={!nextSection}
+                    onAddNew={section.multiple
+                      ? () => setFieldValue(
+                        `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
+                        {
+                          ...buildQuestions(section)[section.name][0],
+                          id: values[section.name][values[section.name].length - 1].id + 1
+                        }
+                      ) : undefined}
+                    onInterrupt={
+                      section.interruption.interruptible
+                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                        : undefined
+                    }
+                    schema={validateSchema}
+                  />
+                )
+            }
           </>
         </Box>
       )}
@@ -138,7 +166,12 @@ FormBuilder.propTypes = {
   page: PropTypes.number.isRequired,
   nextSection: PropTypes.string,
   previousSection: PropTypes.string,
-  modalOpened: PropTypes.oneOf(Object.values(modals))
+  modalOpened: PropTypes.oneOf(Object.values(modals)),
+  isSurvey: PropTypes.bool,
+  components: PropTypes.shape({
+    SectionHeader: PropTypes.node,
+    NavigationButtons: PropTypes.node
+  })
 };
 
 FormBuilder.defaultProps = {
@@ -146,7 +179,9 @@ FormBuilder.defaultProps = {
   previousSection: undefined,
   nextSection: undefined,
   onNext: undefined,
-  onPrevious: undefined
+  onPrevious: undefined,
+  isSurvey: true,
+  components: {}
 };
 
 export default FormBuilder;

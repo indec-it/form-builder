@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import InputLabel from '@mui/material/InputLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
+import ErrorMessage from '@components/ErrorMessage';
 import defaultMessages from '@constants/defaultMessages';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
@@ -24,11 +26,11 @@ const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
 };
 
 function Checkbox({
-  options, label, field, form, readOnlyMode
+  options, label, field, form, readOnlyMode, required
 }) {
   return (
     <>
-      <Typography>{label}</Typography>
+      <InputLabel required={required}>{label}</InputLabel>
       {readOnlyMode ? (
         <Typography>
           {getSelectedOptions(options, field.value)}
@@ -49,6 +51,7 @@ function Checkbox({
           ))}
         </FormGroup>
       )}
+      <ErrorMessage form={form} field={field} />
     </>
   );
 }
@@ -58,7 +61,8 @@ Checkbox.propTypes = {
   options: PropTypes.arrayOf(optionPropTypes).isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired
+  readOnlyMode: PropTypes.bool.isRequired,
+  required: PropTypes.bool.isRequired
 };
 
 export default Checkbox;
