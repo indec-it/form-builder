@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
 import ErrorMessage from '@components/ErrorMessage';
+import InputLabel from '@components/InputLabel';
 import defaultMessages from '@constants/defaultMessages';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
@@ -30,13 +30,13 @@ function Checkbox({
 }) {
   return (
     <>
-      <InputLabel required={required}>{label}</InputLabel>
+      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>
           {getSelectedOptions(options, field.value)}
         </Typography>
       ) : (
-        <FormGroup>
+        <FormGroup row>
           {options.map(option => (
             <FormControlLabel
               key={option.value}
@@ -51,7 +51,7 @@ function Checkbox({
           ))}
         </FormGroup>
       )}
-      <ErrorMessage form={form} field={field} />
+      <ErrorMessage form={form} field={field} readOnly={readOnlyMode} />
     </>
   );
 }

@@ -9,7 +9,7 @@ import Radio from '@components/Radio';
 import modals from '@constants/modals';
 
 const getChildren = (modal, {
-  section, index, currentSection, readOnlyMode, options, label, name
+  section, index, currentSection, options, label, name
 }) => {
   switch (modal) {
   case modals.CONFIRM_DELETE_SECTION_MODAL:
@@ -23,7 +23,7 @@ const getChildren = (modal, {
     );
   case modals.PREVIEW_MODAL:
     return (
-      <QuestionBuilder section={section} index={index} currentSection={currentSection} readOnlyMode={readOnlyMode} />
+      <QuestionBuilder section={section} index={index} currentSection={currentSection} readOnlyMode />
     );
   case modals.INTERRUPTION_MODAL:
     return (

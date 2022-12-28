@@ -1,13 +1,13 @@
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {getIn} from 'formik';
 
 import {formikField, formikForm} from '@utils/propTypes';
+import hasFormikErrors from '@utils/hasFormikErrors';
 
-function ErrorMessage({form, field}) {
-  const error = getIn(form.errors, field.name);
-  const touched = getIn(form.touched, field.name);
-  return error && (touched || form.submitCount > 0) ? (
+function ErrorMessage({form, field, readOnly}) {
+  const {hasError, error} = hasFormikErrors({form, field});
+  return hasError && !readOnly ? (
     <Box sx={{display: 'flex', justifyContent: 'center'}}>
       <Typography color="error">{error}</Typography>
     </Box>
@@ -16,7 +16,8 @@ function ErrorMessage({form, field}) {
 
 ErrorMessage.propTypes = {
   field: formikField.isRequired,
-  form: formikForm.isRequired
+  form: formikForm.isRequired,
+  readOnly: PropTypes.bool.isRequired
 };
 
 export default ErrorMessage;
