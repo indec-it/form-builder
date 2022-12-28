@@ -4,5 +4,6 @@ export default {
   DROPDOWN: 3,
   RADIO: 4,
   CHECKBOX: 5,
+  DATE: 6,
   RADIO_TABLE: 7
 };

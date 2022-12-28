@@ -33,7 +33,7 @@ const getHeaders = (questions, answers, headers) => {
 };
 
 function SectionHeader({
-  section, sectionsLength, onView, onEdit, onDelete, answers
+  section, sectionsLength, onView, onEdit, onDelete, answers, isSurvey
 }) {
   return (
     <Box sx={{
@@ -50,21 +50,23 @@ function SectionHeader({
         {section.introduction && (
           <Typography fontWeight="bold" color="gray">{section.introduction}</Typography>
         )}
-        <Typography>{getHeaders(section.questions, answers, section.headers)}</Typography>
+        {isSurvey ? <Typography>{getHeaders(section.questions, answers, section.headers)}</Typography> : null}
       </Box>
-      <Box>
-        <IconButton color="warning" onClick={onView}>
-          <VisibilityIcon />
-        </IconButton>
-        <IconButton color="primary" onClick={onEdit}>
-          <EditIcon />
-        </IconButton>
-        {section.multiple && sectionsLength > 1 && (
-          <IconButton color="error" onClick={onDelete}>
-            <DeleteIcon />
+      {isSurvey ? (
+        <Box>
+          <IconButton color="warning" onClick={onView}>
+            <VisibilityIcon />
           </IconButton>
-        )}
-      </Box>
+          <IconButton color="primary" onClick={onEdit}>
+            <EditIcon />
+          </IconButton>
+          {section.multiple && sectionsLength > 1 && (
+            <IconButton color="error" onClick={onDelete}>
+              <DeleteIcon />
+            </IconButton>
+          )}
+        </Box>
+      ) : null}
     </Box>
   );
 }
@@ -75,7 +77,8 @@ SectionHeader.propTypes = {
   onDelete: PropTypes.func.isRequired,
   sectionsLength: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  answers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  isSurvey: PropTypes.bool.isRequired
 };
 
 export default SectionHeader;

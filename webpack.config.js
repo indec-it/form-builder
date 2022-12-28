@@ -53,6 +53,7 @@ const plugins = [
     filename: 'remoteEntry.js',
     exposes: {
       './FormBuilder': './src/components/FormBuilder',
+      './Radio': './src/components/Radio',
       './Select': './src/components/Select',
       './TextField': './src/components/TextField',
       './state': './src/state'

@@ -2,21 +2,20 @@ import PropTypes from 'prop-types';
 import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
-import {getIn} from 'formik';
+
+import ErrorMessage from '@components/ErrorMessage';
 
 import {formikField, formikForm} from '@utils/propTypes';
 import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 function Radio({
-  options, field, form, readOnlyMode, label
+  options, field, readOnlyMode, label, required, form
 }) {
-  const error = getIn(form.errors, field.name);
-  const touched = getIn(form.touched, field.name);
   return (
-    <FormControl>
-      <Typography>{label}</Typography>
+    <>
+      <InputLabel required={required}>{label}</InputLabel>
       {readOnlyMode ? (
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       ) : (
@@ -26,12 +25,14 @@ function Radio({
           ))}
         </RadioGroup>
       )}
-    </FormControl>
+      <ErrorMessage form={form} field={field} />
+    </>
   );
 }
 
 Radio.propTypes = {
   readOnlyMode: PropTypes.bool.isRequired,
+  required: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,

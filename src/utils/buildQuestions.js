@@ -16,10 +16,10 @@ const buildQuestions = section => {
       return;
     }
     if (question.type === questionTypes.RADIO_TABLE) {
-      const opts = {};
-      question.options.forEach(option => {
-        Object.assign(opts, {[option.name]: ''});
-      });
+      const opts = question.options.reduce((acc, currentValue) => {
+        acc[currentValue.name] = undefined;
+        return acc;
+      }, {});
       values[section.name][question.name] = opts;
       return;
     }

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import {useRoutes} from 'react-router-dom';
+import Container from '@mui/material/Container';
 
 import FormBuilder from '@components/FormBuilder';
 import sectionPropTypes from '@utils/propTypes/section';
@@ -19,8 +20,11 @@ const buildRoutes = sections => {
 };
 
 function Routes({sections}) {
-  const element = useRoutes(buildRoutes(sections));
-  return element;
+  return (
+    <Container maxWidth="xl" sx={{mt: 4}}>
+      {useRoutes(buildRoutes(sections))}
+    </Container>
+  );
 }
 
 Routes.propTypes = {

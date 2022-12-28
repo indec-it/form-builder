@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
+import InputLabel from '@mui/material/InputLabel';
 import Typography from '@mui/material/Typography';
 
 import {formikField, formikForm} from '@utils/propTypes';
@@ -18,7 +19,7 @@ function Select({
 
   return readOnlyMode ? (
     <>
-      <Typography>{label}</Typography>
+      <InputLabel required={required}>{label}</InputLabel>
       <Typography>
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       </Typography>

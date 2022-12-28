@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
+import {useFormikContext} from 'formik';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -10,8 +10,6 @@ import DoneIcon from '@mui/icons-material/Done';
 
 function NavigationButtons({
   onPrevious,
-  onNext,
-  disableNextButton,
   disablePreviousButton,
   nextButtonLabel,
   onAddNew,
@@ -19,6 +17,7 @@ function NavigationButtons({
   isLastSection,
   onInterrupt
 }) {
+  const {submitForm} = useFormikContext();
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
       <Button startIcon={<ArrowBackIcon />} onClick={onPrevious} variant="outlined" disabled={disablePreviousButton}>
@@ -40,9 +39,8 @@ function NavigationButtons({
       <Button
         startIcon={isLastSection ? <DoneIcon /> : undefined}
         endIcon={isLastSection ? undefined : <ArrowRightIcon />}
-        onClick={onNext}
+        onClick={submitForm}
         variant="contained"
-        disabled={disableNextButton}
         color={isLastSection ? 'success' : 'primary'}
       >
         {nextButtonLabel}
@@ -53,18 +51,18 @@ function NavigationButtons({
 
 NavigationButtons.propTypes = {
   onPrevious: PropTypes.func.isRequired,
-  onNext: PropTypes.func.isRequired,
   onInterrupt: PropTypes.func,
   onAddNew: PropTypes.func,
-  disableNextButton: PropTypes.bool,
   disablePreviousButton: PropTypes.bool,
   isLastSection: PropTypes.bool,
   nextButtonLabel: PropTypes.string,
-  addButtonLabel: PropTypes.string
+  addButtonLabel: PropTypes.string,
+  schema: PropTypes.shape({
+    validate: PropTypes.func.isRequired
+  }).isRequired
 };
 
 NavigationButtons.defaultProps = {
-  disableNextButton: false,
   disablePreviousButton: false,
   isLastSection: false,
   nextButtonLabel: 'Siguiente',

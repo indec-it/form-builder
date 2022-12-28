@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import InputLabel from '@mui/material/InputLabel';
 import MuiRadio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 
+import ErrorMessage from '@components/ErrorMessage';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
 import optionPropTypes from '@utils/propTypes/option';
 import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 function RadioTable({
-  options, label, form, field, readOnlyMode
+  options, label, form, field, readOnlyMode, required
 }) {
   return (
-    <FormControl>
-      <Typography>{label}</Typography>
+    <>
+      <InputLabel required={required}>{label}</InputLabel>
       {readOnlyMode ? (
         <>
           {options.map(option => (
@@ -35,7 +36,7 @@ function RadioTable({
         <>
           {options.map(option => (
             <Box key={option.id}>
-              <Stack direction="row" spacing={5}>
+              <Stack direction="row" spacing={5} alignItems="center">
                 <Box sx={{width: '400px'}}>
                   <Typography>{option.title}</Typography>
                 </Box>
@@ -57,11 +58,12 @@ function RadioTable({
                   ))}
                 </RadioGroup>
               </Stack>
+              <ErrorMessage form={form} field={{...field, name: `${field.name}.${option.name}`}} />
             </Box>
           ))}
         </>
       )}
-    </FormControl>
+    </>
   );
 }
 
@@ -77,7 +79,8 @@ RadioTable.propTypes = {
     })
   ).isRequired,
   label: PropTypes.string.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired
+  readOnlyMode: PropTypes.bool.isRequired,
+  required: PropTypes.bool.isRequired
 };
 
 export default RadioTable;
