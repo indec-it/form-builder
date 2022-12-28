@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import InputLabel from '@mui/material/InputLabel';
 import MuiRadio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 
 import ErrorMessage from '@components/ErrorMessage';
+import InputLabel from '@components/InputLabel';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
 import optionPropTypes from '@utils/propTypes/option';
@@ -18,7 +18,7 @@ function RadioTable({
 }) {
   return (
     <>
-      <InputLabel required={required}>{label}</InputLabel>
+      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <>
           {options.map(option => (
@@ -58,7 +58,7 @@ function RadioTable({
                   ))}
                 </RadioGroup>
               </Stack>
-              <ErrorMessage form={form} field={{...field, name: `${field.name}.${option.name}`}} />
+              <ErrorMessage form={form} field={{...field, name: `${field.name}.${option.name}`}} readOnly={readOnlyMode} />
             </Box>
           ))}
         </>

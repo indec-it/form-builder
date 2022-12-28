@@ -106,9 +106,9 @@ function FormBuilder({
                     )}
                     <Modals
                       open={selectedSectionId === section.id}
-                      section={section}
+                      section={currentSection}
                       index={index}
-                      currentSection={currentSection}
+                      currentSection={section}
                       readOnlyMode
                       cancelButtonLabel="Cerrar"
                       options={section.interruption.options}
