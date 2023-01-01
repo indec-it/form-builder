@@ -4,7 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
-import ErrorMessage from '@components/ErrorMessage';
+import FieldMessage from '@components/FieldMessage';
 import InputLabel from '@components/InputLabel';
 import defaultMessages from '@constants/defaultMessages';
 import formikField from '@utils/propTypes/formikField';
@@ -26,11 +26,11 @@ const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
 };
 
 function Checkbox({
-  options, label, field, form, readOnlyMode, required
+  options, label, field, form, readOnlyMode, required, warnings
 }) {
   return (
     <>
-      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>
           {getSelectedOptions(options, field.value)}
@@ -51,7 +51,7 @@ function Checkbox({
           ))}
         </FormGroup>
       )}
-      <ErrorMessage form={form} field={field} readOnly={readOnlyMode} />
+      <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
     </>
   );
 }
@@ -62,7 +62,8 @@ Checkbox.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   readOnlyMode: PropTypes.bool.isRequired,
-  required: PropTypes.bool.isRequired
+  required: PropTypes.bool.isRequired,
+  warnings: PropTypes.shape({}).isRequired
 };
 
 export default Checkbox;

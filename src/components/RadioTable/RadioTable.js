@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 
-import ErrorMessage from '@components/ErrorMessage';
+import FieldMessage from '@components/FieldMessage';
 import InputLabel from '@components/InputLabel';
 import formikField from '@utils/propTypes/formikField';
 import formikForm from '@utils/propTypes/formikForm';
@@ -14,11 +14,11 @@ import optionPropTypes from '@utils/propTypes/option';
 import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 function RadioTable({
-  options, label, form, field, readOnlyMode, required
+  options, label, form, field, readOnlyMode, required, warnings
 }) {
   return (
     <>
-      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <>
           {options.map(option => (
@@ -58,7 +58,12 @@ function RadioTable({
                   ))}
                 </RadioGroup>
               </Stack>
-              <ErrorMessage form={form} field={{...field, name: `${field.name}.${option.name}`}} readOnly={readOnlyMode} />
+              <FieldMessage
+                warnings={warnings}
+                form={form}
+                field={{...field, name: `${field.name}.${option.name}`}}
+                readOnly={readOnlyMode}
+              />
             </Box>
           ))}
         </>
@@ -80,7 +85,8 @@ RadioTable.propTypes = {
   ).isRequired,
   label: PropTypes.string.isRequired,
   readOnlyMode: PropTypes.bool.isRequired,
-  required: PropTypes.bool.isRequired
+  required: PropTypes.bool.isRequired,
+  warnings: PropTypes.shape({}).isRequired
 };
 
 export default RadioTable;

@@ -2,18 +2,29 @@ import {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray} from 'formik';
 import Box from '@mui/material/Box';
-import * as Yup from 'yup';
 
 import modals from '@constants/modals';
 import NavigationButtons from '@components/NavigationButtons';
 import QuestionBuilder from '@components/QuestionBuilder';
 import buildQuestions from '@utils/buildQuestions';
-import buildYupSchema from '@utils/buildYupSchema';
+import getWarningsAndErrorsSchemas from '@utils/getWarningsAndErrorsSchemas';
+import yupToFriendlyErrors from '@utils/yupToFriendlyErrors';
 import sectionPropTypes from '@utils/propTypes/section';
 
 import Modals from './Modals';
 
 import SectionHeader from './SectionHeader';
+
+const getWarnings = (schema, values) => {
+  let warnings = {};
+  try {
+    schema.validateSync(values, {abortEarly: false});
+    return warnings;
+  } catch (error) {
+    warnings = yupToFriendlyErrors(error);
+    return warnings;
+  }
+};
 
 function FormBuilder({
   section,
@@ -32,12 +43,7 @@ function FormBuilder({
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
-  const yepSchema = section.questions.reduce(buildYupSchema, {});
-  const validateSchema = Yup.object({
-    [section.name]: Yup.array().of(
-      Yup.object(yepSchema)
-    )
-  });
+  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
 
   useEffect(() => {
     setInitialValues(buildQuestions(section));
@@ -69,13 +75,15 @@ function FormBuilder({
       validationSchema={validateSchema}
       onSubmit={() => (onNext ? onNext() : changeSection(nextSection))}
     >
-      {({values, setFieldValue}) => (
-        <Box component="form" noValidate sx={{width: '100%'}}>
-          <>
-            <FieldArray
-              name={section.name}
-              render={
-                sectionHelpers => values
+      {({values, setFieldValue}) => {
+        const warnings = getWarnings(warningSchema, values);
+        return (
+          <Box component="form" noValidate sx={{width: '100%'}}>
+            <>
+              <FieldArray
+                name={section.name}
+                render={
+                  sectionHelpers => values
                 && values[section.name]
                 && values[section.name].map((currentSection, index) => (
                   <Box key={section.id} mb={2}>
@@ -101,6 +109,7 @@ function FormBuilder({
                           index={index}
                           currentSection={section}
                           readOnlyMode={readOnlyMode === section.id}
+                          warnings={warnings}
                         />
                       </Box>
                     )}
@@ -122,37 +131,38 @@ function FormBuilder({
                     />
                   </Box>
                 ))
+                }
+              />
+              {
+                components.NavigationButtons
+                  ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
+                  : (
+                    <NavigationButtons
+                      onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
+                      disablePreviousButton={page === 0}
+                      nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
+                      isLastSection={!nextSection}
+                      onAddNew={section.multiple
+                        ? () => setFieldValue(
+                          `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
+                          {
+                            ...buildQuestions(section)[section.name][0],
+                            id: values[section.name][values[section.name].length - 1].id + 1
+                          }
+                        ) : undefined}
+                      onInterrupt={
+                        section.interruption.interruptible
+                          ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                          : undefined
+                      }
+                      schema={validateSchema}
+                    />
+                  )
               }
-            />
-            {
-              components.NavigationButtons
-                ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
-                : (
-                  <NavigationButtons
-                    onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
-                    disablePreviousButton={page === 0}
-                    nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
-                    isLastSection={!nextSection}
-                    onAddNew={section.multiple
-                      ? () => setFieldValue(
-                        `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
-                        {
-                          ...buildQuestions(section)[section.name][0],
-                          id: values[section.name][values[section.name].length - 1].id + 1
-                        }
-                      ) : undefined}
-                    onInterrupt={
-                      section.interruption.interruptible
-                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                        : undefined
-                    }
-                    schema={validateSchema}
-                  />
-                )
-            }
-          </>
-        </Box>
-      )}
+            </>
+          </Box>
+        );
+      }}
     </Formik>
   );
 }

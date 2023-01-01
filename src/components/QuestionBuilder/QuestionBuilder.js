@@ -11,7 +11,7 @@ import TextField from '@components/TextField';
 import questionTypes from '@constants/questionTypes';
 import sectionPropTypes from '@utils/propTypes/section';
 
-const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
+const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
@@ -32,6 +32,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         readOnlyMode={readOnlyMode}
         required={isRequired}
+        warnings={warnings}
       />
     );
     break;
@@ -45,6 +46,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
+        warnings={warnings}
       />
     );
     break;
@@ -57,6 +59,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
+        warnings={warnings}
       />
     );
     break;
@@ -69,6 +72,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         label={label}
         readOnlyMode={readOnlyMode}
         required={isRequired}
+        warnings={warnings}
       />
     );
     break;
@@ -81,6 +85,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
+        warnings={warnings}
       />
     );
     break;
@@ -91,13 +96,13 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode) => {
 };
 
 function QuestionBuilder({
-  section, currentSection, index, readOnlyMode
+  section, currentSection, index, readOnlyMode, warnings
 }) {
   return (
     <Grid container direction="column" spacing={2}>
       {Object.values(section).map((question, questionIndex) => (
         <Grid item key={questionIndex}>
-          {getComponent(currentSection, index, questionIndex, readOnlyMode)}
+          {getComponent(currentSection, index, questionIndex, readOnlyMode, warnings)}
         </Grid>
       ))}
     </Grid>
@@ -110,7 +115,8 @@ QuestionBuilder.propTypes = {
   section: PropTypes.shape({
     id: PropTypes.number.isRequired
   }).isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  warnings: PropTypes.shape({}).isRequired
 };
 
 QuestionBuilder.defaultProps = {
