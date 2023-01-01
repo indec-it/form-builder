@@ -8,23 +8,20 @@ import Typography from '@mui/material/Typography';
 import HelpIcon from '@mui/icons-material/Help';
 
 import InputLabel from '@components/InputLabel';
+import FieldMessage from '@components/FieldMessage';
 import defaultMessages from '@constants/defaultMessages';
 import {formikField, formikForm} from '@utils/propTypes';
-import hasFormikErrors from '@utils/hasFormikErrors';
 
 function TextField({
-  form, field, placeholder, label, readOnlyMode, tooltip, required, ...props
+  form, field, placeholder, label, readOnlyMode, tooltip, required, warnings, ...props
 }) {
-  const {error, hasError} = hasFormikErrors({form, field});
   return (
     <Box sx={{width: '100%'}}>
-      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>{field.value || defaultMessages.UNANSWERED}</Typography>
       ) : (
         <MuiTextField
-          error={hasError}
-          helperText={hasError && error}
           fullWidth
           id={`field-${field.name}`}
           placeholder={placeholder}
@@ -53,6 +50,7 @@ function TextField({
           value={field.value || ''}
         />
       )}
+      <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
     </Box>
   );
 }
@@ -64,7 +62,8 @@ TextField.propTypes = {
   required: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  tooltip: PropTypes.string
+  tooltip: PropTypes.string,
+  warnings: PropTypes.shape({}).isRequired
 };
 
 TextField.defaultProps = {

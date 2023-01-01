@@ -4,18 +4,18 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 
-import ErrorMessage from '@components/ErrorMessage';
+import FieldMessage from '@components/FieldMessage';
 import InputLabel from '@components/InputLabel';
 
 import {formikField, formikForm} from '@utils/propTypes';
 import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
 
 function Radio({
-  options, field, readOnlyMode, label, required, form
+  options, field, readOnlyMode, label, required, form, warnings
 }) {
   return (
     <>
-      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       ) : (
@@ -25,7 +25,7 @@ function Radio({
           ))}
         </RadioGroup>
       )}
-      <ErrorMessage form={form} field={field} readOnly={readOnlyMode} />
+      <FieldMessage form={form} field={field} warnings={warnings} readOnly={readOnlyMode} />
     </>
   );
 }
@@ -41,7 +41,8 @@ Radio.propTypes = {
       value: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  warnings: PropTypes.shape({}).isRequired
 };
 
 export default Radio;

@@ -30,7 +30,7 @@ const getValidatorType = (type, options, {isRequired, message}) => {
   return validator;
 };
 
-export default function buildYupSchema(schema, config) {
+export default function buildYupSchema(schema, config, opts = {}) {
   const schemaWithValidations = schema;
   const {
     name, type, validations, options
@@ -46,7 +46,11 @@ export default function buildYupSchema(schema, config) {
   }
   validations.forEach(validation => {
     let validationType = validation.type;
-    if (validationType === 'required' && type === questionTypes.RADIO_TABLE) {
+    if (
+      (validationType === 'required' && type === questionTypes.RADIO_TABLE)
+      || (validation.messageType === 'warning' && opts.schemaType !== 'warning')
+      || (validation.messageType === 'error' && opts.schemaType !== 'error')
+    ) {
       return;
     }
     const newParams = [];
