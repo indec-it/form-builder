@@ -76,7 +76,7 @@ function FormBuilder({
       onSubmit={() => (onNext ? onNext() : changeSection(nextSection))}
     >
       {({values, setFieldValue}) => {
-        const warnings = getWarnings(warningSchema, values);
+        const warnings = getWarnings(warningSchema, values) || {};
         return (
           <Box component="form" noValidate sx={{width: '100%'}}>
             <>

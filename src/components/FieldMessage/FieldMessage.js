@@ -1,28 +1,25 @@
 import PropTypes from 'prop-types';
 import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
 
 import {formikField, formikForm} from '@utils/propTypes';
-import hasFormikErrors from '@utils/hasFormikErrors';
-import hasFormikWarnings from '@utils/hasFormikWarnings';
+import hasFormikErrorsAndWarnings from '@utils/hasFormikErrorsAndWarnings';
+
+const alertStyles = {width: '100%', justifyContent: 'center', mt: 2};
 
 function FieldMessage({
   form, field, readOnly, warnings
 }) {
-  const {hasError, error} = hasFormikErrors({form, field});
-  const {hasWarning, warning} = hasFormikWarnings({form, field, warnings});
+  const {
+    hasWarning, warning, hasError, error
+  } = hasFormikErrorsAndWarnings({form, field, warnings});
   if (hasError && !readOnly) {
     return (
-      <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Alert severity="error">{error}</Alert>
-      </Box>
+      <Alert severity="error" sx={alertStyles}>{error}</Alert>
     );
   }
   if (hasWarning && !readOnly) {
     return (
-      <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <Alert severity="warning">{warning}</Alert>
-      </Box>
+      <Alert severity="warning" sx={alertStyles}>{warning}</Alert>
     );
   }
   return null;
