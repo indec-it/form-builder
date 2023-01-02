@@ -5,16 +5,14 @@ import Stack from '@mui/material/Stack';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 
-import hasFormikErrors from '@utils/hasFormikErrors';
-import hasFormikWarnings from '@utils/hasFormikWarnings';
+import hasFormikErrorsAndWarnings from '@utils/hasFormikErrorsAndWarnings';
 import formikFormPropTypes from '@utils/propTypes/formikForm';
 import formikFieldPropTypes from '@utils/propTypes/formikField';
 
 function InputLabel({
   required, label, form, field, readOnly, warnings
 }) {
-  const {hasError} = hasFormikErrors({form, field});
-  const {hasWarning} = hasFormikWarnings({form, field, warnings});
+  const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   return (
     <Stack direction="row" spacing={2}>
       {hasError && !readOnly && (
