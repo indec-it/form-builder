@@ -4,12 +4,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 
-import FieldMessage from '@components/FieldMessage';
-import InputLabel from '@components/InputLabel';
-import defaultMessages from '@constants/defaultMessages';
-import formikField from '@utils/propTypes/formikField';
-import formikForm from '@utils/propTypes/formikForm';
-import optionPropTypes from '@utils/propTypes/option';
+import FieldMessage from '@/components/FieldMessage';
+import InputLabel from '@/components/InputLabel';
+import defaultMessages from '@/constants/defaultMessages';
+import formikField from '@/utils/propTypes/formikField';
+import formikForm from '@/utils/propTypes/formikForm';
+import optionPropTypes from '@/utils/propTypes/option';
 
 const getSelectedOptions = (options, value) => options
   .filter(option => value.includes(option.value))

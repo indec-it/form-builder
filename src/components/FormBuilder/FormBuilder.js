@@ -3,38 +3,25 @@ import PropTypes from 'prop-types';
 import {Formik, FieldArray} from 'formik';
 import Box from '@mui/material/Box';
 
-import modals from '@constants/modals';
-import NavigationButtons from '@components/NavigationButtons';
-import QuestionBuilder from '@components/QuestionBuilder';
-import buildQuestions from '@utils/buildQuestions';
-import getWarningsAndErrorsSchemas from '@utils/getWarningsAndErrorsSchemas';
-import yupToFriendlyErrors from '@utils/yupToFriendlyErrors';
-import sectionPropTypes from '@utils/propTypes/section';
+import modals from '@/constants/modals';
+import NavigationButtons from '@/components/NavigationButtons';
+import QuestionBuilder from '@/components/QuestionBuilder';
+import buildQuestions from '@/utils/buildQuestions';
+import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
+import getWarnings from '@/utils/getWarnings';
+import sectionPropTypes from '@/utils/propTypes/section';
 
 import Modals from './Modals';
 
 import SectionHeader from './SectionHeader';
 
-const getWarnings = (schema, values) => {
-  let warnings = {};
-  try {
-    schema.validateSync(values, {abortEarly: false});
-    return warnings;
-  } catch (error) {
-    warnings = yupToFriendlyErrors(error);
-    return warnings;
-  }
-};
-
 function FormBuilder({
   section,
   openModal,
   modalOpened,
-  previousSection,
   nextSection,
   page,
-  changeSection,
-  onNext,
+  onSubmit,
   onPrevious,
   isSurvey,
   components
@@ -73,7 +60,7 @@ function FormBuilder({
       validateOnMount
       enableReinitialize
       validationSchema={validateSchema}
-      onSubmit={() => (onNext ? onNext() : changeSection(nextSection))}
+      onSubmit={onSubmit}
     >
       {({values, setFieldValue}) => {
         const warnings = getWarnings(warningSchema, values) || {};
@@ -138,7 +125,7 @@ function FormBuilder({
                   ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
                   : (
                     <NavigationButtons
-                      onPrevious={() => (onPrevious ? onPrevious() : changeSection(previousSection))}
+                      onPrevious={onPrevious}
                       disablePreviousButton={page === 0}
                       nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
                       isLastSection={!nextSection}
@@ -155,7 +142,6 @@ function FormBuilder({
                           ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
                           : undefined
                       }
-                      schema={validateSchema}
                     />
                   )
               }
@@ -169,13 +155,11 @@ function FormBuilder({
 
 FormBuilder.propTypes = {
   openModal: PropTypes.func.isRequired,
-  changeSection: PropTypes.func.isRequired,
-  onNext: PropTypes.func,
-  onPrevious: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
   section: sectionPropTypes.isRequired,
   page: PropTypes.number.isRequired,
   nextSection: PropTypes.string,
-  previousSection: PropTypes.string,
   modalOpened: PropTypes.oneOf(Object.values(modals)),
   isSurvey: PropTypes.bool,
   components: PropTypes.shape({
@@ -186,10 +170,7 @@ FormBuilder.propTypes = {
 
 FormBuilder.defaultProps = {
   modalOpened: undefined,
-  previousSection: undefined,
   nextSection: undefined,
-  onNext: undefined,
-  onPrevious: undefined,
   isSurvey: true,
   components: {}
 };

@@ -8,7 +8,7 @@ import MuiModal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import modals from '@constants/modals';
+import modals from '@/constants/modals';
 
 function Modal({
   modal, close, onAccept, children, acceptButtonLabel, cancelButtonLabel, open

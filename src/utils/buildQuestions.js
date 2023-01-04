@@ -1,5 +1,5 @@
-import formStatuses from '@constants/formStatuses';
-import questionTypes from '@constants/questionTypes';
+import formStatuses from '@/constants/formStatuses';
+import questionTypes from '@/constants/questionTypes';
 
 const buildQuestions = section => {
   const values = {[section.name]: {id: 1, multiple: section.multiple, status: formStatuses.INCOMPLETE}};

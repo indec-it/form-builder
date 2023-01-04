@@ -8,6 +8,14 @@
         ],
         ["@babel/preset-env"]
     ],
+    "plugins": [
+      ["module-resolver", {
+        "root": ["./"],
+        "alias": {
+          "@": "./src"
+        }
+      }]
+    ],
     "env": {
       "production": {
         "plugins": [

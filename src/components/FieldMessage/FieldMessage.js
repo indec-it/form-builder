@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import Alert from '@mui/material/Alert';
 
-import {formikField, formikForm} from '@utils/propTypes';
-import hasFormikErrorsAndWarnings from '@utils/hasFormikErrorsAndWarnings';
+import {formikField, formikForm} from '@/utils/propTypes';
+import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 
 const alertStyles = {width: '100%', justifyContent: 'center', mt: 2};
 

@@ -3,10 +3,10 @@ import {FastField} from 'formik';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import Modal from '@components/Modal';
-import QuestionBuilder from '@components/QuestionBuilder';
-import Radio from '@components/Radio';
-import modals from '@constants/modals';
+import Modal from '@/components/Modal';
+import QuestionBuilder from '@/components/QuestionBuilder';
+import Radio from '@/components/Radio';
+import modals from '@/constants/modals';
 
 const getChildren = (modal, {
   section, index, currentSection, options, label, name

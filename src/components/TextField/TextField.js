@@ -7,10 +7,10 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import HelpIcon from '@mui/icons-material/Help';
 
-import InputLabel from '@components/InputLabel';
-import FieldMessage from '@components/FieldMessage';
-import defaultMessages from '@constants/defaultMessages';
-import {formikField, formikForm} from '@utils/propTypes';
+import InputLabel from '@/components/InputLabel';
+import FieldMessage from '@/components/FieldMessage';
+import defaultMessages from '@/constants/defaultMessages';
+import {formikField, formikForm} from '@/utils/propTypes';
 
 function TextField({
   form, field, placeholder, label, readOnlyMode, tooltip, required, warnings, ...props

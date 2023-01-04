@@ -6,9 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import questionTypes from '@constants/questionTypes';
-import sectionPropTypes from '@utils/propTypes/section';
-import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
+import questionTypes from '@/constants/questionTypes';
+import sectionPropTypes from '@/utils/propTypes/section';
+import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 const getHeaders = (questions, answers, headers) => {
   if (headers.some(header => header.question)) {

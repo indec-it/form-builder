@@ -4,11 +4,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 
-import FieldMessage from '@components/FieldMessage';
-import InputLabel from '@components/InputLabel';
+import FieldMessage from '@/components/FieldMessage';
+import InputLabel from '@/components/InputLabel';
 
-import {formikField, formikForm} from '@utils/propTypes';
-import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
+import {formikField, formikForm} from '@/utils/propTypes';
+import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 function Radio({
   options, field, readOnlyMode, label, required, form, warnings

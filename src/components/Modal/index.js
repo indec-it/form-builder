@@ -1,3 +1,3 @@
-import Modal from './ModalContainer';
+import Modal from './Modal';
 
 export default Modal;

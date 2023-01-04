@@ -1,3 +1,3 @@
-import Modals from './ModalsContainer';
+import Modals from './Modals';
 
 export default Modals;

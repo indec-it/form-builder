@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import questionTypes from '@constants/questionTypes';
+import questionTypes from '@/constants/questionTypes';
 
 const getValidatorType = (type, options, {isRequired, message}) => {
   let validator;
