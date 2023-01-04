@@ -3,13 +3,13 @@ import {FastField} from 'formik';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import Checkbox from '@components/Checkbox';
-import Radio from '@components/Radio';
-import RadioTable from '@components/RadioTable';
-import Select from '@components/Select';
-import TextField from '@components/TextField';
-import questionTypes from '@constants/questionTypes';
-import sectionPropTypes from '@utils/propTypes/section';
+import Checkbox from '@/components/Checkbox';
+import Radio from '@/components/Radio';
+import RadioTable from '@/components/RadioTable';
+import Select from '@/components/Select';
+import TextField from '@/components/TextField';
+import questionTypes from '@/constants/questionTypes';
+import sectionPropTypes from '@/utils/propTypes/section';
 
 const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings) => {
   const question = section.questions[questionIndex];

@@ -5,9 +5,9 @@ import Stack from '@mui/material/Stack';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 
-import hasFormikErrorsAndWarnings from '@utils/hasFormikErrorsAndWarnings';
-import formikFormPropTypes from '@utils/propTypes/formikForm';
-import formikFieldPropTypes from '@utils/propTypes/formikField';
+import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
+import formikFormPropTypes from '@/utils/propTypes/formikForm';
+import formikFieldPropTypes from '@/utils/propTypes/formikField';
 
 function InputLabel({
   required, label, form, field, readOnly, warnings

@@ -56,10 +56,7 @@ NavigationButtons.propTypes = {
   disablePreviousButton: PropTypes.bool,
   isLastSection: PropTypes.bool,
   nextButtonLabel: PropTypes.string,
-  addButtonLabel: PropTypes.string,
-  schema: PropTypes.shape({
-    validate: PropTypes.func.isRequired
-  }).isRequired
+  addButtonLabel: PropTypes.string
 };
 
 NavigationButtons.defaultProps = {

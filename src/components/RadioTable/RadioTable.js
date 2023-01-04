@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 
-import FieldMessage from '@components/FieldMessage';
-import InputLabel from '@components/InputLabel';
-import formikField from '@utils/propTypes/formikField';
-import formikForm from '@utils/propTypes/formikForm';
-import optionPropTypes from '@utils/propTypes/option';
-import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
+import FieldMessage from '@/components/FieldMessage';
+import InputLabel from '@/components/InputLabel';
+import formikField from '@/utils/propTypes/formikField';
+import formikForm from '@/utils/propTypes/formikForm';
+import optionPropTypes from '@/utils/propTypes/option';
+import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 function RadioTable({
   options, label, form, field, readOnlyMode, required, warnings

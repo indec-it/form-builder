@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
 
-import InputLabel from '@components/InputLabel';
-import {formikField, formikForm} from '@utils/propTypes';
-import getSelectedOptionLabel from '@utils/getSelectedOptionLabel';
+import InputLabel from '@/components/InputLabel';
+import {formikField, formikForm} from '@/utils/propTypes';
+import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 import TextField from '../TextField';
 
