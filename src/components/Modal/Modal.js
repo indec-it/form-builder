@@ -11,12 +11,12 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import modals from '@/constants/modals';
 
 function Modal({
-  modal, close, onAccept, children, acceptButtonLabel, cancelButtonLabel, open
+  modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open
 }) {
   return (
     <MuiModal
       open={modal > 0 && open}
-      onClose={close}
+      onClose={onClose}
     >
       <Box sx={{
         position: 'absolute',
@@ -30,14 +30,14 @@ function Modal({
       >
         <Container>
           <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-            <IconButton onClick={close}>
+            <IconButton onClick={onClose}>
               <CancelIcon color="info" />
             </IconButton>
           </Box>
           <Divider />
           {children}
           <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
-            <Button onClick={close}>{cancelButtonLabel}</Button>
+            <Button onClick={onClose}>{cancelButtonLabel}</Button>
             {onAccept && <Button variant="contained" onClick={() => onAccept(modal)}>{acceptButtonLabel}</Button>}
           </Stack>
         </Container>
@@ -47,7 +47,7 @@ function Modal({
 }
 
 Modal.propTypes = {
-  close: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onAccept: PropTypes.func,
   acceptButtonLabel: PropTypes.string,
   cancelButtonLabel: PropTypes.string,
