@@ -17,8 +17,6 @@ import SectionHeader from './SectionHeader';
 
 function FormBuilder({
   section,
-  openModal,
-  modalOpened,
   nextSection,
   page,
   onSubmit,
@@ -30,6 +28,7 @@ function FormBuilder({
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
+  const [openModal, setOpenModal] = useState();
   const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
 
   useEffect(() => {
@@ -43,15 +42,15 @@ function FormBuilder({
 
   const handleOpenModal = (modal, sectionId) => {
     setSelectedSelectionId(sectionId);
-    openModal(modal);
+    setOpenModal(modal);
   };
 
   const handleAcceptModal = (allSections, sectionHelpers) => {
-    if (modalOpened === modals.CONFIRM_DELETE_SECTION_MODAL) {
+    if (openModal === modals.CONFIRM_DELETE_SECTION_MODAL) {
       const index = allSections.findIndex(currentSection => currentSection.id === selectedSectionId);
       sectionHelpers.remove(index);
     }
-    openModal(undefined);
+    setOpenModal(undefined);
   };
 
   return (
@@ -111,10 +110,12 @@ function FormBuilder({
                       label={section.interruption.reason}
                       name={`${section.name}.${index}.${section.interruption.name}`}
                       onAccept={
-                        [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(modalOpened)
+                        [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)
                           ? () => handleAcceptModal(values[section.name], sectionHelpers)
                           : undefined
                       }
+                      onClose={() => setOpenModal(undefined)}
+                      modal={openModal}
                     />
                   </Box>
                 ))
@@ -154,13 +155,11 @@ function FormBuilder({
 }
 
 FormBuilder.propTypes = {
-  openModal: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onPrevious: PropTypes.func.isRequired,
   section: sectionPropTypes.isRequired,
   page: PropTypes.number.isRequired,
   nextSection: PropTypes.string,
-  modalOpened: PropTypes.oneOf(Object.values(modals)),
   isSurvey: PropTypes.bool,
   components: PropTypes.shape({
     SectionHeader: PropTypes.node,
@@ -169,7 +168,6 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  modalOpened: undefined,
   nextSection: undefined,
   isSurvey: true,
   components: {}

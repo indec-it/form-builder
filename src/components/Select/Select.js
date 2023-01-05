@@ -19,7 +19,7 @@ function Select({
 
   return readOnlyMode ? (
     <>
-      <InputLabel required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       <Typography>
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       </Typography>

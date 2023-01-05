@@ -35,16 +35,24 @@ const getChildren = (modal, {
 };
 
 function Modals({
-  modal, acceptButtonLabel, cancelButtonLabel, onAccept, open, ...props
+  modal, acceptButtonLabel, cancelButtonLabel, onAccept, open, onClose, ...props
 }) {
   return (
-    <Modal open={open} acceptButtonLabel={acceptButtonLabel} cancelButtonLabel={cancelButtonLabel} onAccept={onAccept}>
+    <Modal
+      open={open}
+      modal={modal}
+      acceptButtonLabel={acceptButtonLabel}
+      cancelButtonLabel={cancelButtonLabel}
+      onAccept={onAccept}
+      onClose={onClose}
+    >
       {getChildren(modal, props)}
     </Modal>
   );
 }
 
 Modals.propTypes = {
+  onClose: PropTypes.func.isRequired,
   onAccept: PropTypes.func,
   acceptButtonLabel: PropTypes.string,
   cancelButtonLabel: PropTypes.string,
