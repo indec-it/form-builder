@@ -1,4 +1,4 @@
-import yupToFriendlyErrors from './yupToFriendlyErrors';
+import castErrorsFromYup from './castErrorsFromYup';
 
 const getWarnings = (schema, values) => {
   let warnings = {};
@@ -6,7 +6,7 @@ const getWarnings = (schema, values) => {
     schema.validateSync(values, {abortEarly: false});
     return warnings;
   } catch (error) {
-    warnings = yupToFriendlyErrors(error);
+    warnings = castErrorsFromYup(error);
     return warnings;
   }
 };
