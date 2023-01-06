@@ -16,10 +16,10 @@ const buildQuestions = section => {
       return;
     }
     if (question.type === questionTypes.RADIO_TABLE) {
-      const opts = question.options.reduce((acc, currentValue) => {
-        acc[currentValue.name] = undefined;
-        return acc;
-      }, {});
+      const opts = question.options.reduce((accumulator, currentValue) => ({
+        ...accumulator,
+        [currentValue.name]: undefined
+      }), {});
       values[section.name][question.name] = opts;
       return;
     }
