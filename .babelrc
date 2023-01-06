@@ -23,6 +23,10 @@
             "mode": "wrap",
             "ignoreFilenames": ["node_modules"]
           }]
+        ],
+        "ignore": [
+          "src/**/*.test.js",
+          "src/**/*.stories.js"
         ]
       }
     }
