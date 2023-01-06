@@ -1,6 +1,6 @@
 import {getIn, setIn} from 'formik';
 
-const yupToFriendlyErrors = yupErrors => {
+const castErrorsFromYup = yupErrors => {
   let warnings = {};
   if (!yupErrors) {
     return warnings;
@@ -9,14 +9,13 @@ const yupToFriendlyErrors = yupErrors => {
     if (yupErrors.inner.length === 0) {
       return setIn(warnings, yupErrors.path, yupErrors.message);
     }
-    for (const err of yupErrors.inner) {
-      if (!getIn(warnings, err.path)) {
-        const {path} = err;
-        warnings = setIn(warnings, path, err.message);
+    yupErrors.inner.forEach(error => {
+      if (!getIn(warnings, error.path)) {
+        warnings = setIn(warnings, error.path, error.message);
       }
-    }
+    });
   }
   return warnings;
 };
 
-export default yupToFriendlyErrors;
+export default castErrorsFromYup;
