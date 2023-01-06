@@ -60,7 +60,7 @@ Modal.defaultProps = {
   onAccept: null,
   acceptButtonLabel: 'Aceptar',
   cancelButtonLabel: 'Cancelar',
-  modal: '',
+  modal: undefined,
   children: undefined,
   open: true
 };

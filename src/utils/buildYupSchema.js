@@ -17,10 +17,10 @@ const getValidatorType = (type, options, {isRequired, message}) => {
     validator = Yup.array().of(Yup.string());
     break;
   case questionTypes.RADIO_TABLE: {
-    const opts = options.reduce((accumulator, currentValue) => {
-      accumulator[currentValue.name] = isRequired ? Yup.string().required(message) : Yup.string();
-      return accumulator;
-    }, {});
+    const opts = options.reduce((accumulator, currentValue) => ({
+      ...accumulator,
+      [currentValue.name]: isRequired ? Yup.string().required(message) : Yup.string()
+    }), {});
     validator = Yup.object(opts);
     break;
   }

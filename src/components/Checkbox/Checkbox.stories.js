@@ -88,7 +88,7 @@ function Template(args) {
     <Formik
       initialValues={{S1: [{S1P1: []}]}}
       validationSchema={withErrors ? validateSchema : null}
-      onSubmit={() => console.log('submitted')}
+      onSubmit={() => {}}
     >
       {({values, submitForm}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};

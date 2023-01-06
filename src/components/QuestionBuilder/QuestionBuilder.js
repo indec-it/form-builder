@@ -116,11 +116,12 @@ QuestionBuilder.propTypes = {
     id: PropTypes.number.isRequired
   }).isRequired,
   index: PropTypes.number.isRequired,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
 };
 
 QuestionBuilder.defaultProps = {
-  readOnlyMode: false
+  readOnlyMode: false,
+  warnings: {}
 };
 
 export default QuestionBuilder;

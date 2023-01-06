@@ -134,11 +134,10 @@ function Template(args) {
         ]
       }}
       validationSchema={withErrors ? validateSchema : null}
-      onSubmit={() => console.log('submitted')}
+      onSubmit={() => {}}
     >
-      {({values, submitForm, errors}) => {
+      {({values, submitForm}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
-        console.log({errors});
         return (
           <>
             <Field

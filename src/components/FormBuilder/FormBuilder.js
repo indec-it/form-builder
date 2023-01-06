@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray} from 'formik';
 import Box from '@mui/material/Box';
@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
+import useSectionInitialValues from '@/hooks/useSectionInitialValues';
 import buildQuestions from '@/utils/buildQuestions';
 import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
@@ -24,16 +25,12 @@ function FormBuilder({
   isSurvey,
   components
 }) {
-  const [initialValues, setInitialValues] = useState();
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
   const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
-
-  useEffect(() => {
-    setInitialValues(buildQuestions(section));
-  }, [section]);
+  const {initialValues} = useSectionInitialValues(section);
 
   const handleShowSurvey = (sectionId, readOnly) => {
     setShowSurvey(sectionId);

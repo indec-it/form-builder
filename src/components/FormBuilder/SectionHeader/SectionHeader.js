@@ -77,7 +77,7 @@ SectionHeader.propTypes = {
   onDelete: PropTypes.func.isRequired,
   sectionsLength: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
-  answers: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  answers: PropTypes.shape({}).isRequired,
   isSurvey: PropTypes.bool.isRequired
 };
 
