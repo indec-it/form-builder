@@ -1,10 +1,13 @@
 # FORM BUILDER 🚀
 
+https://indec-it.github.io/form-builder
+
 ## Glossary
 
 1. [Installation](#installation)
 1. [Start](#start)
 1. [Dependencies](#dependencies)
+1. [Components](#components)
 1. [Tests](#tests)
 1. [Contributing](#contributing)
 
@@ -36,6 +39,12 @@ These are the core dependencies you'll need to get acquainted yourself with:
 - [Jest](https://jestjs.io) (testing framework)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) (DOM interface for testing)
 - [EsLint](https://eslint.org) (used to lint code)
+
+## Components
+
+We use [Storybook](https://storybook.js.org) to build our UI components isolated of the application.
+
+If you want to see our available components, please check it out here: [Form Builder](https://indec-it.github.io/form-builder)
 
 ## Tests
 
