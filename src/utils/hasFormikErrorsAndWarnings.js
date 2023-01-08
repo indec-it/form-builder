@@ -1,6 +1,6 @@
 import {getIn} from 'formik';
 
-const hasFormikErrorsAndWarnings = ({form, field, warnings}) => {
+const hasFormikErrorsAndWarnings = ({form, field, warnings = {}}) => {
   const warning = getIn(warnings, field.name);
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);

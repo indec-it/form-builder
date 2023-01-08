@@ -48,10 +48,6 @@ module.exports = {
     'react/jsx-filename-extension': [1, {
       extensions: ['.js', '.jsx']
     }],
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: ['state']
-    }],
     'arrow-parens': 'off',
     'no-underscore-dangle': 'off'
   }

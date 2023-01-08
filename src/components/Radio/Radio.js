@@ -42,7 +42,11 @@ Radio.propTypes = {
       label: PropTypes.string.isRequired
     })
   ).isRequired,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
+};
+
+Radio.defaultProps = {
+  warnings: {}
 };
 
 export default Radio;

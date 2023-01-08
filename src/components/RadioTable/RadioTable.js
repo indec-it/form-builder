@@ -86,7 +86,11 @@ RadioTable.propTypes = {
   label: PropTypes.string.isRequired,
   readOnlyMode: PropTypes.bool.isRequired,
   required: PropTypes.bool.isRequired,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
+};
+
+RadioTable.defaultProps = {
+  warnings: {}
 };
 
 export default RadioTable;

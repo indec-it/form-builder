@@ -20,9 +20,7 @@ function Select({
   return readOnlyMode ? (
     <>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
-      <Typography>
-        <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
-      </Typography>
+      <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
     </>
   ) : (
     <Autocomplete
@@ -64,7 +62,7 @@ Select.propTypes = {
   readOnlyMode: PropTypes.bool.isRequired,
   required: PropTypes.bool,
   loading: PropTypes.bool,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
 };
 
 Select.defaultProps = {
@@ -74,7 +72,8 @@ Select.defaultProps = {
   loading: false,
   onClean: () => {},
   placeholder: '[Seleccione]',
-  keyValue: 'value'
+  keyValue: 'value',
+  warnings: {}
 };
 
 export default Select;
