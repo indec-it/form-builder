@@ -14,6 +14,7 @@ const section = {
   id: 1,
   name: 'S1',
   label: 'Sección 1',
+  multiple: false,
   questions: [
     {
       id: 1,
@@ -51,6 +52,7 @@ function Template(args) {
       onView={() => {}}
       onEdit={() => {}}
       onDelete={() => {}}
+      sectionsLength={1}
       {...args}
     />
   );

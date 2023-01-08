@@ -63,12 +63,13 @@ TextField.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   tooltip: PropTypes.string,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
 };
 
 TextField.defaultProps = {
   placeholder: '[Ingrese texto]',
-  tooltip: undefined
+  tooltip: undefined,
+  warnings: {}
 };
 
 export default TextField;
