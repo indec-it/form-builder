@@ -27,7 +27,7 @@ const getChildren = (modal, {
     );
   case modals.INTERRUPTION_MODAL:
     return (
-      <FastField component={Radio} options={options} label={label} name={name} />
+      <FastField component={Radio} options={options} label={label} name={name} required readOnlyMode={false} />
     );
   default:
     return null;
