@@ -38,7 +38,11 @@ InputLabel.propTypes = {
   form: formikFormPropTypes.isRequired,
   field: formikFieldPropTypes.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  warnings: PropTypes.shape({}).isRequired
+  warnings: PropTypes.shape({})
+};
+
+InputLabel.defaultProps = {
+  warnings: {}
 };
 
 export default InputLabel;
