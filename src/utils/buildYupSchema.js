@@ -11,7 +11,8 @@ const getValidatorType = (type, options, {isRequired, message}) => {
     validator = Yup.string();
     break;
   case questionTypes.NUMERIC_FIELD:
-    validator = Yup.number();
+    validator = Yup.number()
+      .transform(value => (Number.isNaN(value) || value === null || value === undefined || value === '' ? 0 : value));
     break;
   case questionTypes.CHECKBOX:
     validator = Yup.array().of(Yup.string());
