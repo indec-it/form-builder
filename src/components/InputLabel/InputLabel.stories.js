@@ -1,8 +1,8 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
 
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
+import getSchemas from '@/utils/getSchemas';
 
 import InputLabel from './InputLabel';
 
@@ -21,7 +21,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your name',
       name: 'S1P1',
       number: '1',
       type: 1,
@@ -67,7 +67,7 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik

@@ -18,7 +18,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your name',
       name: 'S1P1',
       number: '1',
       type: 1,
@@ -28,7 +28,7 @@ const section = {
     },
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your age',
       name: 'S1P2',
       number: '1',
       type: 2,

@@ -8,9 +8,9 @@ import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
 import useSectionInitialValues from '@/hooks/useSectionInitialValues';
 import buildQuestions from '@/utils/buildQuestions';
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
+import getSchemas from '@/utils/getSchemas';
 
 import Modals from './Modals';
 
@@ -29,7 +29,7 @@ function FormBuilder({
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {initialValues} = useSectionInitialValues(section);
 
   const handleShowSurvey = (sectionId, readOnly) => {
