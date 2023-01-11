@@ -13,7 +13,7 @@ export default {
 
 function Template(args) {
   return (
-    <Formik initialValues={{S1: ''}} onSubmit={() => {}}>
+    <Formik initialValues={{S1: {id: 1, answer: ''}}} onSubmit={() => {}}>
       <Modals
         acceptButtonLabel="Accept"
         cancelButtonLabel="Cancel"
@@ -55,8 +55,7 @@ Preview.args = {
     ]
   },
   section: {
-    id: 1,
-    S1: ''
+    S1: {id: 1, answer: ''}
   }
 };
 

@@ -3,7 +3,7 @@ import questionTypes from '@/constants/questionTypes';
 const buildQuestions = section => {
   const values = {[section.name]: {}};
   if (section.interruption.interruptible) {
-    values[section.name][section.interruption.name] = '';
+    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: ''};
   }
   section.questions.forEach(question => {
     const {id} = question;

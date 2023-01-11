@@ -1,7 +1,5 @@
 # FORM BUILDER 🚀
 
-https://indec-it.github.io/form-builder
-
 ## Glossary
 
 1. [Installation](#installation)
