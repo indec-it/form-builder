@@ -17,7 +17,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     return null;
   }
   let QuestionComponent;
-  const questionName = `${section.name}.${sectionIndex}.${question.name}`;
+  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
   const isRequired = question.validations.some(validation => validation.type === 'required');
   const label = `${question.number} - ${question.label}`;
   switch (question.type) {
@@ -101,7 +101,7 @@ function QuestionBuilder({
   return (
     <Grid container direction="column" spacing={2}>
       {Object.values(section).map((question, questionIndex) => (
-        <Grid item key={questionIndex}>
+        <Grid item key={question.id}>
           {getComponent(currentSection, index, questionIndex, readOnlyMode, warnings)}
         </Grid>
       ))}
@@ -112,9 +112,7 @@ function QuestionBuilder({
 QuestionBuilder.propTypes = {
   currentSection: sectionPropTypes.isRequired,
   readOnlyMode: PropTypes.bool,
-  section: PropTypes.shape({
-    id: PropTypes.number.isRequired
-  }).isRequired,
+  section: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   warnings: PropTypes.shape({})
 };

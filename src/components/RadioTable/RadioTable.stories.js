@@ -2,8 +2,8 @@ import React from 'react';
 import {Formik, Field} from 'formik';
 import {Button} from '@mui/material';
 
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
+import getSchemas from '@/utils/getSchemas';
 
 import RadioTable from './RadioTable';
 
@@ -95,7 +95,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your name',
       name: 'S1P1',
       number: '1',
       type: 7,
@@ -119,7 +119,7 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
@@ -129,7 +129,7 @@ function Template(args) {
             id: 1,
             multiple: false,
             status: 2,
-            S1P1: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}
+            S1P1: {id: 1, answer: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}}
           }
         ]
       }}
@@ -162,7 +162,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   options
 };
@@ -172,7 +172,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   options
 };
@@ -182,7 +182,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: true,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   withErrors: true,
   options

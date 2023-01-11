@@ -2,8 +2,8 @@ import React from 'react';
 import {Formik, Field} from 'formik';
 import {Button} from '@mui/material';
 
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
+import getSchemas from '@/utils/getSchemas';
 
 import Radio from './Radio';
 
@@ -58,7 +58,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your name',
       name: 'S1P1',
       number: '1',
       type: 1,
@@ -82,11 +82,11 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
-      initialValues={{S1: [{S1P1: ''}]}}
+      initialValues={{S1: [{S1P1: {id: 1, answer: ''}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
     >
@@ -116,7 +116,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   options
 };
@@ -126,7 +126,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   options
 };
@@ -136,7 +136,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: true,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   withErrors: true,
   options

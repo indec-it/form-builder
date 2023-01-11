@@ -68,6 +68,9 @@ export default function buildYupSchema(schema, config, opts = {}) {
     }
     validator = validator[validationType](...newParams);
   });
-  schemaWithValidations[name] = validator;
+  schemaWithValidations[name] = Yup.object({
+    id: Yup.number().required(),
+    answer: validator
+  });
   return schemaWithValidations;
 }

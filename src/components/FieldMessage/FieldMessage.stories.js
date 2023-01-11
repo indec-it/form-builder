@@ -1,8 +1,8 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
 
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
+import getSchemas from '@/utils/getSchemas';
 
 import FieldMessage from './FieldMessage';
 
@@ -21,7 +21,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Ingrese su nombre',
+      label: 'Write your name',
       name: 'S1P1',
       number: '1',
       type: 1,
@@ -87,11 +87,11 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
-      initialValues={{S1: [{S1P1: ''}]}}
+      initialValues={{S1: [{S1P1: {id: 1, answer: ''}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
     >
@@ -115,12 +115,12 @@ function Template(args) {
 
 export const WithError = Template.bind({});
 WithError.args = {
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   withErrors: true
 };
 
 export const WithWarning = Template.bind({});
 WithWarning.args = {
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   withWarnings: true
 };

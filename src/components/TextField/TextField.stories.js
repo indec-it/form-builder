@@ -1,8 +1,8 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
 
-import getWarningsAndErrorsSchemas from '@/utils/getWarningsAndErrorsSchemas';
 import getWarnings from '@/utils/getWarnings';
+import getSchemas from '@/utils/getSchemas';
 
 import TextField from './TextField';
 
@@ -57,10 +57,10 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getWarningsAndErrorsSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
-    <Formik initialValues={{S1: [{S1P1: ''}]}} validationSchema={withErrors ? validateSchema : null}>
+    <Formik initialValues={{S1: [{S1P1: {id: 1, answer: ''}}]}} validationSchema={withErrors ? validateSchema : null}>
       {({values}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
@@ -80,7 +80,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {}
 };
 
@@ -89,7 +89,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {}
 };
 
@@ -99,7 +99,7 @@ WithTooltip.args = {
   label: 'Write your name',
   tooltip: 'This is an input with tooltip',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {}
 };
 
@@ -108,7 +108,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: true,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   warnings: {},
   withErrors: true
 };
@@ -118,6 +118,6 @@ WithWarnings.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer',
   withWarnings: true
 };
