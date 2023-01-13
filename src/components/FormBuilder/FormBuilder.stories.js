@@ -1,4 +1,7 @@
 import React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 import FormBuilder from './FormBuilder';
 
@@ -186,7 +189,6 @@ function Template(args) {
   }, [page]);
   return (
     <FormBuilder
-      {...args}
       section={sections[page]}
       page={page}
       onSubmit={() => setPage(page + 1)}
@@ -194,8 +196,43 @@ function Template(args) {
       nextSection={sections[page + 1]?.name}
       previousSection={sections[page - 1]?.name}
       isSurvey
+      {...args}
     />
   );
 }
 
 export const Basic = Template.bind({});
+
+function SectionHeader() {
+  return (
+    <Box sx={{
+      display: 'flex', justifyContent: 'center', backgroundColor: '#98b9ed', height: '100px'
+    }}
+    >
+      <Typography>My custom header</Typography>
+    </Box>
+  );
+}
+
+export const WithCustomSectionHeader = Template.bind({});
+WithCustomSectionHeader.args = {
+  components: {
+    SectionHeader: props => <SectionHeader {...props} />
+  }
+};
+
+function NavigationButtons() {
+  return (
+    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+      <Button variant="outlined">Go back</Button>
+      <Button variant="outlined" color="error">Next</Button>
+    </Box>
+  );
+}
+
+export const WithCustomNavigationButtons = Template.bind({});
+WithCustomNavigationButtons.args = {
+  components: {
+    NavigationButtons: props => <NavigationButtons {...props} />
+  }
+};
