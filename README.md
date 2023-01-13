@@ -2,19 +2,67 @@
 
 ## Glossary
 
-1. [Installation](#installation)
+1. [Set up](#set-up)
 1. [Start](#start)
 1. [Dependencies](#dependencies)
 1. [Components](#components)
 1. [Tests](#tests)
 1. [Contributing](#contributing)
 
-## Installation
+## Set up
 
-Set up your environment variables for development:
+Install the package as dependency
 
 ```sh
 $ npm install @indec/form-builder
+```
+
+Then you should use `FormBuilder` component
+
+```js
+import {useState} from 'react';
+import {FormBuilder} from '@indec/form-builder/lib/components';
+
+function MyComponent({sections}) {
+    const [page, setPage] = useState(0);
+    const handleNext = values => {
+        console.log(values); // here are the completed values of the form
+        setPage(page + 1);
+    }
+    return (
+        <FormBuilder
+            onPrevious={() => setPage(page - 1)}
+            page={page}
+            section={sections[page]}
+            isLastSection={sections.length - 1 === page}
+            onSubmit={handleNext}
+        />
+    )
+}
+```
+
+If you want to change the default navigation button or change the header, pass to FormBuilder component the prop `components`
+
+```js
+function MyComponent({sections}) {
+    const [page, setPage] = useState(0);
+    const handleNext = values => {
+        console.log(values); // here are the completed values of the form
+        setPage(page + 1);
+    }
+    return (
+        <FormBuilder
+            onPrevious={() => setPage(page - 1)}
+            page={page}
+            section={sections[page]}
+            isLastSection={sections.length - 1 === page}
+            onSubmit={handleNext}
+            components={{
+                
+            }}
+        />
+    )
+}
 ```
 
 ## Start
