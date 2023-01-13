@@ -18,7 +18,7 @@ import SectionHeader from './SectionHeader';
 
 function FormBuilder({
   section,
-  nextSection,
+  isLastSection,
   page,
   onSubmit,
   onPrevious,
@@ -125,8 +125,8 @@ function FormBuilder({
                     <NavigationButtons
                       onPrevious={onPrevious}
                       disablePreviousButton={page === 0}
-                      nextButtonLabel={nextSection ? 'Siguiente' : 'Finalizar'}
-                      isLastSection={!nextSection}
+                      nextButtonLabel={isLastSection ? 'Finalizar' : 'Siguiente'}
+                      isLastSection={isLastSection}
                       onAddNew={section.multiple
                         ? () => setFieldValue(
                           `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
@@ -156,7 +156,7 @@ FormBuilder.propTypes = {
   onPrevious: PropTypes.func.isRequired,
   section: sectionPropTypes.isRequired,
   page: PropTypes.number.isRequired,
-  nextSection: PropTypes.string,
+  isLastSection: PropTypes.bool,
   isSurvey: PropTypes.bool,
   components: PropTypes.shape({
     SectionHeader: PropTypes.node,
@@ -165,7 +165,7 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  nextSection: undefined,
+  isLastSection: false,
   isSurvey: true,
   components: {}
 };
