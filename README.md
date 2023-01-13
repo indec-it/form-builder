@@ -44,6 +44,26 @@ function MyComponent({sections}) {
 If you want to change the default navigation button or change the header, pass to FormBuilder component the prop `components`
 
 ```js
+function SectionHeader() {
+  return (
+    <Box sx={{
+      display: 'flex', justifyContent: 'center', backgroundColor: '#98b9ed', height: '100px'
+    }}
+    >
+      <Typography>My custom header</Typography>
+    </Box>
+  );
+}
+
+function NavigationButtons() {
+  return (
+    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+      <Button variant="outlined">Go back</Button>
+      <Button variant="outlined" color="error">Next</Button>
+    </Box>
+  );
+}
+
 function MyComponent({sections}) {
     const [page, setPage] = useState(0);
     const handleNext = values => {
@@ -58,7 +78,8 @@ function MyComponent({sections}) {
             isLastSection={sections.length - 1 === page}
             onSubmit={handleNext}
             components={{
-                
+                SectionHeader: props => <SectionHeader {...props} />,
+                NavigationButtons: props => <NavigationButtons {...props} />
             }}
         />
     )
