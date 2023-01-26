@@ -7,7 +7,6 @@ import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
 import useSectionInitialValues from '@/hooks/useSectionInitialValues';
-import buildQuestions from '@/utils/buildQuestions';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 import getSchemas from '@/utils/getSchemas';
@@ -50,6 +49,13 @@ function FormBuilder({
     setOpenModal(undefined);
   };
 
+  const addNewSection = (setValues, values) => {
+    const newValues = values;
+    const lastSection = initialValues[section.name].sort((firstItem, secondItem) => secondItem.id - firstItem.id)[0];
+    newValues[section.name].push({...initialValues[section.name][0], id: lastSection.id + 1});
+    return setValues(newValues);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -58,7 +64,7 @@ function FormBuilder({
       validationSchema={validateSchema}
       onSubmit={onSubmit}
     >
-      {({values, setFieldValue}) => {
+      {({values, setValues}) => {
         const warnings = getWarnings(warningSchema, values) || {};
         return (
           <Box component="form" noValidate sx={{width: '100%'}}>
@@ -69,7 +75,7 @@ function FormBuilder({
                   sectionHelpers => values
                 && values[section.name]
                 && values[section.name].map((currentSection, index) => (
-                  <Box key={section.id} mb={2}>
+                  <Box key={currentSection.id} mb={2}>
                     {
                       components.SectionHeader
                         ? <components.SectionHeader values={currentSection} />
@@ -80,7 +86,7 @@ function FormBuilder({
                             onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, section.id)}
                             sectionsLength={values[section.name].length}
                             section={section}
-                            answers={section}
+                            answers={currentSection}
                             isSurvey={isSurvey}
                           />
                         )
@@ -127,14 +133,7 @@ function FormBuilder({
                       disablePreviousButton={page === 0}
                       nextButtonLabel={isLastSection ? 'Finalizar' : 'Siguiente'}
                       isLastSection={isLastSection}
-                      onAddNew={section.multiple
-                        ? () => setFieldValue(
-                          `${section.name}.${values[section.name][values[section.name].length - 1].id}`,
-                          {
-                            ...buildQuestions(section)[section.name][0],
-                            id: values[section.name][values[section.name].length - 1].id + 1
-                          }
-                        ) : undefined}
+                      onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
                       onInterrupt={
                         section.interruption.interruptible
                           ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
