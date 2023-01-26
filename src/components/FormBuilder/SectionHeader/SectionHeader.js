@@ -17,7 +17,7 @@ const getHeaders = (questions, answers, headers) => {
     questions
       .filter(question => headerQuestions.includes(question.id))
       .forEach(question => {
-        const answer = answers[question.name];
+        const {answer} = answers[question.name];
         if (answer) {
           if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
             finalHeaders.push(answer);
