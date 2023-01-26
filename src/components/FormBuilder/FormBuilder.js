@@ -81,9 +81,9 @@ function FormBuilder({
                         ? <components.SectionHeader values={currentSection} />
                         : (
                           <SectionHeader
-                            onView={() => handleOpenModal(modals.PREVIEW_MODAL, section.id)}
-                            onEdit={() => handleShowSurvey(section.id, false)}
-                            onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, section.id)}
+                            onView={() => handleOpenModal(modals.PREVIEW_MODAL, currentSection.id)}
+                            onEdit={() => handleShowSurvey(currentSection.id, false)}
+                            onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
                             sectionsLength={values[section.name].length}
                             section={section}
                             answers={currentSection}
@@ -91,19 +91,19 @@ function FormBuilder({
                           />
                         )
                     }
-                    {(!isSurvey || showSurvey === section.id) && (
+                    {(!isSurvey || showSurvey === currentSection.id) && (
                       <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
                         <QuestionBuilder
                           section={currentSection}
                           index={index}
                           currentSection={section}
-                          readOnlyMode={readOnlyMode === section.id}
+                          readOnlyMode={readOnlyMode === currentSection.id}
                           warnings={warnings}
                         />
                       </Box>
                     )}
                     <Modals
-                      open={selectedSectionId === section.id}
+                      open={selectedSectionId === currentSection.id}
                       section={currentSection}
                       index={index}
                       currentSection={section}
