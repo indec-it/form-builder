@@ -100,7 +100,7 @@ function QuestionBuilder({
 }) {
   return (
     <Grid container direction="column" spacing={2}>
-      {Object.values(section).map((question, questionIndex) => (
+      {Object.values(section).map((question, questionIndex) => question.id && (
         <Grid item key={question.id}>
           {getComponent(currentSection, index, questionIndex, readOnlyMode, warnings)}
         </Grid>
