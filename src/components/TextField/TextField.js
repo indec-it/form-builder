@@ -17,7 +17,14 @@ function TextField({
 }) {
   return (
     <Box sx={{width: '100%'}}>
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel
+        warnings={warnings}
+        required={required}
+        form={form}
+        field={field}
+        label={label}
+        readOnly={readOnlyMode}
+      />
       {readOnlyMode ? (
         <Typography>{field.value || defaultMessages.UNANSWERED}</Typography>
       ) : (

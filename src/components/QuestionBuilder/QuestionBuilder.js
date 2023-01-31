@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import Checkbox from '@/components/Checkbox';
+import DatePicker from '@/components/DatePicker';
 import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
 import Select from '@/components/Select';
@@ -86,6 +87,20 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+      />
+    );
+    break;
+  case questionTypes.DATE:
+    QuestionComponent = (
+      <FastField
+        component={DatePicker}
+        label={label}
+        placeholder={question.placeholder}
+        name={questionName}
+        readOnlyMode={readOnlyMode}
+        required={isRequired}
+        warnings={warnings}
+        metadata={question.metadata}
       />
     );
     break;
