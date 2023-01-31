@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
 
+import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
 
-const getValidatorType = (type, options, {isRequired, message}) => {
+const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   let validator;
   switch (type) {
   case questionTypes.TEXT_FIELD:
@@ -25,6 +26,15 @@ const getValidatorType = (type, options, {isRequired, message}) => {
     validator = Yup.object(opts);
     break;
   }
+  case questionTypes.DATE: {
+    const field = isRequired ? Yup.string().required(message) : Yup.string();
+    if ([dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(metadata.dateType)) {
+      validator = Yup.object({start: field, end: field});
+    } else {
+      validator = Yup.string();
+    }
+    break;
+  }
   default:
     return validator;
   }
@@ -34,13 +44,17 @@ const getValidatorType = (type, options, {isRequired, message}) => {
 export default function buildYupSchema(schema, config, opts = {}) {
   const schemaWithValidations = schema;
   const {
-    name, type, validations, options
+    name, type, validations, options, metadata
   } = config;
   const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
     type,
     options,
-    {isRequired: !!requiredField, message: requiredField?.params?.[0]?.message}
+    {
+      isRequired: !!requiredField,
+      message: requiredField?.params?.[0]?.message,
+      metadata
+    }
   );
   if (!validator) {
     return schemaWithValidations;

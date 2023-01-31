@@ -73,6 +73,8 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.3",
+    "@mui/x-date-pickers": "^5.0.16",
+    "date-fns": "^2.29.3",
     "formik": "^2.2.9",
     "framer-motion": "^8.1.9",
     "prop-types": "^15.8.1",
