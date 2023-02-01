@@ -61,21 +61,27 @@ function Template(args) {
 export const Basic = Template.bind({});
 Basic.args = {
   isSurvey: true,
-  answers: {}
+  values: {
+    S1P1: {id: 1, answer: ''},
+    S1P2: {id: 2, answer: ''}
+  }
 };
 
 export const WithAnswers = Template.bind({});
 WithAnswers.args = {
   isSurvey: true,
-  answers: {
-    S1P1: 'My name',
-    S1P2: 'My age'
+  values: {
+    S1P1: {id: 1, answer: 'My name'},
+    S1P2: {id: 2, answer: 'My age'}
   }
 };
 
 export const WithIntroduction = Template.bind({});
 WithIntroduction.args = {
   isSurvey: true,
-  answers: {},
+  values: {
+    S1P1: {id: 1, answer: ''},
+    S1P2: {id: 2, answer: ''}
+  },
   section: {...section, introduction: 'this is an introduction text'}
 };

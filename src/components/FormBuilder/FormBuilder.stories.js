@@ -87,6 +87,41 @@ const sections = [
         ],
         id: 2,
         userVarName: 'S1P2'
+      },
+      {
+        label: 'Cell number',
+        name: 'S1P3',
+        number: '3',
+        type: 2,
+        options: [
+          {
+            id: 1,
+            name: 'S1P1O1',
+            subOptions: [
+              {
+                id: 1
+              }
+            ]
+          }
+        ],
+        multiple: true,
+        favorite: false,
+        validations: [
+          {
+            id: 1,
+            type: 'required',
+            params: [
+              {
+                id: 1,
+                message: 'Must write your cell number'
+              }
+            ],
+            messageType: 'error',
+            dependsOn: '2'
+          }
+        ],
+        id: 3,
+        userVarName: 'S1P3'
       }
     ],
     multiple: false,

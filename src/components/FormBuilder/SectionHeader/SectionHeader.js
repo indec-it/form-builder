@@ -10,14 +10,14 @@ import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
 import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
-const getHeaders = (questions, answers, headers) => {
+const getHeaders = (questions, values, headers) => {
   if (headers.some(header => header.question)) {
     const finalHeaders = [];
     const headerQuestions = headers.map(header => header.question);
     questions
-      .filter(question => headerQuestions.includes(question.id))
+      .filter(question => headerQuestions.includes(question.id) && !question.multiple)
       .forEach(question => {
-        const {answer} = answers[question.name];
+        const {answer} = values[question.name];
         if (answer) {
           if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
             finalHeaders.push(answer);
@@ -33,7 +33,7 @@ const getHeaders = (questions, answers, headers) => {
 };
 
 function SectionHeader({
-  section, sectionsLength, onView, onEdit, onDelete, answers, isSurvey
+  section, sectionsLength, onView, onEdit, onDelete, values, isSurvey
 }) {
   return (
     <Box sx={{
@@ -50,7 +50,7 @@ function SectionHeader({
         {section.introduction && (
           <Typography fontWeight="bold" color="gray">{section.introduction}</Typography>
         )}
-        {isSurvey ? <Typography>{getHeaders(section.questions, answers, section.headers)}</Typography> : null}
+        {isSurvey ? <Typography>{getHeaders(section.questions, values, section.headers)}</Typography> : null}
       </Box>
       {isSurvey ? (
         <Box>
@@ -77,7 +77,7 @@ SectionHeader.propTypes = {
   onDelete: PropTypes.func.isRequired,
   sectionsLength: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
-  answers: PropTypes.shape({}).isRequired,
+  values: PropTypes.shape({}).isRequired,
   isSurvey: PropTypes.bool.isRequired
 };
 

@@ -86,7 +86,7 @@ function FormBuilder({
                             onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
                             sectionsLength={values[section.name].length}
                             section={section}
-                            answers={currentSection}
+                            values={currentSection}
                             isSurvey={isSurvey}
                           />
                         )
@@ -94,9 +94,9 @@ function FormBuilder({
                     {(!isSurvey || showSurvey === currentSection.id) && (
                       <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
                         <QuestionBuilder
-                          section={currentSection}
+                          values={currentSection}
                           index={index}
-                          currentSection={section}
+                          section={section}
                           readOnlyMode={readOnlyMode === currentSection.id}
                           warnings={warnings}
                         />
@@ -104,9 +104,9 @@ function FormBuilder({
                     )}
                     <Modals
                       open={selectedSectionId === currentSection.id}
-                      section={currentSection}
+                      values={currentSection}
                       index={index}
-                      currentSection={section}
+                      section={section}
                       readOnlyMode
                       cancelButtonLabel="Cerrar"
                       options={section.interruption.options}
