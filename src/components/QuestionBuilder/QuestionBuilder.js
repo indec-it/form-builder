@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import {FastField} from 'formik';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -12,7 +11,9 @@ import TextField from '@/components/TextField';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
 
-const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings) => {
+import Wrapper from './Wrapper';
+
+const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings, values) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
@@ -21,11 +22,12 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
   const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
   const isRequired = question.validations.some(validation => validation.type === 'required');
   const label = `${question.number} - ${question.label}`;
+  const isMultiple = question.multiple;
   switch (question.type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={TextField}
         label={label}
         placeholder={question.placeholder}
@@ -34,12 +36,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
   case questionTypes.DROPDOWN:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={Select}
         label={label}
         placeholder={question.placeholder}
@@ -48,12 +52,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
   case questionTypes.RADIO:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={Radio}
         options={question.options}
         label={label}
@@ -61,12 +67,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
   case questionTypes.CHECKBOX:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={Checkbox}
         name={questionName}
         options={question.options}
@@ -74,12 +82,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
   case questionTypes.RADIO_TABLE:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={RadioTable}
         options={question.options}
         label={label}
@@ -87,12 +97,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
   case questionTypes.DATE:
     QuestionComponent = (
-      <FastField
+      <Wrapper
         component={DatePicker}
         label={label}
         placeholder={question.placeholder}
@@ -101,6 +113,8 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         required={isRequired}
         warnings={warnings}
         metadata={question.metadata}
+        isMultiple={isMultiple}
+        values={values[question.name]}
       />
     );
     break;
@@ -111,13 +125,13 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
 };
 
 function QuestionBuilder({
-  section, currentSection, index, readOnlyMode, warnings
+  values, section, index, readOnlyMode, warnings
 }) {
   return (
     <Grid container direction="column" spacing={2}>
-      {Object.values(section).map((question, questionIndex) => question.id && (
-        <Grid item key={question.id}>
-          {getComponent(currentSection, index, questionIndex - 1, readOnlyMode, warnings)}
+      {Object.values(values).map((value, valueIndex) => value.id && (
+        <Grid item key={value.id}>
+          {getComponent(section, index, valueIndex - 1, readOnlyMode, warnings, values)}
         </Grid>
       ))}
     </Grid>
@@ -125,9 +139,9 @@ function QuestionBuilder({
 }
 
 QuestionBuilder.propTypes = {
-  currentSection: sectionPropTypes.isRequired,
+  section: sectionPropTypes.isRequired,
   readOnlyMode: PropTypes.bool,
-  section: PropTypes.shape({}).isRequired,
+  values: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   warnings: PropTypes.shape({})
 };

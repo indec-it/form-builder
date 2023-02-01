@@ -30,7 +30,7 @@ export const Preview = Template.bind({});
 Preview.args = {
   modal: 1,
   index: 0,
-  currentSection: {
+  section: {
     id: 1,
     name: 'S1',
     label: 'Sección 1',
@@ -54,7 +54,7 @@ Preview.args = {
       }
     ]
   },
-  section: {
+  values: {
     S1: {id: 1, answer: ''}
   }
 };

@@ -44,7 +44,7 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
 export default function buildYupSchema(schema, config, opts = {}) {
   const schemaWithValidations = schema;
   const {
-    name, type, validations, options, metadata
+    name, type, validations, options, metadata, multiple
   } = config;
   const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
@@ -84,7 +84,7 @@ export default function buildYupSchema(schema, config, opts = {}) {
   });
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: validator
+    answer: multiple ? Yup.array().of(Yup.object({id: Yup.number(), value: validator})) : validator
   });
   return schemaWithValidations;
 }

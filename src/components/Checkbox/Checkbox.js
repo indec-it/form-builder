@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import FieldMessage from '@/components/FieldMessage';
@@ -29,7 +30,7 @@ function Checkbox({
   options, label, field, form, readOnlyMode, required, warnings
 }) {
   return (
-    <>
+    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>
@@ -52,7 +53,7 @@ function Checkbox({
         </FormGroup>
       )}
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
-    </>
+    </Stack>
   );
 }
 

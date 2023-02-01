@@ -17,7 +17,7 @@ function RadioTable({
   options, label, form, field, readOnlyMode, required, warnings
 }) {
   return (
-    <>
+    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <>
@@ -68,7 +68,7 @@ function RadioTable({
           ))}
         </>
       )}
-    </>
+    </Stack>
   );
 }
 

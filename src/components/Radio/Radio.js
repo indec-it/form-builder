@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import FieldMessage from '@/components/FieldMessage';
@@ -14,7 +15,7 @@ function Radio({
   options, field, readOnlyMode, label, required, form, warnings
 }) {
   return (
-    <>
+    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
@@ -26,7 +27,7 @@ function Radio({
         </RadioGroup>
       )}
       <FieldMessage form={form} field={field} warnings={warnings} readOnly={readOnlyMode} />
-    </>
+    </Stack>
   );
 }
 
