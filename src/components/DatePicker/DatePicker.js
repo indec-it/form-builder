@@ -28,9 +28,13 @@ function DatePicker({
           renderInput={params => (
             <TextField
               {...params}
-              form={form}
-              field={{...field, name: isRange ? `${field.name}.start` : field.name}}
               {...props}
+              form={form}
+              field={{
+                ...field,
+                name: isRange ? `${field.name}.start` : field.name,
+                value: params.inputProps.value
+              }}
               required={required}
             />
           )}
@@ -44,13 +48,12 @@ function DatePicker({
             renderInput={params => (
               <TextField
                 {...params}
-                form={form}
-                field={{...field, name: `${field.name}.end`}}
                 {...props}
+                form={form}
+                field={{...field, name: `${field.name}.end`, value: params.inputProps.value}}
                 required={required}
               />
             )}
-            minDateTime={new Date(field.value.start)}
             disabled={!field.value.start}
           />
         )}
