@@ -20,13 +20,29 @@ function NavigationButtons({
   const {submitForm} = useFormikContext();
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
-      <Button startIcon={<ArrowBackIcon />} onClick={onPrevious} variant="outlined" disabled={disablePreviousButton}>
+      <Button
+        data-testid="back-button"
+        startIcon={<ArrowBackIcon />}
+        onClick={onPrevious}
+        variant="outlined"
+        disabled={disablePreviousButton}
+      >
         Anterior
       </Button>
       <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
-        {onAddNew && <Button startIcon={<AddIcon />} onClick={onAddNew} variant="outlined">{addButtonLabel}</Button>}
+        {onAddNew && (
+          <Button
+            data-testid="add-new"
+            startIcon={<AddIcon />}
+            onClick={onAddNew}
+            variant="outlined"
+          >
+            {addButtonLabel}
+          </Button>
+        )}
         {onInterrupt && (
           <Button
+            data-testid="interrupt-survey"
             startIcon={<CancelIcon />}
             onClick={onInterrupt}
             variant="outlined"

@@ -38,11 +38,12 @@ function Checkbox({
         </Typography>
       ) : (
         <FormGroup row>
-          {options.map(option => (
+          {options.map((option, index) => (
             <FormControlLabel
               key={option.value}
               control={(
                 <MuiCheckbox
+                  data-testid={`option-${index}`}
                   checked={field.value.includes(option.value)}
                   onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
                 />
