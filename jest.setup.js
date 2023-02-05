@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import {render} from '@testing-library/react';
 import {Formik} from 'formik';
