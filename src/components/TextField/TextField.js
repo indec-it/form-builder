@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-no-duplicate-props */
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -55,6 +55,7 @@ function TextField({
           {...field}
           {...props}
           value={field.value || ''}
+          inputProps={{'data-testid': 'text-field'}}
         />
       )}
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />

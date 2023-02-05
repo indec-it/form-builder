@@ -48,20 +48,20 @@ function SectionHeader({
       <Box sx={{display: 'flex', flexDirection: 'column'}}>
         <Typography variant="h6" fontWeight="bold">{section.label}</Typography>
         {section.introduction && (
-          <Typography fontWeight="bold" color="gray">{section.introduction}</Typography>
+          <Typography data-testid="introduction" fontWeight="bold" color="gray">{section.introduction}</Typography>
         )}
         {isSurvey ? <Typography>{getHeaders(section.questions, values, section.headers)}</Typography> : null}
       </Box>
       {isSurvey ? (
         <Box>
-          <IconButton color="warning" onClick={onView}>
+          <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
             <VisibilityIcon />
           </IconButton>
-          <IconButton color="primary" onClick={onEdit}>
+          <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
             <EditIcon />
           </IconButton>
           {section.multiple && sectionsLength > 1 && (
-            <IconButton color="error" onClick={onDelete}>
+            <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
               <DeleteIcon />
             </IconButton>
           )}
