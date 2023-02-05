@@ -52,7 +52,11 @@ function Select({
 
 Select.propTypes = {
   onClean: PropTypes.func,
-  options: PropTypes.arrayOf(PropTypes.shape({})),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string
+    })
+  ),
   label: PropTypes.string.isRequired,
   loadingText: PropTypes.string,
   placeholder: PropTypes.string,

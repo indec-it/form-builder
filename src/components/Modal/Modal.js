@@ -30,15 +30,23 @@ function Modal({
       >
         <Container>
           <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-            <IconButton onClick={onClose}>
+            <IconButton data-testid="close-button-icon" onClick={onClose}>
               <CancelIcon color="info" />
             </IconButton>
           </Box>
           <Divider />
           {children}
           <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
-            <Button onClick={onClose}>{cancelButtonLabel}</Button>
-            {onAccept && <Button variant="contained" onClick={() => onAccept(modal)}>{acceptButtonLabel}</Button>}
+            <Button data-testid="close-button" onClick={onClose}>{cancelButtonLabel}</Button>
+            {onAccept && (
+              <Button
+                variant="contained"
+                data-testid="accept-button"
+                onClick={() => onAccept(modal)}
+              >
+                {acceptButtonLabel}
+              </Button>
+            )}
           </Stack>
         </Container>
       </Box>

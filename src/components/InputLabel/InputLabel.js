@@ -14,15 +14,15 @@ function InputLabel({
 }) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} data-testid="input-label">
       {hasError && !readOnly && (
         <Box>
-          <ErrorIcon color="error" />
+          <ErrorIcon color="error" data-testid="error-icon" />
         </Box>
       )}
       {hasWarning && !readOnly && !hasError && (
         <Box>
-          <WarningIcon color="warning" />
+          <WarningIcon color="warning" data-testid="warning-icon" />
         </Box>
       )}
       <Box mb={0.5}>
