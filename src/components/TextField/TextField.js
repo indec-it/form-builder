@@ -32,6 +32,7 @@ function TextField({
           fullWidth
           id={`field-${field.name}`}
           placeholder={placeholder}
+          inputProps={{'data-testid': 'text-field'}}
           InputProps={{
             endAdornment: tooltip && (
               <InputAdornment position="end">
@@ -55,7 +56,6 @@ function TextField({
           {...field}
           {...props}
           value={field.value || ''}
-          inputProps={{'data-testid': 'text-field'}}
         />
       )}
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
