@@ -55,7 +55,6 @@ function TextField({
           }}
           {...field}
           {...props}
-          value={field.value || ''}
         />
       )}
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
