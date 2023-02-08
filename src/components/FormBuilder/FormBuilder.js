@@ -22,14 +22,15 @@ function FormBuilder({
   onSubmit,
   onPrevious,
   isSurvey,
-  components
+  components,
+  initialValues
 }) {
   const [readOnlyMode, setReadOnlyMode] = useState(false);
   const [showSurvey, setShowSurvey] = useState(false);
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
   const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
-  const {initialValues} = useSectionInitialValues(section);
+  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, section);
 
   const handleShowSurvey = (sectionId, readOnly) => {
     setShowSurvey(sectionId);
@@ -51,14 +52,14 @@ function FormBuilder({
 
   const addNewSection = (setValues, values) => {
     const newValues = values;
-    const lastSection = initialValues[section.name].sort((firstItem, secondItem) => secondItem.id - firstItem.id)[0];
-    newValues[section.name].push({...initialValues[section.name][0], id: lastSection.id + 1});
+    const lastSection = formInitialValues[section.name].sort((firstItem, secondItem) => secondItem.id - firstItem.id)[0];
+    newValues[section.name].push({...formInitialValues[section.name][0], id: lastSection.id + 1});
     return setValues(newValues);
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formInitialValues}
       validateOnMount
       enableReinitialize
       validationSchema={validateSchema}
@@ -160,7 +161,12 @@ FormBuilder.propTypes = {
   components: PropTypes.shape({
     SectionHeader: PropTypes.node,
     NavigationButtons: PropTypes.node
-  })
+  }),
+  initialValues: PropTypes.shape({})
+};
+
+FormBuilder.defaultProps = {
+  initialValues: undefined
 };
 
 FormBuilder.defaultProps = {

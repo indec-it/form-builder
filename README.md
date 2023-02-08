@@ -41,6 +41,58 @@ function MyComponent({sections}) {
 }
 ```
 
+When you have a section with answers you can send the prop `initialValues` to the component `FormBuilder` to render those values.
+
+```js
+import {useState} from 'react';
+import {FormBuilder} from '@indec/form-builder/lib/components';
+
+function MyComponent({sections}) {
+    const [page, setPage] = useState(0);
+    const handleNext = values => {
+        console.log(values); // here are the completed values of the form
+        setPage(page + 1);
+    }
+    return (
+        <FormBuilder
+            onPrevious={() => setPage(page - 1)}
+            page={page}
+            section={sections[page]}
+            isLastSection={sections.length - 1 === page}
+            onSubmit={handleNext}
+            initialValues={{
+              S1: [
+                {
+                  id: 1,
+                  S1P1: {
+                    id: 1,
+                    answer: 'test'
+                  },
+                  S1P2: {
+                    id: 2,
+                    answer: 26
+                  },
+                  S1P3: {
+                    id: 3,
+                    answer: [
+                      {
+                        id: 1,
+                        value: 123456
+                      },
+                      {
+                        id: 2,
+                        value: 12345678
+                      }
+                    ]
+                  }
+                }
+              ]
+            }}
+          />
+    )
+}
+```
+
 If you want to change the default navigation button or change the header, pass to FormBuilder component the prop `components`
 
 ```js
