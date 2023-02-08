@@ -57,6 +57,7 @@ Wrapper.propTypes = {
         })
       ),
       PropTypes.string,
+      PropTypes.number,
       PropTypes.arrayOf(PropTypes.string)
     ])
   }).isRequired

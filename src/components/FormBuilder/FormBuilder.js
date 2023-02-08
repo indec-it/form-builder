@@ -10,6 +10,7 @@ import useSectionInitialValues from '@/hooks/useSectionInitialValues';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 import getSchemas from '@/utils/getSchemas';
+import getLastId from '@/utils/getLastId';
 
 import Modals from './Modals';
 
@@ -52,8 +53,8 @@ function FormBuilder({
 
   const addNewSection = (setValues, values) => {
     const newValues = values;
-    const lastSection = formInitialValues[section.name].sort((firstItem, secondItem) => secondItem.id - firstItem.id)[0];
-    newValues[section.name].push({...formInitialValues[section.name][0], id: lastSection.id + 1});
+    const lastSection = getLastId(values[section.name]);
+    newValues[section.name].push({...formInitialValues[section.name][0], id: lastSection + 1});
     return setValues(newValues);
   };
 
