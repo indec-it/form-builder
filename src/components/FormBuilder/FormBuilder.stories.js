@@ -124,7 +124,7 @@ const sections = [
         userVarName: 'S1P3'
       }
     ],
-    multiple: false,
+    multiple: true,
     favorite: false,
     interruption: {
       name: 'S1I1',
@@ -217,21 +217,22 @@ const sections = [
 
 function Template(args) {
   const [page, setPage] = React.useState(0);
+
   React.useEffect(() => {
     if (!sections[page]) {
       setPage(0);
     }
   }, [page]);
+
   return (
     <FormBuilder
+      {...args}
       section={sections[page]}
       page={page}
       onSubmit={() => setPage(page + 1)}
       onPrevious={() => setPage(page - 1)}
-      nextSection={sections[page + 1]?.name}
-      previousSection={sections[page - 1]?.name}
+      isLastSection={sections.length - 1 === page}
       isSurvey
-      {...args}
     />
   );
 }
