@@ -238,6 +238,38 @@ function Template(args) {
 
 export const Basic = Template.bind({});
 
+export const WithInitialValues = Template.bind({});
+WithInitialValues.args = {
+  initialValues: {
+    S1: [
+      {
+        id: 1,
+        S1P1: {
+          id: 1,
+          answer: 'test'
+        },
+        S1P2: {
+          id: 2,
+          answer: 26
+        },
+        S1P3: {
+          id: 3,
+          answer: [
+            {
+              id: 1,
+              value: 123456
+            },
+            {
+              id: 2,
+              value: 12345678
+            }
+          ]
+        }
+      }
+    ]
+  }
+};
+
 function SectionHeader() {
   return (
     <Box sx={{
