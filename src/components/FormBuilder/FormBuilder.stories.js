@@ -51,7 +51,8 @@ const sections = [
             messageType: 'error'
           }
         ],
-        userVarName: 'S1P1'
+        userVarName: 'S1P1',
+        subQuestions: []
       },
       {
         label: 'Write your age',
@@ -86,7 +87,8 @@ const sections = [
           }
         ],
         id: 2,
-        userVarName: 'S1P2'
+        userVarName: 'S1P2',
+        subQuestions: []
       },
       {
         label: 'Cell number',
@@ -121,7 +123,8 @@ const sections = [
           }
         ],
         id: 3,
-        userVarName: 'S1P3'
+        userVarName: 'S1P3',
+        subQuestions: []
       }
     ],
     multiple: true,
@@ -247,11 +250,11 @@ WithInitialValues.args = {
         id: 1,
         S1P1: {
           id: 1,
-          answer: 'test'
+          answer: {value: 'test'}
         },
         S1P2: {
           id: 2,
-          answer: 26
+          answer: {value: 26}
         },
         S1P3: {
           id: 3,

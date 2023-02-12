@@ -91,7 +91,7 @@ function Template(args) {
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
-      initialValues={{S1: [{S1P1: {id: 1, answer: ''}}]}}
+      initialValues={{S1: [{S1P1: {id: 1, answer: {value: ''}}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
     >
@@ -115,12 +115,12 @@ function Template(args) {
 
 export const WithError = Template.bind({});
 WithError.args = {
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   withErrors: true
 };
 
 export const WithWarning = Template.bind({});
 WithWarning.args = {
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   withWarnings: true
 };

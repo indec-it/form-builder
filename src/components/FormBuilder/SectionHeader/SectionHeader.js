@@ -17,12 +17,12 @@ const getHeaders = (questions, values, headers) => {
     questions
       .filter(question => headerQuestions.includes(question.id) && !question.multiple)
       .forEach(question => {
-        const {answer} = values[question.name];
-        if (answer) {
+        const {value} = values[question.name].answer;
+        if (value) {
           if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
-            finalHeaders.push(answer);
+            finalHeaders.push(value);
           } else {
-            const label = getSelectedOptionLabel(question.options, answer);
+            const label = getSelectedOptionLabel(question.options, value);
             finalHeaders.push(label);
           }
         }

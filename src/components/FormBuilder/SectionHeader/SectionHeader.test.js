@@ -49,8 +49,8 @@ describe('<SectionHeader>', () => {
       },
       isSurvey: true,
       values: {
-        S1P1: {id: 1, answer: ''},
-        S1P2: {id: 2, answer: ''}
+        S1P1: {id: 1, answer: {value: ''}},
+        S1P2: {id: 2, answer: {value: ''}}
       }
     };
   });
@@ -161,8 +161,8 @@ describe('<SectionHeader>', () => {
           }
         ];
         props.values = {
-          S1P1: {id: 1, answer: 'My name'},
-          S1P2: {id: 2, answer: 'My age'}
+          S1P1: {id: 1, answer: {value: 'My name'}},
+          S1P2: {id: 2, answer: {value: 'My age'}}
         };
       });
 

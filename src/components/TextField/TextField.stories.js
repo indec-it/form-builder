@@ -60,7 +60,10 @@ function Template(args) {
   const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {withErrors, withWarnings, ...props} = args;
   return (
-    <Formik initialValues={{S1: [{S1P1: {id: 1, answer: ''}}]}} validationSchema={withErrors ? validateSchema : null}>
+    <Formik
+      initialValues={{S1: [{S1P1: {id: 1, answer: {value: ''}}}]}}
+      validationSchema={withErrors ? validateSchema : null}
+    >
       {({values}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
@@ -80,7 +83,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
@@ -89,7 +92,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
@@ -99,7 +102,7 @@ WithTooltip.args = {
   label: 'Write your name',
   tooltip: 'This is an input with tooltip',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
@@ -108,7 +111,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: true,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true
 };
@@ -118,6 +121,6 @@ WithWarnings.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   withWarnings: true
 };
