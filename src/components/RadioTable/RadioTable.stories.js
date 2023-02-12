@@ -129,7 +129,7 @@ function Template(args) {
             id: 1,
             multiple: false,
             status: 2,
-            S1P1: {id: 1, answer: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}}
+            S1P1: {id: 1, answer: {value: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}}}
           }
         ]
       }}
@@ -162,7 +162,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options
 };
@@ -172,7 +172,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options
 };
@@ -182,7 +182,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: true,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true,
   options

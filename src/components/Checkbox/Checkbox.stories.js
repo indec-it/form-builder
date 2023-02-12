@@ -86,7 +86,7 @@ function Template(args) {
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
-      initialValues={{S1: [{S1P1: {id: 1, answer: []}}]}}
+      initialValues={{S1: [{S1P1: {id: 1, answer: {value: []}}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
     >
@@ -116,7 +116,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options
 };
@@ -126,7 +126,7 @@ WithReadOnlyMode.args = {
   readOnlyMode: true,
   label: 'Select an option',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options
 };
@@ -136,7 +136,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Select an option',
   required: true,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true,
   options

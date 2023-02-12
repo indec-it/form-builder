@@ -13,16 +13,28 @@ import sectionPropTypes from '@/utils/propTypes/section';
 
 import Wrapper from './Wrapper';
 
+const mapSubQuestions = ({
+  sectionName, sectionIndex, questionName, subQuestions
+}) => subQuestions.map((subQuestion, index) => ({
+  ...subQuestion,
+  name: `${sectionName}.${sectionIndex}.${questionName}.specifications.${index}.answer.value`
+}));
+
 const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings, values) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
   }
   let QuestionComponent;
-  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
+  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer.value`;
   const isRequired = question.validations.some(validation => validation.type === 'required');
   const label = `${question.number} - ${question.label}`;
   const isMultiple = question.multiple;
+  const subQuestions = question.subQuestions.length > 0
+    ? mapSubQuestions({
+      sectionName: section.name, sectionIndex, questionName: question.name, subQuestions: question.subQuestions
+    })
+    : question.subQuestions;
   switch (question.type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
@@ -38,6 +50,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         warnings={warnings}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;
@@ -54,6 +67,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         warnings={warnings}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;
@@ -69,6 +83,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         warnings={warnings}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;
@@ -84,6 +99,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         warnings={warnings}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;
@@ -99,6 +115,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         warnings={warnings}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;
@@ -115,6 +132,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         metadata={question.metadata}
         isMultiple={isMultiple}
         values={values[question.name]}
+        subQuestions={subQuestions}
       />
     );
     break;

@@ -71,7 +71,7 @@ function Template(args) {
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik
-      initialValues={{S1: [{S1P1: ''}]}}
+      initialValues={{S1: [{S1P1: {answer: {value: ''}}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
     >
@@ -98,7 +98,7 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
@@ -107,7 +107,7 @@ WithRequired.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: true,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
@@ -116,7 +116,7 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: true,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true
 };
@@ -126,6 +126,6 @@ WithWarnings.args = {
   readOnlyMode: false,
   label: 'Write your name',
   required: false,
-  name: 'S1.0.S1P1',
+  name: 'S1.0.S1P1.answer.value',
   withWarnings: true
 };

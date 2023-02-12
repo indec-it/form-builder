@@ -24,13 +24,23 @@ const getAnswerValueType = question => {
 const buildQuestions = section => {
   const values = {[section.name]: {id: 1}};
   if (section.interruption.interruptible) {
-    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: ''};
+    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: {value: ''}};
   }
   section.questions.forEach(question => {
     const {id} = question;
-    values[section.name][question.name] = {id, answer: getAnswerValueType(question)};
+    values[section.name][question.name] = {id, answer: {value: getAnswerValueType(question)}};
     if (question.multiple) {
       values[section.name][question.name] = {id, answer: [{id: 1, value: getAnswerValueType(question)}]};
+    }
+    if (question.subQuestions.length > 0) {
+      values[section.name][question.name] = {
+        ...values[section.name][question.name],
+        specifications: question.subQuestions.map(
+          (subQuestion, index) => ({
+            id: index + 1, optionId: subQuestion.optionId, answer: {value: ''}
+          })
+        )
+      };
     }
   });
   values[section.name] = [values[section.name]];

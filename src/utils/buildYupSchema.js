@@ -41,24 +41,8 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   return validator;
 };
 
-export default function buildYupSchema(schema, config, opts = {}) {
-  const schemaWithValidations = schema;
-  const {
-    name, type, validations, options, metadata, multiple
-  } = config;
-  const requiredField = validations.find(validation => validation.type === 'required');
-  let validator = getValidatorType(
-    type,
-    options,
-    {
-      isRequired: !!requiredField,
-      message: requiredField?.params?.[0]?.message,
-      metadata
-    }
-  );
-  if (!validator) {
-    return schemaWithValidations;
-  }
+const handleValidations = ({validator, validations, type, opts}) => {
+  let newValidator = validator;
   validations.forEach(validation => {
     let validationType = validation.type;
     if (
@@ -80,11 +64,35 @@ export default function buildYupSchema(schema, config, opts = {}) {
     if (isCheckboxRequired) {
       validationType = 'min';
     }
-    validator = validator[validationType](...newParams);
+    newValidator = validator[validationType](...newParams);
   });
+  return newValidator;
+};
+
+export default function buildYupSchema(schema, config, opts = {}) {
+  const schemaWithValidations = schema;
+  const {
+    name, type, validations, options, metadata, multiple
+  } = config;
+  const requiredField = validations.find(validation => validation.type === 'required');
+  let validator = getValidatorType(
+    type,
+    options,
+    {
+      isRequired: !!requiredField,
+      message: requiredField?.params?.[0]?.message,
+      metadata
+    }
+  );
+  if (!validator) {
+    return schemaWithValidations;
+  }
+  validator = handleValidations({validator, validations, type, opts});
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: multiple ? Yup.array().of(Yup.object({id: Yup.number(), value: validator})) : validator
+    answer: Yup.object({
+      value: multiple ? Yup.array().of(Yup.object({id: Yup.number(), value: validator})) : validator
+    })
   });
   return schemaWithValidations;
 }

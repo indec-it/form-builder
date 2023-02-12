@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import subQuestion from './subQuestion';
+
 export default PropTypes.shape({
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
@@ -10,7 +12,8 @@ export default PropTypes.shape({
       name: PropTypes.string.isRequired,
       introduction: PropTypes.string,
       type: PropTypes.number.isRequired,
-      placeholder: PropTypes.string
+      placeholder: PropTypes.string,
+      subQuestions: PropTypes.arrayOf(subQuestion)
     })
   ),
   multiple: PropTypes.bool.isRequired,

@@ -62,8 +62,8 @@ export const Basic = Template.bind({});
 Basic.args = {
   isSurvey: true,
   values: {
-    S1P1: {id: 1, answer: ''},
-    S1P2: {id: 2, answer: ''}
+    S1P1: {id: 1, answer: {value: ''}},
+    S1P2: {id: 2, answer: {value: ''}}
   }
 };
 
@@ -71,8 +71,8 @@ export const WithAnswers = Template.bind({});
 WithAnswers.args = {
   isSurvey: true,
   values: {
-    S1P1: {id: 1, answer: 'My name'},
-    S1P2: {id: 2, answer: 'My age'}
+    S1P1: {id: 1, answer: {value: 'My name'}},
+    S1P2: {id: 2, answer: {value: 'My age'}}
   }
 };
 
@@ -80,8 +80,8 @@ export const WithIntroduction = Template.bind({});
 WithIntroduction.args = {
   isSurvey: true,
   values: {
-    S1P1: {id: 1, answer: ''},
-    S1P2: {id: 2, answer: ''}
+    S1P1: {id: 1, answer: {value: ''}},
+    S1P2: {id: 2, answer: {value: ''}}
   },
   section: {...section, introduction: 'this is an introduction text'}
 };

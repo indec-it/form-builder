@@ -79,12 +79,12 @@ Basic.args = {
   readOnlyMode: false,
   label: 'Select dates',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
     dateType: 'dateWithoutHour'
   },
-  initialValues: {S1: [{S1P1: {id: 1, answer: ''}}]},
+  initialValues: {S1: [{S1P1: {id: 1, answer: {value: ''}}}]},
   section: section('dateWithoutHour')
 };
 
@@ -93,12 +93,12 @@ DateWithHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
     dateType: 'dateWithHour'
   },
-  initialValues: {S1: [{S1P1: {id: 1, answer: ''}}]},
+  initialValues: {S1: [{S1P1: {id: 1, answer: {value: ''}}}]},
   section: section('dateWithHour')
 };
 
@@ -107,12 +107,12 @@ RangeWithoutHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
     dateType: 'rangeWithoutHour'
   },
-  initialValues: {S1: [{S1P1: {id: 1, answer: {start: '', end: ''}}}]},
+  initialValues: {S1: [{S1P1: {id: 1, answer: {value: {start: '', end: ''}}}}]},
   section: section('rangeWithoutHour')
 };
 
@@ -121,12 +121,12 @@ RangeWithHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
     dateType: 'rangeWithHour'
   },
-  initialValues: {S1: [{S1P1: {id: 1, answer: {start: '', end: ''}}}]},
+  initialValues: {S1: [{S1P1: {id: 1, answer: {value: {start: '', end: ''}}}}]},
   section: section('rangeWithHour')
 };
 
@@ -135,12 +135,12 @@ WithErrors.args = {
   readOnlyMode: false,
   label: 'Select dates',
   required: false,
-  name: 'S1.0.S1P1.answer',
+  name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
     dateType: 'rangeWithHour'
   },
-  initialValues: {S1: [{S1P1: {id: 1, answer: {start: '', end: ''}}}]},
+  initialValues: {S1: [{S1P1: {id: 1, answer: {value: {start: '', end: ''}}}}]},
   withErrors: true,
   section: section('rangeWithHour')
 };

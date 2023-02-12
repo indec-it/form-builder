@@ -49,6 +49,7 @@ module.exports = {
       extensions: ['.js', '.jsx']
     }],
     'arrow-parens': 'off',
-    'no-underscore-dangle': 'off'
+    'no-underscore-dangle': 'off',
+    'object-curly-newline': 'off'
   }
 };
