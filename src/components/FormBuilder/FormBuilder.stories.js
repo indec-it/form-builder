@@ -156,6 +156,7 @@ const sections = [
     label: 'Sección 2',
     questions: [
       {
+        id: 1,
         label: 'Select the correct option',
         name: 'S2P1',
         number: '1',

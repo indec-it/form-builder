@@ -40,13 +40,18 @@ function Wrapper({
       />
     );
   } else {
-    Component = <FastField {...props} options={options} name={name} readOnlyMode={readOnlyMode} />;
+    Component = <FastField {...props} options={options} name={`${name}.value`} readOnlyMode={readOnlyMode} />;
   }
   if (subQuestions.length > 0 && options.length > 0) {
     Component = (
       <>
         {Component}
-        <SubQuestions values={values} subQuestions={subQuestions} readOnlyMode={readOnlyMode} Component={TextField} />
+        <SubQuestions
+          values={values}
+          subQuestions={subQuestions}
+          readOnlyMode={readOnlyMode}
+          Component={TextField}
+        />
       </>
     );
   }
@@ -57,7 +62,11 @@ Wrapper.propTypes = {
   isMultiple: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
-  subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired
+  subQuestions: PropTypes.arrayOf(subQuestionPropTypes)
+};
+
+Wrapper.defaultProps = {
+  subQuestions: []
 };
 
 export default Wrapper;

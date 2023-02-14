@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert';
 import {formikField, formikForm} from '@/utils/propTypes';
 import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 
-const alertStyles = {width: '100%', justifyContent: 'center', mt: 2};
+const alertStyles = {justifyContent: 'center', mt: 2};
 
 function FieldMessage({
   form, field, readOnly, warnings

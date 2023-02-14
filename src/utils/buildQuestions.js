@@ -21,6 +21,15 @@ const getAnswerValueType = question => {
   return answer;
 };
 
+const getSubQuestions = subQuestions => subQuestions.reduce((accumulator, currentValue, currentIndex) => {
+  accumulator[currentValue.name] = {
+    id: currentIndex + 1,
+    optionId: currentValue.optionId,
+    answer: {value: ''}
+  };
+  return accumulator;
+}, {});
+
 const buildQuestions = section => {
   const values = {[section.name]: {id: 1}};
   if (section.interruption.interruptible) {
@@ -32,14 +41,13 @@ const buildQuestions = section => {
     if (question.multiple) {
       values[section.name][question.name] = {id, answer: [{id: 1, value: getAnswerValueType(question)}]};
     }
-    if (question.subQuestions.length > 0) {
+    if (question.subQuestions && question.subQuestions.length > 0) {
       values[section.name][question.name] = {
         ...values[section.name][question.name],
-        specifications: question.subQuestions.map(
-          (subQuestion, index) => ({
-            id: index + 1, optionId: subQuestion.optionId, answer: {value: ''}
-          })
-        )
+        answer: {
+          ...values[section.name][question.name].answer,
+          specifications: getSubQuestions(question.subQuestions)
+        }
       };
     }
   });
