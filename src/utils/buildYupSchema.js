@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
+import castArray from '@/utils/castArray';
 
 const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   let validator;
@@ -69,10 +70,43 @@ const handleValidations = ({validator, validations, type, opts}) => {
   return newValidator;
 };
 
+const buildSubQuestionsValidations = (subQuestions, opts) => subQuestions.reduce((acc, currentValue) => {
+  let subQuestionValidator = Yup.string();
+  const subQuestionValidations = currentValue.validations;
+  subQuestionValidator = handleValidations({
+    validator: subQuestionValidator,
+    validations: subQuestionValidations,
+    type: currentValue.type,
+    opts
+  });
+  acc[currentValue.name] = Yup.object({answer: Yup.object({value: subQuestionValidator})});
+  return acc;
+}, {});
+
+const buildAnswerObj = ({values, subQuestions, validator, multiple, opts}) => {
+  const defaultSchema = multiple ? Yup.array().of(
+    Yup.object({
+      id: Yup.number().required(),
+      value: validator
+    })
+  ) : Yup.object({value: validator});
+  if (subQuestions.length > 0) {
+    const selectedQuestions = buildSubQuestionsValidations(subQuestions.filter(
+      subQuestion => castArray(values.value).includes(subQuestion.optionId.toString())
+    ), opts);
+    return defaultSchema.concat(
+      Yup.object({
+        specifications: Yup.object(selectedQuestions)
+      })
+    );
+  }
+  return defaultSchema;
+};
+
 export default function buildYupSchema(schema, config, opts = {}) {
   const schemaWithValidations = schema;
   const {
-    name, type, validations, options, metadata, multiple
+    name, type, validations, options, metadata, multiple, subQuestions = []
   } = config;
   const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
@@ -90,9 +124,7 @@ export default function buildYupSchema(schema, config, opts = {}) {
   validator = handleValidations({validator, validations, type, opts});
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: Yup.object({
-      value: multiple ? Yup.array().of(Yup.object({id: Yup.number(), value: validator})) : validator
-    })
+    answer: Yup.lazy(values => buildAnswerObj({values, type, subQuestions, validator, multiple, opts}))
   });
   return schemaWithValidations;
 }

@@ -20,7 +20,7 @@ function Radio({
       {readOnlyMode ? (
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
       ) : (
-        <RadioGroup row {...field}>
+        <RadioGroup {...field}>
           {options.map(option => (
             <FormControlLabel key={option.value} value={option.value} control={<MuiRadio />} label={option.label} />
           ))}

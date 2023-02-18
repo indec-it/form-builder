@@ -15,9 +15,9 @@ import Wrapper from './Wrapper';
 
 const mapSubQuestions = ({
   sectionName, sectionIndex, questionName, subQuestions
-}) => subQuestions.map((subQuestion, index) => ({
+}) => subQuestions.map(subQuestion => ({
   ...subQuestion,
-  name: `${sectionName}.${sectionIndex}.${questionName}.specifications.${index}.answer.value`
+  name: `${sectionName}.${sectionIndex}.${questionName}.answer.specifications.${subQuestion.name}.answer.value`
 }));
 
 const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings, values) => {
@@ -26,11 +26,11 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     return null;
   }
   let QuestionComponent;
-  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer.value`;
+  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
   const isRequired = question.validations.some(validation => validation.type === 'required');
   const label = `${question.number} - ${question.label}`;
   const isMultiple = question.multiple;
-  const subQuestions = question.subQuestions.length > 0
+  const subQuestions = question.subQuestions && question.subQuestions.length > 0
     ? mapSubQuestions({
       sectionName: section.name, sectionIndex, questionName: question.name, subQuestions: question.subQuestions
     })

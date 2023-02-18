@@ -20,10 +20,9 @@ export default PropTypes.shape({
       })
     )
   ]),
-  specifications: PropTypes.arrayOf(
-    PropTypes.shape({
-      optionId: PropTypes.number,
-      name: PropTypes.string
-    })
-  )
+  specifications: PropTypes.shape({
+    optionId: PropTypes.number,
+    name: PropTypes.string,
+    answer: PropTypes.shape({value: PropTypes.string})
+  })
 });

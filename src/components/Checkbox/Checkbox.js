@@ -37,7 +37,7 @@ function Checkbox({
           {getSelectedOptions(options, field.value)}
         </Typography>
       ) : (
-        <FormGroup row>
+        <FormGroup>
           {options.map((option, index) => (
             <FormControlLabel
               key={option.value}
