@@ -6,7 +6,7 @@ import castArray from '@/utils/castArray';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
-function SubQuestions({values, subQuestions, readOnlyMode, Component}) {
+function SubQuestions({values, subQuestions, Component, ...props}) {
   const selectedQuestions = subQuestions.filter(
     subQuestion => castArray(values.answer.value).includes(subQuestion.optionId.toString())
   );
@@ -22,7 +22,7 @@ function SubQuestions({values, subQuestions, readOnlyMode, Component}) {
               label={subQuestion.label}
               placeholder={subQuestion.placeholder}
               required={isRequired}
-              readOnlyMode={readOnlyMode}
+              {...props}
             />
           </Box>
         );
@@ -34,7 +34,6 @@ function SubQuestions({values, subQuestions, readOnlyMode, Component}) {
 SubQuestions.propTypes = {
   values: valuesPropTypes.isRequired,
   subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired,
-  readOnlyMode: PropTypes.bool.isRequired,
   Component: PropTypes.node.isRequired
 };
 

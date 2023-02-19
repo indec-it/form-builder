@@ -12,7 +12,7 @@ import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
 function Wrapper({
-  isMultiple, name, values, subQuestions, options, readOnlyMode, ...props
+  isMultiple, name, values, subQuestions, options, readOnlyMode, warnings, ...props
 }) {
   let Component;
   if (isMultiple) {
@@ -21,7 +21,13 @@ function Wrapper({
         name={name}
         render={helpers => values.answer.map((answer, index) => (
           <Stack key={answer.id} direction="row" spacing={2}>
-            <FastField {...props} options={options} name={`${name}.${index}.value`} readOnlyMode={readOnlyMode} />
+            <FastField
+              {...props}
+              options={options}
+              name={`${name}.${index}.value`}
+              readOnlyMode={readOnlyMode}
+              warnings={warnings}
+            />
             {values.answer.length === index + 1 && (
               <Button
                 startIcon={<AddCircleIcon />}
@@ -40,7 +46,15 @@ function Wrapper({
       />
     );
   } else {
-    Component = <FastField {...props} options={options} name={`${name}.value`} readOnlyMode={readOnlyMode} />;
+    Component = (
+      <FastField
+        {...props}
+        options={options}
+        name={`${name}.value`}
+        readOnlyMode={readOnlyMode}
+        warnings={warnings}
+      />
+    );
   }
   if (subQuestions.length > 0 && options.length > 0) {
     Component = (
@@ -51,6 +65,7 @@ function Wrapper({
           subQuestions={subQuestions}
           readOnlyMode={readOnlyMode}
           Component={TextField}
+          warnings={warnings}
         />
       </>
     );
@@ -62,11 +77,13 @@ Wrapper.propTypes = {
   isMultiple: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
-  subQuestions: PropTypes.arrayOf(subQuestionPropTypes)
+  subQuestions: PropTypes.arrayOf(subQuestionPropTypes),
+  warnings: PropTypes.shape({})
 };
 
 Wrapper.defaultProps = {
-  subQuestions: []
+  subQuestions: [],
+  warnings: {}
 };
 
 export default Wrapper;

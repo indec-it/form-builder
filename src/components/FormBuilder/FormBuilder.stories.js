@@ -125,6 +125,106 @@ const sections = [
         id: 3,
         userVarName: 'S1P3',
         subQuestions: []
+      },
+      {
+        id: 4,
+        label: 'Select an option',
+        name: 'S1P4',
+        number: '4',
+        type: 4,
+        options: [
+          {
+            id: 1,
+            name: 'S1P1O1',
+            subOptions: [
+              {
+                id: 1
+              }
+            ],
+            label: 'Yes',
+            value: '1',
+            needSpecification: true
+          },
+          {
+            id: 2,
+            needSpecification: true,
+            label: 'No',
+            value: '2'
+          }
+        ],
+        multiple: false,
+        favorite: false,
+        validations: [
+          {
+            id: 1,
+            type: 'required',
+            params: [
+              {
+                id: 1,
+                message: 'Must select an option'
+              }
+            ],
+            messageType: 'error'
+          }
+        ],
+        subQuestions: [
+          {
+            id: 1,
+            optionId: 1,
+            type: '1',
+            label: 'Add specification',
+            name: 'S1P1SQ1',
+            validations: [
+              {
+                id: 1,
+                type: 'required',
+                params: [
+                  {
+                    id: 1,
+                    message: 'Must add a specification for option 1'
+                  }
+                ],
+                messageType: 'error'
+              },
+              {
+                id: 2,
+                type: 'min',
+                params: [
+                  {
+                    id: 1,
+                    value: 2,
+                    message: 'Should have at least 2 characters'
+                  }
+                ],
+                messageType: 'warning'
+              }
+            ],
+            userVarName: 'S1P1E1'
+          },
+          {
+            id: 2,
+            optionId: 2,
+            type: '1',
+            label: 'Add specification',
+            name: 'S1P1SQ2',
+            validations: [
+              {
+                id: 1,
+                type: 'required',
+                params: [
+                  {
+                    id: 1,
+                    message: 'Must add a specification for option 2'
+                  }
+                ],
+                messageType: 'error'
+              }
+            ],
+            userVarName: 'S1P1E2'
+          }
+        ],
+        metadata: {},
+        userVarName: 'S1P4'
       }
     ],
     multiple: true,
