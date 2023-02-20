@@ -27,7 +27,11 @@ function RadioTable({
                 <Box sx={{width: '400px'}}>
                   <Typography>{option.title}</Typography>
                 </Box>
-                <Typography>{getSelectedOptionLabel(option.subOptions, field.value[option.name])}</Typography>
+                <Typography
+                  data-testid={`selected-option-${option.id}`}
+                >
+                  {getSelectedOptionLabel(option.subOptions, field.value[option.name])}
+                </Typography>
               </Stack>
             </Box>
           ))}
@@ -44,6 +48,7 @@ function RadioTable({
                   {option.subOptions.map(subOption => (
                     <FormControlLabel
                       key={subOption.value}
+                      data-testid={`subOption-${option.id}-${subOption.id}`}
                       value={subOption.value}
                       control={(
                         <MuiRadio
