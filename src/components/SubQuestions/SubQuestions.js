@@ -12,29 +12,26 @@ function SubQuestions({values, subQuestions, Component, ...props}) {
   );
   return (
     <>
-      {selectedQuestions.map(subQuestion => {
-        const isRequired = subQuestion.validations.some(validation => validation.type === 'required');
-        return (
-          <Box key={subQuestion.id} mb={2}>
-            <FastField
-              component={Component}
-              name={subQuestion.name}
-              label={subQuestion.label}
-              placeholder={subQuestion.placeholder}
-              required={isRequired}
-              {...props}
-            />
-          </Box>
-        );
-      })}
+      {selectedQuestions.map(subQuestion => (
+        <Box key={subQuestion.id} mb={2}>
+          <FastField
+            component={Component}
+            name={subQuestion.name}
+            label={subQuestion.label}
+            placeholder={subQuestion.placeholder}
+            required={subQuestion.validations.some(validation => validation.type === 'required')}
+            {...props}
+          />
+        </Box>
+      ))}
     </>
   );
 }
 
 SubQuestions.propTypes = {
+  Component: PropTypes.func.isRequired,
   values: valuesPropTypes.isRequired,
-  subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired,
-  Component: PropTypes.node.isRequired
+  subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired
 };
 
 export default SubQuestions;
