@@ -9,6 +9,7 @@
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
     "test": "jest --config=jest.config.json",
+    "test:coverage": "jest --config=jest.config.json --coverage",
     "test:watch": "jest --config=jest.config.json --watch",
     "prepare": "husky install",
     "validate": "npm run lint && npm run test",

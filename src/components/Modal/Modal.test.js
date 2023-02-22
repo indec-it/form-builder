@@ -61,6 +61,19 @@ describe('<Modal>', () => {
       const {baseElement} = getComponent();
       expect(getByTestId(baseElement, 'accept-button')).toBeInTheDocument();
     });
+
+    describe('and the button is clicked', () => {
+      beforeEach(() => {
+        const {baseElement} = getComponent();
+        const acceptButton = getByTestId(baseElement, 'accept-button');
+        fireEvent.click(acceptButton);
+      });
+
+      it('should fire `props.onAccept`', () => {
+        expect(props.onAccept).toHaveBeenCalledTimes(1);
+        expect(props.onAccept).toHaveBeenCalledWith(props.modal);
+      });
+    });
   });
 
   describe('when `props.onAccept` is not defined', () => {

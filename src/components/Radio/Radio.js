@@ -15,7 +15,7 @@ function Radio({
   options, field, readOnlyMode, label, required, form, warnings
 }) {
   return (
-    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
+    <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
         <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
