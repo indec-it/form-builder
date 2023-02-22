@@ -146,7 +146,7 @@ function QuestionBuilder({
   values, section, index, readOnlyMode, warnings
 }) {
   return (
-    <Grid container direction="column" spacing={2}>
+    <Grid container direction="column" spacing={2} data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
         <Grid item key={value.id}>
           {getComponent(section, index, valueIndex - 1, readOnlyMode, warnings, values)}
