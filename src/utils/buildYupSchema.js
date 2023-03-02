@@ -56,7 +56,7 @@ const handleValidations = ({validator, validations, type, opts}) => {
     const newParams = [];
     const isCheckboxRequired = validationType === 'required' && type === questionTypes.CHECKBOX;
     validation.params.forEach(param => {
-      if (param.value || isCheckboxRequired) {
+      if (typeof param.value === 'number' || param.value || isCheckboxRequired) {
         newParams.push(isCheckboxRequired ? 1 : param.value, param.message);
       } else {
         newParams.push(param.message);
