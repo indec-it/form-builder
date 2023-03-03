@@ -14,10 +14,7 @@ function Modal({
   modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open
 }) {
   return (
-    <MuiModal
-      open={modal > 0 && open}
-      onClose={onClose}
-    >
+    <MuiModal open={modal > 0 && open} onClose={onClose}>
       <Box sx={{
         position: 'absolute',
         top: '50%',

@@ -7,6 +7,7 @@ import DatePicker from '@/components/DatePicker';
 import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
 import Select from '@/components/Select';
+import Table from '@/components/Table';
 import TextField from '@/components/TextField';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
@@ -26,31 +27,33 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     return null;
   }
   let QuestionComponent;
-  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
-  const isRequired = question.validations.some(validation => validation.type === 'required');
-  const label = `${question.number} - ${question.label}`;
-  const isMultiple = question.multiple;
-  const subQuestions = question.subQuestions && question.subQuestions.length > 0
+  const {
+    multiple, subQuestions, type, options, placeholder, metadata, name, label, number, validations, rows, columns
+  } = question;
+  const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
+  const isRequired = validations.some(validation => validation.type === 'required');
+  const labelFormatted = `${number} - ${label}`;
+  const mappedSubQuestions = subQuestions && subQuestions.length > 0
     ? mapSubQuestions({
-      sectionName: section.name, sectionIndex, questionName: question.name, subQuestions: question.subQuestions
+      sectionName: section.name, sectionIndex, questionName: name, subQuestions
     })
-    : question.subQuestions;
-  switch (question.type) {
+    : subQuestions;
+  switch (type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
     QuestionComponent = (
       <Wrapper
         component={TextField}
-        label={label}
-        placeholder={question.placeholder}
+        label={labelFormatted}
+        placeholder={placeholder}
         name={questionName}
-        type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
+        type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
       />
     );
     break;
@@ -58,16 +61,16 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={Select}
-        label={label}
-        placeholder={question.placeholder}
-        options={question.options}
+        label={labelFormatted}
+        placeholder={placeholder}
+        options={options}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
       />
     );
     break;
@@ -75,15 +78,15 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={Radio}
-        options={question.options}
-        label={label}
+        options={options}
+        label={labelFormatted}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
       />
     );
     break;
@@ -92,14 +95,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
       <Wrapper
         component={Checkbox}
         name={questionName}
-        options={question.options}
-        label={label}
+        options={options}
+        label={labelFormatted}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
       />
     );
     break;
@@ -107,15 +110,15 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={RadioTable}
-        options={question.options}
-        label={label}
+        options={options}
+        label={labelFormatted}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
       />
     );
     break;
@@ -123,16 +126,31 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={DatePicker}
-        label={label}
-        placeholder={question.placeholder}
+        label={labelFormatted}
+        placeholder={placeholder}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        metadata={question.metadata}
-        isMultiple={isMultiple}
-        values={values[question.name]}
-        subQuestions={subQuestions}
+        metadata={metadata}
+        isMultiple={multiple}
+        values={values[name]}
+        subQuestions={mappedSubQuestions}
+      />
+    );
+    break;
+  case questionTypes.TABLE:
+    QuestionComponent = (
+      <Wrapper
+        component={Table}
+        label={labelFormatted}
+        name={questionName}
+        readOnlyMode={readOnlyMode}
+        warnings={warnings}
+        isMultiple={multiple}
+        values={values[name]}
+        rows={rows}
+        columns={columns}
       />
     );
     break;

@@ -225,6 +225,57 @@ const sections = [
         ],
         metadata: {},
         userVarName: 'S1P4'
+      },
+      {
+        id: 5,
+        label: 'Complete the table',
+        name: 'S1P5',
+        number: '5',
+        type: 8,
+        columns: [
+          {
+            id: 1,
+            label: 'Column 1',
+            name: 'column1',
+            type: 1,
+            options: []
+          },
+          {
+            id: 2,
+            label: 'Column 2',
+            name: 'column2',
+            type: 1,
+            options: []
+          },
+          {
+            id: 3,
+            label: 'Column 3',
+            name: 'column3',
+            type: 1,
+            options: []
+          }
+        ],
+        rows: [
+          {
+            id: 1,
+            label: 'Row 1'
+          },
+          {
+            id: 2,
+            label: 'Row 2'
+          },
+          {
+            id: 3,
+            label: 'Row 3',
+            placeholder: 'Write a text'
+          }
+        ],
+        multiple: false,
+        favorite: false,
+        validations: [],
+        subQuestions: [],
+        metadata: {},
+        userVarName: 'S1P4'
       }
     ],
     multiple: true,

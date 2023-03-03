@@ -4,7 +4,7 @@ import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
 import castArray from '@/utils/castArray';
 
-const getValidatorType = (type, options, {isRequired, message, metadata}) => {
+const getValidatorType = (type, options, {isRequired, message, metadata, columns, rows}) => {
   let validator;
   switch (type) {
   case questionTypes.TEXT_FIELD:
@@ -34,6 +34,18 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
     } else {
       validator = Yup.string();
     }
+    break;
+  }
+  case questionTypes.TABLE: {
+    const reducedColumns = columns.reduce((acc, currentValue) => {
+      acc[currentValue.name] = getValidatorType(currentValue.type, currentValue.options, {});
+      return acc;
+    }, {});
+    const validations = rows.reduce((acc, currentValue, currentIndex) => {
+      acc[currentIndex] = reducedColumns;
+      return acc;
+    }, {});
+    validator = Yup.object(validations);
     break;
   }
   default:
@@ -106,7 +118,7 @@ const buildAnswerObj = ({values, subQuestions, validator, multiple, opts}) => {
 export default function buildYupSchema(schema, config, opts = {}) {
   const schemaWithValidations = schema;
   const {
-    name, type, validations, options, metadata, multiple, subQuestions = []
+    name, type, validations, options, metadata, multiple, subQuestions = [], rows, columns
   } = config;
   const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
@@ -115,7 +127,9 @@ export default function buildYupSchema(schema, config, opts = {}) {
     {
       isRequired: !!requiredField,
       message: requiredField?.params?.[0]?.message,
-      metadata
+      metadata,
+      rows,
+      columns
     }
   );
   if (!validator) {
