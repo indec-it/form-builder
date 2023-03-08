@@ -748,8 +748,8 @@ describe('buildQuestions', () => {
               answer: {
                 value: '',
                 specifications: {
-                  S1P1SQ1: {id: 1, optionId: 1, answer: {value: ''}},
-                  S1P1SQ2: {id: 2, optionId: 2, answer: {value: ''}}
+                  S1P1SQ1: {id: 1, answer: {value: ''}},
+                  S1P1SQ2: {id: 2, answer: {value: ''}}
                 }
               }
             }

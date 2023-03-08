@@ -24,7 +24,6 @@ const getAnswerValueType = question => {
 const getSubQuestions = subQuestions => subQuestions.reduce((accumulator, currentValue, currentIndex) => {
   accumulator[currentValue.name] = {
     id: currentIndex + 1,
-    optionId: currentValue.optionId,
     answer: {value: ''}
   };
   return accumulator;
@@ -38,9 +37,6 @@ const buildQuestions = section => {
   section.questions.forEach(question => {
     const {id} = question;
     values[section.name][question.name] = {id, answer: {value: getAnswerValueType(question)}};
-    if (question.multiple) {
-      values[section.name][question.name] = {id, answer: [{id: 1, value: getAnswerValueType(question)}]};
-    }
     if (question.subQuestions && question.subQuestions.length > 0) {
       values[section.name][question.name] = {
         ...values[section.name][question.name],
@@ -48,6 +44,12 @@ const buildQuestions = section => {
           ...values[section.name][question.name].answer,
           specifications: getSubQuestions(question.subQuestions)
         }
+      };
+    }
+    if (question.multiple) {
+      values[section.name][question.name] = {
+        ...values[section.name][question.name],
+        answer: [{id: 1, ...values[section.name][question.name].answer}]
       };
     }
   });

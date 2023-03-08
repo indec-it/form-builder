@@ -6,7 +6,7 @@ import castArray from '@/utils/castArray';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
-function SubQuestions({values, subQuestions, Component, ...props}) {
+function SubQuestions({values, subQuestions, Component, name, ...props}) {
   const selectedQuestions = subQuestions.filter(
     subQuestion => castArray(values.answer.value).includes(subQuestion.optionId.toString())
   );
@@ -16,7 +16,7 @@ function SubQuestions({values, subQuestions, Component, ...props}) {
         <Box key={subQuestion.id} mb={2}>
           <FastField
             component={Component}
-            name={subQuestion.name}
+            name={`${name}.${subQuestion.name}.answer.value`}
             label={subQuestion.label}
             placeholder={subQuestion.placeholder}
             required={subQuestion.validations.some(validation => validation.type === 'required')}
@@ -30,6 +30,7 @@ function SubQuestions({values, subQuestions, Component, ...props}) {
 
 SubQuestions.propTypes = {
   Component: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
   subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired
 };
