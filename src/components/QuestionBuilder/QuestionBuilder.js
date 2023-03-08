@@ -13,43 +13,31 @@ import sectionPropTypes from '@/utils/propTypes/section';
 
 import Wrapper from './Wrapper';
 
-const mapSubQuestions = ({
-  sectionName, sectionIndex, questionName, subQuestions
-}) => subQuestions.map(subQuestion => ({
-  ...subQuestion,
-  name: `${sectionName}.${sectionIndex}.${questionName}.answer.specifications.${subQuestion.name}.answer.value`
-}));
-
 const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings, values) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
   }
   let QuestionComponent;
-  const questionName = `${section.name}.${sectionIndex}.${question.name}.answer`;
-  const isRequired = question.validations.some(validation => validation.type === 'required');
-  const label = `${question.number} - ${question.label}`;
-  const isMultiple = question.multiple;
-  const subQuestions = question.subQuestions && question.subQuestions.length > 0
-    ? mapSubQuestions({
-      sectionName: section.name, sectionIndex, questionName: question.name, subQuestions: question.subQuestions
-    })
-    : question.subQuestions;
-  switch (question.type) {
+  const {validations, number, label, multiple, subQuestions, type, placeholder, name, options, metadata} = question;
+  const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
+  const isRequired = validations.some(validation => validation.type === 'required');
+  const labelWithNumber = `${number} - ${label}`;
+  switch (type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
     QuestionComponent = (
       <Wrapper
         component={TextField}
-        label={label}
-        placeholder={question.placeholder}
+        label={labelWithNumber}
+        placeholder={placeholder}
         name={questionName}
-        type={question.type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
+        type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -58,15 +46,15 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={Select}
-        label={label}
-        placeholder={question.placeholder}
-        options={question.options}
+        label={labelWithNumber}
+        placeholder={placeholder}
+        options={options}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -76,13 +64,13 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
       <Wrapper
         component={Radio}
         options={question.options}
-        label={label}
+        label={labelWithNumber}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -92,13 +80,13 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
       <Wrapper
         component={Checkbox}
         name={questionName}
-        options={question.options}
-        label={label}
+        options={options}
+        label={labelWithNumber}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -107,14 +95,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     QuestionComponent = (
       <Wrapper
         component={RadioTable}
-        options={question.options}
-        label={label}
+        options={options}
+        label={labelWithNumber}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -124,14 +112,14 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
       <Wrapper
         component={DatePicker}
         label={label}
-        placeholder={question.placeholder}
+        placeholder={placeholder}
         name={questionName}
         readOnlyMode={readOnlyMode}
         required={isRequired}
         warnings={warnings}
-        metadata={question.metadata}
-        isMultiple={isMultiple}
-        values={values[question.name]}
+        metadata={metadata}
+        isMultiple={multiple}
+        values={values[name]}
         subQuestions={subQuestions}
       />
     );
@@ -142,9 +130,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
   return QuestionComponent;
 };
 
-function QuestionBuilder({
-  values, section, index, readOnlyMode, warnings
-}) {
+function QuestionBuilder({values, section, index, readOnlyMode, warnings}) {
   return (
     <Grid container direction="column" spacing={2} data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (

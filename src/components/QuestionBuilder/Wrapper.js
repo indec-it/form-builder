@@ -20,13 +20,21 @@ function Wrapper({
       <FieldArray
         name={name}
         render={helpers => values.answer.map((answer, index) => (
-          <Stack key={answer.id} direction="row" spacing={2}>
+          <Stack key={answer.id} direction={{xs: 'column', sm: 'row'}} spacing={2} mb={2}>
             <FastField
               {...props}
               options={options}
               name={`${name}.${index}.value`}
               readOnlyMode={readOnlyMode}
               warnings={warnings}
+            />
+            <SubQuestions
+              values={{answer, id: answer.id}}
+              subQuestions={subQuestions}
+              readOnlyMode={readOnlyMode}
+              Component={TextField}
+              warnings={warnings}
+              name={`${name}.${index}.specifications`}
             />
             {values.answer.length === index + 1 && (
               <Button
@@ -56,7 +64,7 @@ function Wrapper({
       />
     );
   }
-  if (subQuestions.length > 0 && options.length > 0) {
+  if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (
       <>
         {Component}
@@ -66,6 +74,7 @@ function Wrapper({
           readOnlyMode={readOnlyMode}
           Component={TextField}
           warnings={warnings}
+          name={`${name}.specifications`}
         />
       </>
     );

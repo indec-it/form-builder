@@ -84,23 +84,20 @@ const buildSubQuestionsValidations = (subQuestions, opts) => subQuestions.reduce
 }, {});
 
 const buildAnswerObj = ({values, subQuestions, validator, multiple, opts}) => {
-  const defaultSchema = multiple ? Yup.array().of(
-    Yup.object({
-      id: Yup.number().required(),
-      value: validator
-    })
-  ) : Yup.object({value: validator});
+  let defaultSchema = Yup.object({value: validator});
   if (subQuestions.length > 0) {
-    const selectedQuestions = buildSubQuestionsValidations(subQuestions.filter(
-      subQuestion => castArray(values.value).includes(subQuestion.optionId.toString())
-    ), opts);
-    return defaultSchema.concat(
+    const valuesToArray = multiple && values ? values.map(value => value.value) : castArray(values.value);
+    const selectedSubQuestions = subQuestions.filter(
+      subQuestion => valuesToArray.includes(subQuestion.optionId.toString())
+    );
+    const selectedQuestions = buildSubQuestionsValidations(selectedSubQuestions, opts);
+    defaultSchema = defaultSchema.concat(
       Yup.object({
         specifications: Yup.object(selectedQuestions)
       })
     );
   }
-  return defaultSchema;
+  return multiple ? Yup.array().of(defaultSchema) : defaultSchema;
 };
 
 export default function buildYupSchema(schema, config, opts = {}) {
