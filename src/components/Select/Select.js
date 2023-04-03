@@ -42,7 +42,7 @@ function Select({
         />
       )}
       name={field.name}
-      onChange={(event, newValue) => handleChange(newValue)}
+      onChange={(_, newValue) => handleChange(newValue)}
       loading={loading}
       getOptionLabel={option => option.label || ''}
       value={selectedValue}

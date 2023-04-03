@@ -19,7 +19,18 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
     return null;
   }
   let QuestionComponent;
-  const {validations, number, label, multiple, subQuestions, type, placeholder, name, options, metadata} = question;
+  const {
+    validations,
+    number,
+    label,
+    multiple,
+    subQuestions,
+    type,
+    placeholder,
+    name,
+    options,
+    metadata
+  } = question;
   const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
   const isRequired = validations.some(validation => validation.type === 'required');
   const labelWithNumber = `${number} - ${label}`;

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import {useFormikContext} from 'formik';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -17,7 +16,6 @@ function NavigationButtons({
   isLastSection,
   onInterrupt
 }) {
-  const {submitForm} = useFormikContext();
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
       <Button
@@ -53,9 +51,9 @@ function NavigationButtons({
         )}
       </Stack>
       <Button
+        type="submit"
         startIcon={isLastSection ? <DoneIcon /> : undefined}
         endIcon={isLastSection ? undefined : <ArrowRightIcon />}
-        onClick={submitForm}
         variant="contained"
         color={isLastSection ? 'success' : 'primary'}
       >
