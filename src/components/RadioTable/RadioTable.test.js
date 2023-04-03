@@ -1,4 +1,4 @@
-import {fireEvent, getByTestId, getByText} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
 import RadioTable from './RadioTable';
 
@@ -97,19 +97,20 @@ describe('<RadioTable>', () => {
       props.readOnlyMode = true;
     });
 
-    it('should display `props.options.title` and the selected option', () => {
+    it('should render ReadOnly component', () => {
       const {container} = getComponent();
-      props.options.forEach(option => {
-        expect(getByText(container, option.title)).toBeInTheDocument();
-        const selectedOption = getByTestId(container, `selected-option-${option.id}`);
-        expect(getByText(selectedOption, 'Sin respuesta.')).toBeInTheDocument();
-      });
+      expect(getByTestId(container, 'read-only')).toBeInTheDocument();
     });
   });
 
   describe('when `props.readOnlyMode` is `false`', () => {
     beforeEach(() => {
       props.readOnlyMode = false;
+    });
+
+    it('should not render ReadOnly component', () => {
+      const {container} = getComponent();
+      expect(queryByTestId(container, 'read-only')).toBeNull();
     });
 
     it('should display `props.options.title` and `props.options.subOptions.label`', () => {

@@ -12,22 +12,22 @@ import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 const getHeaders = (questions, values, headers) => {
   if (headers.some(header => header.question)) {
-    const finalHeaders = [];
     const headerQuestions = headers.map(header => header.question);
-    questions
-      .filter(question => headerQuestions.includes(question.id) && !question.multiple)
-      .forEach(question => {
+    return questions.reduce((acc, question) => {
+      if (
+        headerQuestions.includes(question.id)
+        && !question.multiple
+        && values[question.name].answer?.value
+      ) {
         const {value} = values[question.name].answer;
-        if (value) {
-          if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
-            finalHeaders.push(value);
-          } else {
-            const label = getSelectedOptionLabel(question.options, value);
-            finalHeaders.push(label);
-          }
+        if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
+          acc.push(value);
+        } else {
+          acc.push(getSelectedOptionLabel(question.options, value));
         }
-      });
-    return finalHeaders.join('| ');
+      }
+      return acc;
+    }, []).join(' | ');
   }
   return '';
 };

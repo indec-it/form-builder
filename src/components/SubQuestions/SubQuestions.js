@@ -2,14 +2,12 @@ import PropTypes from 'prop-types';
 import {FastField} from 'formik';
 import Box from '@mui/material/Box';
 
-import castArray from '@/utils/castArray';
+import useSubQuestions from '@/hooks/useSubQuestions';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
 function SubQuestions({values, subQuestions, Component, name, ...props}) {
-  const selectedQuestions = subQuestions.filter(
-    subQuestion => castArray(values.answer.value).includes(subQuestion.optionId.toString())
-  );
+  const {selectedQuestions} = useSubQuestions(subQuestions, values.answer.value);
   return (
     <>
       {selectedQuestions.map(subQuestion => (

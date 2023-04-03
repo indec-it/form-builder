@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Formik, FieldArray} from 'formik';
+import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
 
 import modals from '@/constants/modals';
@@ -69,12 +69,11 @@ function FormBuilder({
       {({values, setValues}) => {
         const warnings = getWarnings(warningSchema, values) || {};
         return (
-          <Box component="form" noValidate sx={{width: '100%'}}>
-            <>
-              <FieldArray
-                name={section.name}
-                render={
-                  sectionHelpers => values
+          <Form>
+            <FieldArray
+              name={section.name}
+              render={
+                sectionHelpers => values
                 && values[section.name]
                 && values[section.name].map((currentSection, index) => (
                   <Box key={currentSection.id} mb={2}>
@@ -124,28 +123,27 @@ function FormBuilder({
                     />
                   </Box>
                 ))
-                }
-              />
-              {
-                components.NavigationButtons
-                  ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
-                  : (
-                    <NavigationButtons
-                      onPrevious={onPrevious}
-                      disablePreviousButton={page === 0}
-                      nextButtonLabel={isLastSection ? 'Finalizar' : 'Siguiente'}
-                      isLastSection={isLastSection}
-                      onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                      onInterrupt={
-                        section.interruption.interruptible
-                          ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                          : undefined
-                      }
-                    />
-                  )
               }
-            </>
-          </Box>
+            />
+            {
+              components.NavigationButtons
+                ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
+                : (
+                  <NavigationButtons
+                    onPrevious={onPrevious}
+                    disablePreviousButton={page === 0}
+                    nextButtonLabel={isLastSection ? 'Finalizar' : 'Siguiente'}
+                    isLastSection={isLastSection}
+                    onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                    onInterrupt={
+                      section.interruption.interruptible
+                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                        : undefined
+                    }
+                  />
+                )
+            }
+          </Form>
         );
       }}
     </Formik>

@@ -5,41 +5,33 @@ import questionTypes from '@/constants/questionTypes';
 import castArray from '@/utils/castArray';
 
 const getValidatorType = (type, options, {isRequired, message, metadata}) => {
-  let validator;
   switch (type) {
   case questionTypes.TEXT_FIELD:
   case questionTypes.DROPDOWN:
   case questionTypes.RADIO:
-    validator = Yup.string();
-    break;
+    return Yup.string();
   case questionTypes.NUMERIC_FIELD:
-    validator = Yup.number()
+    return Yup.number()
       .transform(value => (Number.isNaN(value) || value === null || value === undefined || value === '' ? 0 : value));
-    break;
   case questionTypes.CHECKBOX:
-    validator = Yup.array().of(Yup.string());
-    break;
+    return Yup.array().of(Yup.string());
   case questionTypes.RADIO_TABLE: {
     const opts = options.reduce((accumulator, currentValue) => ({
       ...accumulator,
       [currentValue.name]: isRequired ? Yup.string().required(message) : Yup.string()
     }), {});
-    validator = Yup.object(opts);
-    break;
+    return Yup.object(opts);
   }
   case questionTypes.DATE: {
     const field = isRequired ? Yup.string().required(message) : Yup.string();
     if ([dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(metadata.dateType)) {
-      validator = Yup.object({start: field, end: field});
-    } else {
-      validator = Yup.string();
+      return Yup.object({start: field, end: field});
     }
-    break;
+    return Yup.string();
   }
   default:
-    return validator;
+    return null;
   }
-  return validator;
 };
 
 const handleValidations = ({validator, validations, type, opts}) => {
@@ -105,12 +97,12 @@ export default function buildYupSchema(schema, config, opts = {}) {
   const {
     name, type, validations, options, metadata, multiple, subQuestions = []
   } = config;
-  const requiredField = validations.find(validation => validation.type === 'required');
+  const requiredField = validations.some(validation => validation.type === 'required');
   let validator = getValidatorType(
     type,
     options,
     {
-      isRequired: !!requiredField,
+      isRequired: requiredField,
       message: requiredField?.params?.[0]?.message,
       metadata
     }

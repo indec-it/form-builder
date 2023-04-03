@@ -168,7 +168,7 @@ describe('<SectionHeader>', () => {
 
       it('should display header answers', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'My name| My age')).toBeInTheDocument();
+        expect(getByText(container, 'My name | My age')).toBeInTheDocument();
       });
     });
   });

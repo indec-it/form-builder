@@ -66,7 +66,8 @@ describe('<SubQuestions>', () => {
         }
       ],
       Component: TextField,
-      readOnlyMode: false
+      readOnlyMode: false,
+      name: 'test'
     };
   });
 

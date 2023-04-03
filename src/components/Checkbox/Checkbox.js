@@ -12,18 +12,17 @@ import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
 
-const getSelectedOptions = (options, value) => options
-  .filter(option => value.includes(option.value))
-  .map(selectedOption => selectedOption.label)
-  .join(', ') || defaultMessages.UNANSWERED;
+const getSelectedOptions = (options, selectedValues) => selectedValues.reduce((accumulator, currentValue) => {
+  const option = options.find(currentOption => currentOption.value === currentValue);
+  return option ? [...accumulator, option.label] : accumulator;
+}, []).join(', ') || defaultMessages.UNANSWERED;
 
 const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
-  if (e.target.checked) {
-    setFieldValue(name, [...value, selectedValue]);
-  } else {
-    const values = value.filter(currentValue => currentValue !== selectedValue);
-    setFieldValue(name, values);
-  }
+  const isChecked = e.target.checked;
+  const values = isChecked
+    ? [...value, selectedValue]
+    : value.filter(currentValue => currentValue !== selectedValue);
+  setFieldValue(name, values);
 };
 
 function Checkbox({

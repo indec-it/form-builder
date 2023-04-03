@@ -11,7 +11,8 @@ import InputLabel from '@/components/InputLabel';
 import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
-import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
+
+import ReadOnly from './ReadOnly';
 
 function RadioTable({
   options, label, form, field, readOnlyMode, required, warnings
@@ -20,22 +21,7 @@ function RadioTable({
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
       {readOnlyMode ? (
-        <>
-          {options.map(option => (
-            <Box key={option.id}>
-              <Stack direction={{xs: 'column', sm: 'row'}} spacing={5}>
-                <Box sx={{width: '400px'}}>
-                  <Typography>{option.title}</Typography>
-                </Box>
-                <Typography
-                  data-testid={`selected-option-${option.id}`}
-                >
-                  {getSelectedOptionLabel(option.subOptions, field.value[option.name])}
-                </Typography>
-              </Stack>
-            </Box>
-          ))}
-        </>
+        <ReadOnly options={options} field={field} />
       ) : (
         <>
           {options.map(option => (
