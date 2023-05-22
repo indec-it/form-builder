@@ -1,3 +1,4 @@
+import {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
 import Typography from '@mui/material/Typography';
@@ -12,10 +13,10 @@ function Select({
   options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, keyValue, warnings, ...props
 }) {
   const handleChange = selectedValue => {
-    form.setFieldValue(field.name, selectedValue[keyValue]);
+    form.setFieldValue(field.name, selectedValue ? selectedValue[keyValue] : undefined);
     onClean(form);
   };
-  const selectedValue = options.find(option => option[keyValue] === field.value) || {};
+  const selectedValue = useMemo(() => options.find(option => option[keyValue] === field.value) || {}, [field?.value]);
 
   return readOnlyMode ? (
     <>
@@ -24,11 +25,11 @@ function Select({
     </>
   ) : (
     <Autocomplete
-      {...props}
-      disableClearable
+      disableClearable={required}
       options={options}
       fullWidth
       noOptionsText="No hay opciones."
+      {...props}
       renderInput={params => (
         <TextField
           {...params}
