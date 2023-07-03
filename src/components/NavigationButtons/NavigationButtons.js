@@ -14,7 +14,8 @@ function NavigationButtons({
   onAddNew,
   addButtonLabel,
   isLastSection,
-  onInterrupt
+  onInterrupt,
+  readOnlyMode
 }) {
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
@@ -27,29 +28,31 @@ function NavigationButtons({
       >
         Anterior
       </Button>
-      <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
-        {onAddNew && (
-          <Button
-            data-testid="add-new"
-            startIcon={<AddIcon />}
-            onClick={onAddNew}
-            variant="outlined"
-          >
-            {addButtonLabel}
-          </Button>
-        )}
-        {onInterrupt && (
-          <Button
-            data-testid="interrupt-survey"
-            startIcon={<CancelIcon />}
-            onClick={onInterrupt}
-            variant="outlined"
-            color="error"
-          >
-            Interrumpir encuesta
-          </Button>
-        )}
-      </Stack>
+      {!readOnlyMode && (
+        <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+          {onAddNew && (
+            <Button
+              data-testid="add-new"
+              startIcon={<AddIcon />}
+              onClick={onAddNew}
+              variant="outlined"
+            >
+              {addButtonLabel}
+            </Button>
+          )}
+          {onInterrupt && (
+            <Button
+              data-testid="interrupt-survey"
+              startIcon={<CancelIcon />}
+              onClick={onInterrupt}
+              variant="outlined"
+              color="error"
+            >
+              Interrumpir encuesta
+            </Button>
+          )}
+        </Stack>
+      )}
       <Button
         type="submit"
         startIcon={isLastSection ? <DoneIcon /> : undefined}
@@ -67,6 +70,7 @@ NavigationButtons.propTypes = {
   onPrevious: PropTypes.func.isRequired,
   onInterrupt: PropTypes.func,
   onAddNew: PropTypes.func,
+  readOnlyMode: PropTypes.bool,
   disablePreviousButton: PropTypes.bool,
   isLastSection: PropTypes.bool,
   nextButtonLabel: PropTypes.string,
@@ -76,6 +80,7 @@ NavigationButtons.propTypes = {
 NavigationButtons.defaultProps = {
   disablePreviousButton: false,
   isLastSection: false,
+  readOnlyMode: false,
   nextButtonLabel: 'Siguiente',
   addButtonLabel: 'Agregar nuevo',
   onAddNew: null,

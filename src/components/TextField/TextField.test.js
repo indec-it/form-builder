@@ -1,5 +1,5 @@
 import {
-  fireEvent, getByTestId, getByText, queryByTestId
+  fireEvent, getByTestId, queryByText
 } from '@testing-library/react';
 
 import TextField from './TextField';
@@ -32,6 +32,12 @@ describe('<TextField>', () => {
       expect(getByTestId(container, 'text-field')).toBeInTheDocument();
     });
 
+    it('should not be disabled', () => {
+      const {container} = getComponent();
+      const input = getByTestId(container, 'text-field');
+      expect(input).not.toBeDisabled();
+    });
+
     describe('and a text is written', () => {
       beforeEach(() => {
         const {container} = getComponent();
@@ -50,9 +56,15 @@ describe('<TextField>', () => {
       props.readOnlyMode = true;
     });
 
-    it('should not render an input', () => {
+    it('should render an input', () => {
       const {container} = getComponent();
-      expect(queryByTestId(container, 'text-field')).toBeNull();
+      expect(getByTestId(container, 'text-field')).toBeInTheDocument();
+    });
+
+    it('should be disabled', () => {
+      const {container} = getComponent();
+      const input = getByTestId(container, 'text-field');
+      expect(input).toBeDisabled();
     });
 
     describe('and the input has a value', () => {
@@ -62,7 +74,8 @@ describe('<TextField>', () => {
 
       it('should display `props.field.value`', () => {
         const {container} = getComponent();
-        expect(getByText(container, props.field.value)).toBeInTheDocument();
+        const input = getByTestId(container, 'text-field');
+        expect(input.value).toBe(props.field.value);
       });
     });
 
@@ -71,9 +84,9 @@ describe('<TextField>', () => {
         props.field.value = undefined;
       });
 
-      it('should display `Sin respuesta.`', () => {
+      it('should not display `Sin respuesta.`', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'Sin respuesta.')).toBeInTheDocument();
+        expect(queryByText(container, 'Sin respuesta.')).toBeNull();
       });
     });
   });

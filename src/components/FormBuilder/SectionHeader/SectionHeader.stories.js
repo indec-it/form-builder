@@ -53,6 +53,7 @@ function Template(args) {
       onEdit={() => {}}
       onDelete={() => {}}
       sectionsLength={1}
+      isReadOnly={false}
       {...args}
     />
   );

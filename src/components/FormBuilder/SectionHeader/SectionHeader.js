@@ -33,7 +33,7 @@ const getHeaders = (questions, values, headers) => {
 };
 
 function SectionHeader({
-  section, sectionsLength, onView, onEdit, onDelete, values, isSurvey
+  section, sectionsLength, onView, onEdit, onDelete, values, isReadOnly
 }) {
   return (
     <Box sx={{
@@ -50,23 +50,25 @@ function SectionHeader({
         {section.introduction && (
           <Typography data-testid="introduction" fontWeight="bold" color="gray">{section.introduction}</Typography>
         )}
-        {isSurvey ? <Typography>{getHeaders(section.questions, values, section.headers)}</Typography> : null}
+        <Typography>{getHeaders(section.questions, values, section.headers)}</Typography>
       </Box>
-      {isSurvey ? (
-        <Box>
-          <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
-            <VisibilityIcon />
-          </IconButton>
-          <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
-            <EditIcon />
-          </IconButton>
-          {section.multiple && sectionsLength > 1 && (
-            <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
-              <DeleteIcon />
+      <Box>
+        <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
+          <VisibilityIcon />
+        </IconButton>
+        {!isReadOnly && (
+          <>
+            <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
+              <EditIcon />
             </IconButton>
-          )}
-        </Box>
-      ) : null}
+            {section.multiple && sectionsLength > 1 && (
+              <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </>
+        )}
+      </Box>
     </Box>
   );
 }
@@ -78,7 +80,11 @@ SectionHeader.propTypes = {
   sectionsLength: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
   values: PropTypes.shape({}).isRequired,
-  isSurvey: PropTypes.bool.isRequired
+  isReadOnly: PropTypes.bool
+};
+
+SectionHeader.defaultProps = {
+  isReadOnly: false
 };
 
 export default SectionHeader;

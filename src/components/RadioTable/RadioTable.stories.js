@@ -120,7 +120,7 @@ const section = {
 
 function Template(args) {
   const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
-  const {withErrors, withWarnings, ...props} = args;
+  const {withErrors, withWarnings, initialValues, ...props} = args;
   return (
     <Formik
       initialValues={{
@@ -129,7 +129,12 @@ function Template(args) {
             id: 1,
             multiple: false,
             status: 2,
-            S1P1: {id: 1, answer: {value: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}}}
+            S1P1: {
+              id: 1,
+              answer: {
+                value: initialValues || {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}
+              }
+            }
           }
         ]
       }}
@@ -174,7 +179,8 @@ WithReadOnlyMode.args = {
   required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
-  options
+  options,
+  initialValues: {S1P1O1: '2', S1P1O2: '1', S1P1O3: '3'}
 };
 
 export const WithErrors = Template.bind({});

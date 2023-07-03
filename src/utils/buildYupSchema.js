@@ -75,7 +75,7 @@ const buildSubQuestionsValidations = (subQuestions, opts) => subQuestions.reduce
   return acc;
 }, {});
 
-const buildAnswerObj = ({values, subQuestions, validator, multiple, opts}) => {
+const buildAnswerObj = ({values = [], subQuestions, validator, multiple, opts}) => {
   let defaultSchema = Yup.object({value: validator});
   if (subQuestions.length > 0) {
     const valuesToArray = multiple && values ? values.map(value => value.value) : castArray(values.value);

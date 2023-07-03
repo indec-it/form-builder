@@ -12,53 +12,46 @@ import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
 
-import ReadOnly from './ReadOnly';
-
 function RadioTable({
   options, label, form, field, readOnlyMode, required, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
-      {readOnlyMode ? (
-        <ReadOnly options={options} field={field} />
-      ) : (
-        <>
-          {options.map(option => (
-            <Box key={option.id}>
-              <Stack direction="row" spacing={5} alignItems="center">
-                <Box sx={{width: '400px'}}>
-                  <Typography>{option.title}</Typography>
-                </Box>
-                <RadioGroup row>
-                  {option.subOptions.map(subOption => (
-                    <FormControlLabel
-                      key={subOption.value}
-                      data-testid={`subOption-${option.id}-${subOption.id}`}
-                      value={subOption.value}
-                      control={(
-                        <MuiRadio
-                          checked={subOption.value === field.value[option.name]}
-                          onChange={
-                            e => form.setFieldValue(`${field.name}.${option.name}`, e.target.value)
-                          }
-                        />
-                      )}
-                      label={subOption.label}
-                    />
-                  ))}
-                </RadioGroup>
-              </Stack>
-              <FieldMessage
-                warnings={warnings}
-                form={form}
-                field={{...field, name: `${field.name}.${option.name}`}}
-                readOnly={readOnlyMode}
-              />
+      {options.map(option => (
+        <Box key={option.id}>
+          <Stack direction="row" spacing={5} alignItems="center">
+            <Box sx={{width: '400px'}}>
+              <Typography>{option.title}</Typography>
             </Box>
-          ))}
-        </>
-      )}
+            <RadioGroup row>
+              {option.subOptions.map(subOption => (
+                <FormControlLabel
+                  key={subOption.value}
+                  data-testid={`subOption-${option.id}-${subOption.id}`}
+                  value={subOption.value}
+                  control={(
+                    <MuiRadio
+                      checked={subOption.value === field.value[option.name]}
+                      onChange={
+                        e => form.setFieldValue(`${field.name}.${option.name}`, e.target.value)
+                      }
+                    />
+                  )}
+                  label={subOption.label}
+                  disabled={readOnlyMode}
+                />
+              ))}
+            </RadioGroup>
+          </Stack>
+          <FieldMessage
+            warnings={warnings}
+            form={form}
+            field={{...field, name: `${field.name}.${option.name}`}}
+            readOnly={readOnlyMode}
+          />
+        </Box>
+      ))}
     </Stack>
   );
 }
