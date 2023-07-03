@@ -4,13 +4,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Modal from '@/components/Modal';
-import QuestionBuilder from '@/components/QuestionBuilder';
 import Radio from '@/components/Radio';
 import modals from '@/constants/modals';
 
-const getChildren = (modal, {
-  values, index, section, options, label, name
-}) => {
+const getChildren = (modal, {options, label, name}) => {
   switch (modal) {
   case modals.CONFIRM_DELETE_SECTION_MODAL:
     return (
@@ -20,10 +17,6 @@ const getChildren = (modal, {
         </Box>
         <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
       </>
-    );
-  case modals.PREVIEW_MODAL:
-    return (
-      <QuestionBuilder values={values} index={index} section={section} readOnlyMode />
     );
   case modals.INTERRUPTION_MODAL:
     return (

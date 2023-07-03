@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {FastField} from 'formik';
+import {Field} from 'formik';
 import Box from '@mui/material/Box';
 
 import useSubQuestions from '@/hooks/useSubQuestions';
@@ -12,7 +12,7 @@ function SubQuestions({values, subQuestions, Component, name, ...props}) {
     <>
       {selectedQuestions.map(subQuestion => (
         <Box key={subQuestion.id} mb={2}>
-          <FastField
+          <Field
             component={Component}
             name={`${name}.${subQuestion.name}.answer.value`}
             label={subQuestion.label}

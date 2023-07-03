@@ -78,9 +78,16 @@ describe('<Radio>', () => {
         props.field.value = '3';
       });
 
-      it('should display the label of the selected option', () => {
+      it('should be checked the option selected', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'Option 3')).toBeInTheDocument();
+        const radioSelected = getByTestId(container, 'radio-2');
+        expect(radioSelected.querySelector('input').checked).toBe(true);
+      });
+
+      it('should not be checked another option', () => {
+        const {container} = getComponent();
+        const radioSelected = getByTestId(container, 'radio-1');
+        expect(radioSelected.querySelector('input').checked).toBe(false);
       });
     });
 
@@ -89,16 +96,16 @@ describe('<Radio>', () => {
         props.field.value = '';
       });
 
-      it('should display `Sin respuesta.`', () => {
+      it('should not display `Sin respuesta.`', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'Sin respuesta.')).toBeInTheDocument();
+        expect(queryByText(container, 'Sin respuesta.')).toBeNull();
       });
     });
 
-    it('should not render the list of radios', () => {
+    it('should render the list of radios', () => {
       const {container} = getComponent();
       props.options.forEach(option => {
-        expect(queryByText(container, option.label)).toBeNull();
+        expect(getByText(container, option.label)).toBeInTheDocument();
       });
     });
   });

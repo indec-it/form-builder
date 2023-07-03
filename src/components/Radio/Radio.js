@@ -3,13 +3,11 @@ import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
 
 import {formikField, formikForm} from '@/utils/propTypes';
-import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 function Radio({
   options, field, readOnlyMode, label, required, form, warnings
@@ -17,15 +15,19 @@ function Radio({
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
-      {readOnlyMode ? (
-        <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
-      ) : (
-        <RadioGroup {...field}>
-          {options.map(option => (
-            <FormControlLabel key={option.value} value={option.value} control={<MuiRadio />} label={option.label} />
-          ))}
-        </RadioGroup>
-      )}
+      <RadioGroup {...field}>
+        {options.map((option, index) => (
+          <FormControlLabel
+            data-testid={`radio-${index}`}
+            key={option.value}
+            value={option.value}
+            control={<MuiRadio />}
+            label={option.label}
+            disabled={readOnlyMode}
+            checked={option.value === field.value}
+          />
+        ))}
+      </RadioGroup>
       <FieldMessage form={form} field={field} warnings={warnings} readOnly={readOnlyMode} />
     </Stack>
   );
@@ -39,7 +41,7 @@ Radio.propTypes = {
   form: formikForm.isRequired,
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       label: PropTypes.string.isRequired
     })
   ).isRequired,

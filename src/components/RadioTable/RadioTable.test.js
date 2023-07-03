@@ -97,9 +97,35 @@ describe('<RadioTable>', () => {
       props.readOnlyMode = true;
     });
 
-    it('should render ReadOnly component', () => {
+    it('should not render ReadOnly component', () => {
       const {container} = getComponent();
-      expect(getByTestId(container, 'read-only')).toBeInTheDocument();
+      expect(queryByTestId(container, 'read-only')).toBeNull();
+    });
+
+    describe('and there are selected options', () => {
+      beforeEach(() => {
+        props.field.value = {S1P1O1: '1', S1P1O2: '2', S1P1O3: '3'};
+      });
+
+      it('should be checked the selected options', () => {
+        const {container} = getComponent();
+        const radioSelectedForFirstOption = getByTestId(container, 'subOption-1-1');
+        const radioSelectedForSecondOption = getByTestId(container, 'subOption-2-2');
+        const radioSelectedForThirdOption = getByTestId(container, 'subOption-3-3');
+        expect(radioSelectedForFirstOption.querySelector('input').checked).toBe(true);
+        expect(radioSelectedForSecondOption.querySelector('input').checked).toBe(true);
+        expect(radioSelectedForThirdOption.querySelector('input').checked).toBe(true);
+      });
+
+      it('should not be checked other options', () => {
+        const {container} = getComponent();
+        const radioNoSelectedForFirstOption = getByTestId(container, 'subOption-1-2');
+        const radioNoSelectedForSecondOption = getByTestId(container, 'subOption-2-1');
+        const radioNoSelectedForThirdOption = getByTestId(container, 'subOption-3-2');
+        expect(radioNoSelectedForFirstOption.querySelector('input').checked).toBe(false);
+        expect(radioNoSelectedForSecondOption.querySelector('input').checked).toBe(false);
+        expect(radioNoSelectedForThirdOption.querySelector('input').checked).toBe(false);
+      });
     });
   });
 

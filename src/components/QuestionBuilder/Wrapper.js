@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {FastField, FieldArray} from 'formik';
+import {Field, FieldArray} from 'formik';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -21,7 +21,7 @@ function Wrapper({
         name={name}
         render={helpers => values.answer.map((answer, index) => (
           <Stack key={answer.id} direction={{xs: 'column', sm: 'row'}} spacing={2} mb={2}>
-            <FastField
+            <Field
               {...props}
               options={options}
               name={`${name}.${index}.value`}
@@ -36,13 +36,13 @@ function Wrapper({
               warnings={warnings}
               name={`${name}.${index}.specifications`}
             />
-            {values.answer.length === index + 1 && (
+            {values.answer.length === index + 1 && !readOnlyMode && (
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => helpers.push({id: getLastId(values.answer) + 1, value: ''})}
               />
             )}
-            {index > 0 && (
+            {index > 0 && !readOnlyMode && (
               <Button
                 color="error"
                 startIcon={<DeleteIcon />}
@@ -55,7 +55,7 @@ function Wrapper({
     );
   } else {
     Component = (
-      <FastField
+      <Field
         {...props}
         options={options}
         name={`${name}.value`}

@@ -117,4 +117,22 @@ describe('<NavigationButtons>', () => {
       expect(queryByTestId(container, 'interrupt-survey')).toBeNull();
     });
   });
+
+  describe('when `props.readOnlyMode` is `true`', () => {
+    beforeEach(() => {
+      props.readOnlyMode = true;
+      props.onAddNew = () => {};
+      props.onInterrupt = () => {};
+    });
+
+    it('should not render the button to add new', () => {
+      const {container} = getComponent();
+      expect(queryByTestId(container, 'add-new')).toBeNull();
+    });
+
+    it('should not render the button to interrupt survey', () => {
+      const {container} = getComponent();
+      expect(queryByTestId(container, 'interrupt-survey')).toBeNull();
+    });
+  });
 });

@@ -408,3 +408,36 @@ WithCustomNavigationButtons.args = {
     NavigationButtons: props => <NavigationButtons {...props} />
   }
 };
+
+export const WithReadOnlyMode = Template.bind({});
+WithReadOnlyMode.args = {
+  initialValues: {
+    S1: [
+      {
+        id: 1,
+        S1P1: {
+          id: 1,
+          answer: {value: 'test'}
+        },
+        S1P2: {
+          id: 2,
+          answer: {value: 26}
+        },
+        S1P3: {
+          id: 3,
+          answer: [
+            {
+              id: 1,
+              value: 123456
+            },
+            {
+              id: 2,
+              value: 12345678
+            }
+          ]
+        }
+      }
+    ]
+  },
+  isReadOnly: true
+};

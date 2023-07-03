@@ -3,19 +3,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
-import defaultMessages from '@/constants/defaultMessages';
 import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
-
-const getSelectedOptions = (options, selectedValues) => selectedValues.reduce((accumulator, currentValue) => {
-  const option = options.find(currentOption => currentOption.value === currentValue);
-  return option ? [...accumulator, option.label] : accumulator;
-}, []).join(', ') || defaultMessages.UNANSWERED;
 
 const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
   const isChecked = e.target.checked;
@@ -31,27 +24,23 @@ function Checkbox({
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
       <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
-      {readOnlyMode ? (
-        <Typography>
-          {getSelectedOptions(options, field.value)}
-        </Typography>
-      ) : (
-        <FormGroup>
-          {options.map((option, index) => (
-            <FormControlLabel
-              key={option.value}
-              control={(
-                <MuiCheckbox
-                  data-testid={`option-${index}`}
-                  checked={field.value.includes(option.value)}
-                  onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
-                />
-              )}
-              label={option.label}
-            />
-          ))}
-        </FormGroup>
-      )}
+      <FormGroup>
+        {options.map((option, index) => (
+          <FormControlLabel
+            key={option.value}
+            data-testid={`checkbox-${index}`}
+            control={(
+              <MuiCheckbox
+                data-testid={`option-${index}`}
+                checked={field.value.includes(option.value)}
+                onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
+              />
+            )}
+            label={option.label}
+            disabled={readOnlyMode}
+          />
+        ))}
+      </FormGroup>
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
     </Stack>
   );

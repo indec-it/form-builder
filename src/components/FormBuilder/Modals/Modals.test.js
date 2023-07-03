@@ -1,4 +1,4 @@
-import {getByTestId, getByText} from '@testing-library/react';
+import {getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
 import Modals from './Modals';
 
@@ -49,9 +49,9 @@ describe('<Modals>', () => {
         };
       });
 
-      it('should render QuestionBuilder component', () => {
+      it('should not render QuestionBuilder component', () => {
         const {baseElement} = getComponent();
-        expect(getByTestId(baseElement, 'question-builder')).toBeInTheDocument();
+        expect(queryByTestId(baseElement, 'question-builder')).toBeNull();
       });
     });
 

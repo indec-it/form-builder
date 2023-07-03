@@ -4,12 +4,10 @@ import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import MuiTextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
 import HelpIcon from '@mui/icons-material/Help';
 
 import InputLabel from '@/components/InputLabel';
 import FieldMessage from '@/components/FieldMessage';
-import defaultMessages from '@/constants/defaultMessages';
 import {formikField, formikForm} from '@/utils/propTypes';
 
 function TextField({
@@ -25,38 +23,35 @@ function TextField({
         label={label}
         readOnly={readOnlyMode}
       />
-      {readOnlyMode ? (
-        <Typography>{field.value || defaultMessages.UNANSWERED}</Typography>
-      ) : (
-        <MuiTextField
-          fullWidth
-          id={`field-${field.name}`}
-          placeholder={placeholder}
-          inputProps={{'data-testid': 'text-field'}}
-          InputProps={{
-            endAdornment: tooltip && (
-              <InputAdornment position="end">
-                <Tooltip
-                  arrow
-                  placement="top"
-                  title={tooltip}
+      <MuiTextField
+        fullWidth
+        id={`field-${field.name}`}
+        placeholder={placeholder}
+        inputProps={{'data-testid': 'text-field'}}
+        InputProps={{
+          endAdornment: tooltip && (
+            <InputAdornment position="end">
+              <Tooltip
+                arrow
+                placement="top"
+                title={tooltip}
+              >
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  flexWrap="wrap"
+                  px={2}
                 >
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    flexWrap="wrap"
-                    px={2}
-                  >
-                    <HelpIcon fontSize="small" />
-                  </Box>
-                </Tooltip>
-              </InputAdornment>
-            )
-          }}
-          {...field}
-          {...props}
-        />
-      )}
+                  <HelpIcon fontSize="small" />
+                </Box>
+              </Tooltip>
+            </InputAdornment>
+          )
+        }}
+        {...field}
+        {...props}
+        disabled={readOnlyMode}
+      />
       <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
     </Box>
   );

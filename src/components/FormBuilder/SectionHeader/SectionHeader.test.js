@@ -77,26 +77,26 @@ describe('<SectionHeader>', () => {
     });
   });
 
-  describe('when `props.isSurvey` is `true`', () => {
+  it('should render a button to activate read only mode', () => {
+    const {container} = getComponent();
+    expect(getByTestId(container, 'read-only-button')).toBeInTheDocument();
+  });
+
+  describe('when the button to active read only mode is clicked', () => {
     beforeEach(() => {
-      props.isSurvey = true;
-    });
-
-    it('should render a button to activate read only mode', () => {
       const {container} = getComponent();
-      expect(getByTestId(container, 'read-only-button')).toBeInTheDocument();
+      const button = getByTestId(container, 'read-only-button');
+      fireEvent.click(button);
     });
 
-    describe('when the button to active read only mode is clicked', () => {
-      beforeEach(() => {
-        const {container} = getComponent();
-        const button = getByTestId(container, 'read-only-button');
-        fireEvent.click(button);
-      });
+    it('should fire `props.onView`', () => {
+      expect(props.onView).toHaveBeenCalledTimes(1);
+    });
+  });
 
-      it('should fire `props.onView`', () => {
-        expect(props.onView).toHaveBeenCalledTimes(1);
-      });
+  describe('when `props.isReadOnly` is `false`', () => {
+    beforeEach(() => {
+      props.isReadOnly = false;
     });
 
     it('should render a button to edit survey', () => {
@@ -173,14 +173,9 @@ describe('<SectionHeader>', () => {
     });
   });
 
-  describe('when `props.isSurvey` is `false`', () => {
+  describe('when `props.isReadOnly` is `true`', () => {
     beforeEach(() => {
-      props.isSurvey = false;
-    });
-
-    it('should not render a button to activate read only mode', () => {
-      const {container} = getComponent();
-      expect(queryByTestId(container, 'read-only-button')).toBeNull();
+      props.isReadOnly = true;
     });
 
     it('should not render a button to edit survey', () => {

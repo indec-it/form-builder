@@ -1,11 +1,8 @@
 import {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
-import Typography from '@mui/material/Typography';
 
-import InputLabel from '@/components/InputLabel';
 import {formikField, formikForm} from '@/utils/propTypes';
-import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 import TextField from '../TextField';
 
@@ -18,12 +15,7 @@ function Select({
   };
   const selectedValue = useMemo(() => options.find(option => option[keyValue] === field.value) || {}, [field?.value]);
 
-  return readOnlyMode ? (
-    <>
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
-      <Typography>{getSelectedOptionLabel(options, field.value)}</Typography>
-    </>
-  ) : (
+  return (
     <Autocomplete
       disableClearable={required}
       options={options}
@@ -47,6 +39,7 @@ function Select({
       loading={loading}
       getOptionLabel={option => option.label || ''}
       value={selectedValue}
+      disabled={readOnlyMode}
     />
   );
 }

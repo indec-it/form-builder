@@ -122,9 +122,18 @@ describe('<Checkbox>', () => {
         props.field.value = ['2', '3'];
       });
 
-      it('should display the selected options', () => {
+      it('should be checked the selected options', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'Option 2, Option 3')).toBeInTheDocument();
+        const firstSelectedOption = getByTestId(container, 'checkbox-1');
+        const secondSelectedOption = getByTestId(container, 'checkbox-2');
+        expect(firstSelectedOption.querySelector('input').checked).toBe(true);
+        expect(secondSelectedOption.querySelector('input').checked).toBe(true);
+      });
+
+      it('should not be checked the other options', () => {
+        const {container} = getComponent();
+        const unselectedOption = getByTestId(container, 'checkbox-0');
+        expect(unselectedOption.querySelector('input').checked).toBe(false);
       });
     });
 
@@ -133,16 +142,16 @@ describe('<Checkbox>', () => {
         props.field.value = [];
       });
 
-      it('should display `Sin respuesta.`', () => {
+      it('should not display `Sin respuesta.`', () => {
         const {container} = getComponent();
-        expect(getByText(container, 'Sin respuesta.')).toBeInTheDocument();
+        expect(queryByText(container, 'Sin respuesta.')).toBeNull();
       });
     });
 
-    it('should not render the list of checkboxes', () => {
+    it('should render the list of checkboxes', () => {
       const {container} = getComponent();
       props.options.forEach(option => {
-        expect(queryByText(container, option.label)).toBeNull();
+        expect(getByText(container, option.label)).toBeInTheDocument();
       });
     });
   });

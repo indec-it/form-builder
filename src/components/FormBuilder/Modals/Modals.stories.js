@@ -26,42 +26,9 @@ function Template(args) {
   );
 }
 
-export const Preview = Template.bind({});
-Preview.args = {
-  modal: 1,
-  index: 0,
-  section: {
-    id: 1,
-    name: 'S1',
-    label: 'Sección 1',
-    multiple: false,
-    questions: [
-      {
-        id: 1,
-        label: 'Ingrese su nombre',
-        name: 'S1P1',
-        number: '1',
-        type: 1,
-        options: [],
-        validations: [],
-        userVarName: 's1p1'
-      }
-    ],
-    headers: [
-      {
-        id: 1,
-        question: 1
-      }
-    ]
-  },
-  values: {
-    S1: {id: 1, answer: ''}
-  }
-};
-
 export const Interruption = Template.bind({});
 Interruption.args = {
-  modal: 2,
+  modal: 1,
   label: 'Select an option',
   options: [
     {
@@ -77,4 +44,4 @@ Interruption.args = {
 };
 
 export const ConfirmDeleteSection = Template.bind({});
-ConfirmDeleteSection.args = {modal: 3};
+ConfirmDeleteSection.args = {modal: 2};
