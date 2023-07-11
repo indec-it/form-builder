@@ -105,7 +105,7 @@ function Template(args) {
             component={FieldMessage}
             {...props}
             warnings={warnings}
-            readOnly={false}
+            disabled={false}
           />
         );
       }}

@@ -85,7 +85,7 @@ function Template(args) {
             component={InputLabel}
             {...props}
             warnings={warnings}
-            readOnly={false}
+            disabled={false}
           />
         );
       }}
@@ -95,7 +95,6 @@ function Template(args) {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  readOnlyMode: false,
   label: 'Write your name',
   required: false,
   name: 'S1.0.S1P1.answer.value',
@@ -104,7 +103,6 @@ Basic.args = {
 
 export const WithRequired = Template.bind({});
 WithRequired.args = {
-  readOnlyMode: false,
   label: 'Write your name',
   required: true,
   name: 'S1.0.S1P1.answer.value',
@@ -113,7 +111,6 @@ WithRequired.args = {
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
-  readOnlyMode: false,
   label: 'Write your name',
   required: true,
   name: 'S1.0.S1P1.answer.value',
@@ -123,7 +120,6 @@ WithErrors.args = {
 
 export const WithWarnings = Template.bind({});
 WithWarnings.args = {
-  readOnlyMode: false,
   label: 'Write your name',
   required: false,
   name: 'S1.0.S1P1.answer.value',

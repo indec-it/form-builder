@@ -13,7 +13,7 @@ import sectionPropTypes from '@/utils/propTypes/section';
 
 import Wrapper from './Wrapper';
 
-const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnings, values) => {
+const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, values) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
@@ -44,7 +44,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         placeholder={placeholder}
         name={questionName}
         type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         isMultiple={multiple}
@@ -61,7 +61,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         placeholder={placeholder}
         options={options}
         name={questionName}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         isMultiple={multiple}
@@ -77,7 +77,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         options={question.options}
         label={labelWithNumber}
         name={questionName}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         isMultiple={multiple}
@@ -93,7 +93,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         name={questionName}
         options={options}
         label={labelWithNumber}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         isMultiple={multiple}
@@ -109,7 +109,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         options={options}
         label={labelWithNumber}
         name={questionName}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         isMultiple={multiple}
@@ -125,7 +125,7 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
         label={label}
         placeholder={placeholder}
         name={questionName}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         required={isRequired}
         warnings={warnings}
         metadata={metadata}
@@ -141,12 +141,12 @@ const getComponent = (section, sectionIndex, questionIndex, readOnlyMode, warnin
   return QuestionComponent;
 };
 
-function QuestionBuilder({values, section, index, readOnlyMode, warnings}) {
+function QuestionBuilder({values, section, index, disabled, warnings}) {
   return (
     <Grid container direction="column" spacing={2} data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
         <Grid item key={value.id}>
-          {getComponent(section, index, valueIndex - 1, readOnlyMode, warnings, values)}
+          {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
         </Grid>
       ))}
     </Grid>
@@ -155,14 +155,14 @@ function QuestionBuilder({values, section, index, readOnlyMode, warnings}) {
 
 QuestionBuilder.propTypes = {
   section: sectionPropTypes.isRequired,
-  readOnlyMode: PropTypes.bool,
+  disabled: PropTypes.bool,
   values: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
   warnings: PropTypes.shape({})
 };
 
 QuestionBuilder.defaultProps = {
-  readOnlyMode: false,
+  disabled: false,
   warnings: {}
 };
 

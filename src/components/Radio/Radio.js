@@ -10,11 +10,11 @@ import InputLabel from '@/components/InputLabel';
 import {formikField, formikForm} from '@/utils/propTypes';
 
 function Radio({
-  options, field, readOnlyMode, label, required, form, warnings
+  options, field, disabled, label, required, form, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
       <RadioGroup {...field}>
         {options.map((option, index) => (
           <FormControlLabel
@@ -23,19 +23,19 @@ function Radio({
             value={option.value}
             control={<MuiRadio />}
             label={option.label}
-            disabled={readOnlyMode}
+            disabled={disabled}
             checked={option.value === field.value}
           />
         ))}
       </RadioGroup>
-      <FieldMessage form={form} field={field} warnings={warnings} readOnly={readOnlyMode} />
+      <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
     </Stack>
   );
 }
 
 Radio.propTypes = {
-  readOnlyMode: PropTypes.bool.isRequired,
-  required: PropTypes.bool.isRequired,
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
@@ -49,7 +49,9 @@ Radio.propTypes = {
 };
 
 Radio.defaultProps = {
-  warnings: {}
+  warnings: {},
+  required: false,
+  disabled: false
 };
 
 export default Radio;

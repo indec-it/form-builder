@@ -79,7 +79,7 @@ describe('<RadioTable>', () => {
           title: 'Options 3'
         }
       ],
-      readOnlyMode: false,
+      disabled: false,
       required: false,
       label: 'Select the correct options',
       field: {value: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}, name: 'test'},
@@ -92,9 +92,9 @@ describe('<RadioTable>', () => {
     expect(getByTestId(container, 'input-label')).toBeInTheDocument();
   });
 
-  describe('when `props.readOnlyMode` is `true`', () => {
+  describe('when `props.disabled` is `true`', () => {
     beforeEach(() => {
-      props.readOnlyMode = true;
+      props.disabled = true;
     });
 
     it('should not render ReadOnly component', () => {
@@ -129,9 +129,9 @@ describe('<RadioTable>', () => {
     });
   });
 
-  describe('when `props.readOnlyMode` is `false`', () => {
+  describe('when `props.disabled` is `false`', () => {
     beforeEach(() => {
-      props.readOnlyMode = false;
+      props.disabled = false;
     });
 
     it('should not render ReadOnly component', () => {

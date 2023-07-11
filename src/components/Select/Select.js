@@ -7,7 +7,7 @@ import {formikField, formikForm} from '@/utils/propTypes';
 import TextField from '../TextField';
 
 function Select({
-  options, field, label, form, required, loading, onClean, placeholder, readOnlyMode, keyValue, warnings, ...props
+  options, field, label, form, required, loading, onClean, placeholder, disabled, keyValue, warnings, ...props
 }) {
   const handleChange = selectedValue => {
     form.setFieldValue(field.name, selectedValue ? selectedValue[keyValue] : undefined);
@@ -30,7 +30,7 @@ function Select({
           required={required}
           field={{name: field.name}}
           placeholder={placeholder}
-          readOnlyMode={readOnlyMode}
+          disabled={disabled}
           warnings={warnings}
         />
       )}
@@ -39,7 +39,7 @@ function Select({
       loading={loading}
       getOptionLabel={option => option.label || ''}
       value={selectedValue}
-      disabled={readOnlyMode}
+      disabled={disabled}
     />
   );
 }
@@ -57,7 +57,7 @@ Select.propTypes = {
   keyValue: PropTypes.string,
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   required: PropTypes.bool,
   loading: PropTypes.bool,
   warnings: PropTypes.shape({})
@@ -68,6 +68,7 @@ Select.defaultProps = {
   loadingText: 'Cargando...',
   required: false,
   loading: false,
+  disabled: false,
   onClean: () => {},
   placeholder: '[Seleccione]',
   keyValue: 'value',
