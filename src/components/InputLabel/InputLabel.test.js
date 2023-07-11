@@ -6,7 +6,7 @@ describe('<InputLabel>', () => {
   const getComponent = () => render(InputLabel, props);
   beforeEach(() => {
     props = {
-      readOnly: false,
+      disabled: false,
       label: 'test',
       field: {name: 'test'},
       form: {submitCount: 0, errors: {}, touched: {test: false}},
@@ -19,7 +19,7 @@ describe('<InputLabel>', () => {
     expect(getByText(container, props.label)).toBeInTheDocument();
   });
 
-  describe('when there is an error and `props.readOnly` is `false`', () => {
+  describe('when there is an error and `props.disabled` is `false`', () => {
     beforeEach(() => {
       props.form.errors = {test: 'there is an error'};
       props.form.touched = {test: true};
@@ -31,7 +31,7 @@ describe('<InputLabel>', () => {
     });
   });
 
-  describe('when there is not an error, `props.readOnly` is `false` and there`s a warning', () => {
+  describe('when there is not an error, `props.disabled` is `false` and there`s a warning', () => {
     beforeEach(() => {
       props.form.errors = {};
       props.form.touched = {test: true};

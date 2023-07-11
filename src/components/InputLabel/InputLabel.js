@@ -10,17 +10,17 @@ import formikFormPropTypes from '@/utils/propTypes/formikForm';
 import formikFieldPropTypes from '@/utils/propTypes/formikField';
 
 function InputLabel({
-  required, label, form, field, readOnly, warnings
+  required, label, form, field, disabled, warnings
 }) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   return (
     <Stack direction="row" spacing={2} data-testid="input-label">
-      {hasError && !readOnly && (
+      {hasError && !disabled && (
         <Box>
           <ErrorIcon color="error" data-testid="error-icon" />
         </Box>
       )}
-      {hasWarning && !readOnly && !hasError && (
+      {hasWarning && !disabled && !hasError && (
         <Box>
           <WarningIcon color="warning" data-testid="warning-icon" />
         </Box>
@@ -37,7 +37,7 @@ InputLabel.propTypes = {
   required: PropTypes.bool.isRequired,
   form: formikFormPropTypes.isRequired,
   field: formikFieldPropTypes.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   warnings: PropTypes.shape({})
 };
 

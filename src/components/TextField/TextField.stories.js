@@ -80,7 +80,7 @@ function Template(args) {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Write your name',
   required: false,
   name: 'S1.0.S1P1.answer.value',
@@ -89,7 +89,7 @@ Basic.args = {
 
 export const WithReadOnlyMode = Template.bind({});
 WithReadOnlyMode.args = {
-  readOnlyMode: true,
+  disabled: true,
   label: 'Write your name',
   required: false,
   name: 'S1.0.S1P1.answer.value',
@@ -99,7 +99,7 @@ WithReadOnlyMode.args = {
 
 export const WithTooltip = Template.bind({});
 WithTooltip.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Write your name',
   tooltip: 'This is an input with tooltip',
   required: false,
@@ -109,7 +109,7 @@ WithTooltip.args = {
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Write your name',
   required: true,
   name: 'S1.0.S1P1.answer.value',
@@ -119,7 +119,7 @@ WithErrors.args = {
 
 export const WithWarnings = Template.bind({});
 WithWarnings.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Write your name',
   required: false,
   name: 'S1.0.S1P1.answer.value',

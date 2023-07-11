@@ -11,7 +11,7 @@ import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm} from '@/utils/propTypes';
 
 function TextField({
-  form, field, placeholder, label, readOnlyMode, tooltip, required, warnings, ...props
+  form, field, placeholder, label, disabled, tooltip, required, warnings, ...props
 }) {
   return (
     <Box sx={{width: '100%'}}>
@@ -21,7 +21,7 @@ function TextField({
         form={form}
         field={field}
         label={label}
-        readOnly={readOnlyMode}
+        readOnly={disabled}
       />
       <MuiTextField
         fullWidth
@@ -50,9 +50,9 @@ function TextField({
         }}
         {...field}
         {...props}
-        disabled={readOnlyMode}
+        disabled={disabled}
       />
-      <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
+      <FieldMessage warnings={warnings} form={form} field={field} readOnly={disabled} />
     </Box>
   );
 }
@@ -60,8 +60,8 @@ function TextField({
 TextField.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired,
-  required: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   tooltip: PropTypes.string,
@@ -71,7 +71,9 @@ TextField.propTypes = {
 TextField.defaultProps = {
   placeholder: '[Ingrese texto]',
   tooltip: undefined,
-  warnings: {}
+  warnings: {},
+  disabled: false,
+  required: false
 };
 
 export default TextField;

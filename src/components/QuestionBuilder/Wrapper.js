@@ -12,7 +12,7 @@ import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
 function Wrapper({
-  isMultiple, name, values, subQuestions, options, readOnlyMode, warnings, ...props
+  isMultiple, name, values, subQuestions, options, disabled, warnings, ...props
 }) {
   let Component;
   if (isMultiple) {
@@ -25,24 +25,24 @@ function Wrapper({
               {...props}
               options={options}
               name={`${name}.${index}.value`}
-              readOnlyMode={readOnlyMode}
+              disabled={disabled}
               warnings={warnings}
             />
             <SubQuestions
               values={{answer, id: answer.id}}
               subQuestions={subQuestions}
-              readOnlyMode={readOnlyMode}
+              disabled={disabled}
               Component={TextField}
               warnings={warnings}
               name={`${name}.${index}.specifications`}
             />
-            {values.answer.length === index + 1 && !readOnlyMode && (
+            {values.answer.length === index + 1 && !disabled && (
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => helpers.push({id: getLastId(values.answer) + 1, value: ''})}
               />
             )}
-            {index > 0 && !readOnlyMode && (
+            {index > 0 && !disabled && (
               <Button
                 color="error"
                 startIcon={<DeleteIcon />}
@@ -59,7 +59,7 @@ function Wrapper({
         {...props}
         options={options}
         name={`${name}.value`}
-        readOnlyMode={readOnlyMode}
+        disabled={disabled}
         warnings={warnings}
       />
     );
@@ -71,7 +71,7 @@ function Wrapper({
         <SubQuestions
           values={values}
           subQuestions={subQuestions}
-          readOnlyMode={readOnlyMode}
+          disabled={disabled}
           Component={TextField}
           warnings={warnings}
           name={`${name}.specifications`}
@@ -84,6 +84,7 @@ function Wrapper({
 
 Wrapper.propTypes = {
   isMultiple: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
   subQuestions: PropTypes.arrayOf(subQuestionPropTypes),
@@ -92,7 +93,8 @@ Wrapper.propTypes = {
 
 Wrapper.defaultProps = {
   subQuestions: [],
-  warnings: {}
+  warnings: {},
+  disabled: false
 };
 
 export default Wrapper;

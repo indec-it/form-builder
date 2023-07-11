@@ -10,9 +10,7 @@ import DoneIcon from '@mui/icons-material/Done';
 function NavigationButtons({
   onPrevious,
   disablePreviousButton,
-  nextButtonLabel,
   onAddNew,
-  addButtonLabel,
   isLastSection,
   onInterrupt,
   readOnlyMode
@@ -37,7 +35,7 @@ function NavigationButtons({
               onClick={onAddNew}
               variant="outlined"
             >
-              {addButtonLabel}
+              Agregar nuevo
             </Button>
           )}
           {onInterrupt && (
@@ -60,7 +58,7 @@ function NavigationButtons({
         variant="contained"
         color={isLastSection ? 'success' : 'primary'}
       >
-        {nextButtonLabel}
+        {isLastSection ? 'Finalizar' : 'Siguiente'}
       </Button>
     </Stack>
   );
@@ -72,17 +70,13 @@ NavigationButtons.propTypes = {
   onAddNew: PropTypes.func,
   readOnlyMode: PropTypes.bool,
   disablePreviousButton: PropTypes.bool,
-  isLastSection: PropTypes.bool,
-  nextButtonLabel: PropTypes.string,
-  addButtonLabel: PropTypes.string
+  isLastSection: PropTypes.bool
 };
 
 NavigationButtons.defaultProps = {
   disablePreviousButton: false,
   isLastSection: false,
   readOnlyMode: false,
-  nextButtonLabel: 'Siguiente',
-  addButtonLabel: 'Agregar nuevo',
   onAddNew: null,
   onInterrupt: null
 };

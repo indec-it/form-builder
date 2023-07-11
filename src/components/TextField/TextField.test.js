@@ -10,7 +10,7 @@ describe('<TextField>', () => {
   beforeEach(() => {
     props = {
       label: 'Write your name',
-      readOnlyMode: false,
+      disabled: false,
       field: {value: '', name: 'test', onChange: jest.fn()},
       form: {errors: {}, submitCount: 0},
       required: false
@@ -22,9 +22,9 @@ describe('<TextField>', () => {
     expect(getByTestId(container, 'input-label')).toBeInTheDocument();
   });
 
-  describe('when `props.readOnlyMode` is `false`', () => {
+  describe('when `props.disabled` is `false`', () => {
     beforeEach(() => {
-      props.readOnlyMode = false;
+      props.disabled = false;
     });
 
     it('should render an input', () => {
@@ -51,9 +51,9 @@ describe('<TextField>', () => {
     });
   });
 
-  describe('when `props.readOnlyMode` is `true`', () => {
+  describe('when `props.disabled` is `true`', () => {
     beforeEach(() => {
-      props.readOnlyMode = true;
+      props.disabled = true;
     });
 
     it('should render an input', () => {

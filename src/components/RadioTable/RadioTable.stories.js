@@ -164,7 +164,7 @@ function Template(args) {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Select an option',
   required: false,
   name: 'S1.0.S1P1.answer.value',
@@ -174,7 +174,7 @@ Basic.args = {
 
 export const WithReadOnlyMode = Template.bind({});
 WithReadOnlyMode.args = {
-  readOnlyMode: true,
+  disabled: true,
   label: 'Select an option',
   required: false,
   name: 'S1.0.S1P1.answer.value',
@@ -185,7 +185,7 @@ WithReadOnlyMode.args = {
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
-  readOnlyMode: false,
+  disabled: false,
   label: 'Select an option',
   required: true,
   name: 'S1.0.S1P1.answer.value',

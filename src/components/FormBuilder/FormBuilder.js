@@ -108,7 +108,7 @@ function FormBuilder({
                           values={currentSection}
                           index={index}
                           section={section}
-                          readOnlyMode={readOnlyMode}
+                          disabled={readOnlyMode}
                           warnings={warnings}
                         />
                       </Box>
@@ -137,12 +137,22 @@ function FormBuilder({
             />
             {
               components.NavigationButtons
-                ? <components.NavigationButtons schema={validateSchema} values={values ? values[section.name] : {}} />
+                ? (
+                  <components.NavigationButtons
+                    schema={validateSchema}
+                    values={values ? values[section.name] : {}}
+                    onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                    onInterrupt={
+                      section.interruption.interruptible
+                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                        : undefined
+                    }
+                  />
+                )
                 : (
                   <NavigationButtons
                     onPrevious={onPrevious}
                     disablePreviousButton={page === 0}
-                    nextButtonLabel={isLastSection ? 'Finalizar' : 'Siguiente'}
                     isLastSection={isLastSection}
                     onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
                     onInterrupt={

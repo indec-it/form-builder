@@ -6,7 +6,7 @@ describe('<FieldMessage>', () => {
   const getComponent = () => render(FieldMessage, props);
   beforeEach(() => {
     props = {
-      readOnly: false,
+      disabled: false,
       label: 'test',
       field: {name: 'test'},
       form: {submitCount: 0, errors: {}, touched: {test: false}},
@@ -14,9 +14,9 @@ describe('<FieldMessage>', () => {
     };
   });
 
-  describe('when `props.readOnly` is `false` and there is an error', () => {
+  describe('when `props.disabled` is `false` and there is an error', () => {
     beforeEach(() => {
-      props.readOnly = false;
+      props.disabled = false;
       props.form.errors = {test: 'there is an error'};
       props.form.touched = {test: true};
     });
@@ -27,9 +27,9 @@ describe('<FieldMessage>', () => {
     });
   });
 
-  describe('when `props.readOnly` is `false`, there is not an error and there is a warning', () => {
+  describe('when `props.disabled` is `false`, there is not an error and there is a warning', () => {
     beforeEach(() => {
-      props.readOnly = false;
+      props.disabled = false;
       props.form.errors = {};
       props.form.touched = {test: true};
       props.warnings = {test: 'there is a warning'};

@@ -42,7 +42,7 @@ describe('<Radio>', () => {
           ]
         }
       ],
-      readOnlyMode: false,
+      disabled: false,
       required: false,
       label: 'Select an option',
       field: {value: '', name: 'test'},
@@ -55,9 +55,9 @@ describe('<Radio>', () => {
     expect(getByTestId(container, 'input-label')).toBeInTheDocument();
   });
 
-  describe('when `props.readOnlyMode` is `false`', () => {
+  describe('when `props.disabled` is `false`', () => {
     beforeEach(() => {
-      props.readOnlyMode = false;
+      props.disabled = false;
     });
 
     it('should display `props.options.label`', () => {
@@ -68,9 +68,9 @@ describe('<Radio>', () => {
     });
   });
 
-  describe('when `props.readOnlyMode` is `true`', () => {
+  describe('when `props.disabled` is `true`', () => {
     beforeEach(() => {
-      props.readOnlyMode = true;
+      props.disabled = true;
     });
 
     describe('and there is an option selected', () => {

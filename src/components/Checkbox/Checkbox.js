@@ -19,11 +19,11 @@ const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
 };
 
 function Checkbox({
-  options, label, field, form, readOnlyMode, required, warnings
+  options, label, field, form, disabled, required, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} readOnly={readOnlyMode} />
+      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
       <FormGroup>
         {options.map((option, index) => (
           <FormControlLabel
@@ -37,11 +37,11 @@ function Checkbox({
               />
             )}
             label={option.label}
-            disabled={readOnlyMode}
+            disabled={disabled}
           />
         ))}
       </FormGroup>
-      <FieldMessage warnings={warnings} form={form} field={field} readOnly={readOnlyMode} />
+      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </Stack>
   );
 }
@@ -51,9 +51,14 @@ Checkbox.propTypes = {
   options: PropTypes.arrayOf(optionPropTypes).isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  readOnlyMode: PropTypes.bool.isRequired,
-  required: PropTypes.bool.isRequired,
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
   warnings: PropTypes.shape({}).isRequired
+};
+
+Checkbox.defaultProps = {
+  required: false,
+  disabled: false
 };
 
 export default Checkbox;
