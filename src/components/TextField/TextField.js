@@ -21,7 +21,7 @@ function TextField({
         form={form}
         field={field}
         label={label}
-        readOnly={disabled}
+        disabled={disabled}
       />
       <MuiTextField
         fullWidth
@@ -52,7 +52,7 @@ function TextField({
         {...props}
         disabled={disabled}
       />
-      <FieldMessage warnings={warnings} form={form} field={field} readOnly={disabled} />
+      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </Box>
   );
 }

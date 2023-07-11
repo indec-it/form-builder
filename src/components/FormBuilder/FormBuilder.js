@@ -7,6 +7,7 @@ import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
 import useSectionInitialValues from '@/hooks/useSectionInitialValues';
+import buildQuestions from '@/utils/buildQuestions';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 import getSchemas from '@/utils/getSchemas';
@@ -54,7 +55,8 @@ function FormBuilder({
   const addNewSection = (setValues, values) => {
     const newValues = values;
     const lastSection = getLastId(values[section.name]);
-    newValues[section.name].push({...formInitialValues[section.name][0], id: lastSection + 1});
+    const emptySection = buildQuestions(section)[section.name][0];
+    newValues[section.name].push({...emptySection, id: lastSection + 1});
     setValues(newValues);
   };
 
