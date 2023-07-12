@@ -143,9 +143,9 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
 
 function QuestionBuilder({values, section, index, disabled, warnings}) {
   return (
-    <Grid container direction="column" spacing={2} data-testid="question-builder">
+    <Grid direction="column" spacing={2} data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
-        <Grid item key={value.id}>
+        <Grid item key={value.id} mb={2}>
           {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
         </Grid>
       ))}
