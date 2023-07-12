@@ -75,9 +75,7 @@ function FormBuilder({
             <FieldArray
               name={section.name}
               render={
-                sectionHelpers => values
-                && values[section.name]
-                && values[section.name].map((currentSection, index) => (
+                sectionHelpers => values?.[section.name]?.map((currentSection, index) => (
                   <Box key={currentSection.id} mb={2}>
                     {
                       components.SectionHeader
@@ -90,6 +88,7 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
+                            isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                           />
                         )
                         : (
@@ -101,6 +100,7 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
+                            isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                           />
                         )
                     }
@@ -117,11 +117,6 @@ function FormBuilder({
                     )}
                     <Modals
                       open={selectedSectionId === currentSection.id}
-                      values={currentSection}
-                      index={index}
-                      section={section}
-                      readOnlyMode
-                      cancelButtonLabel="Cerrar"
                       options={section.interruption.options}
                       label={section.interruption.reason}
                       name={`${section.name}.${index}.${section.interruption.name}`}

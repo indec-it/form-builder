@@ -51,7 +51,8 @@ describe('<SectionHeader>', () => {
       values: {
         S1P1: {id: 1, answer: {value: ''}},
         S1P2: {id: 2, answer: {value: ''}}
-      }
+      },
+      isValid: false
     };
   });
 
@@ -193,6 +194,28 @@ describe('<SectionHeader>', () => {
         const {container} = getComponent();
         expect(queryByTestId(container, 'delete-button')).toBeNull();
       });
+    });
+  });
+
+  describe('when `props.isValid` is `false`', () => {
+    beforeEach(() => {
+      props.isValid = false;
+    });
+
+    it('should render an error icon', () => {
+      const {container} = getComponent();
+      expect(getByTestId(container, 'error-icon')).toBeInTheDocument();
+    });
+  });
+
+  describe('when `props.isValid` is `true`', () => {
+    beforeEach(() => {
+      props.isValid = true;
+    });
+
+    it('should render a check icon', () => {
+      const {container} = getComponent();
+      expect(getByTestId(container, 'success-icon')).toBeInTheDocument();
     });
   });
 });
