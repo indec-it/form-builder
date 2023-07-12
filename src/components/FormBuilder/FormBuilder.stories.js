@@ -369,6 +369,26 @@ WithInitialValues.args = {
               value: 12345678
             }
           ]
+        },
+        S1P4: {
+          id: 4,
+          answer: {
+            value: '1',
+            specifications: {
+              S1P1SQ1: {
+                id: 1,
+                answer: {
+                  value: 'test'
+                }
+              },
+              S1P1SQ2: {
+                id: 2,
+                answer: {
+                  value: ''
+                }
+              }
+            }
+          }
         }
       }
     ]

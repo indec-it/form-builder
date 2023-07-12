@@ -28,14 +28,13 @@ const getChildren = (modal, {options, label, name}) => {
 };
 
 function Modals({
-  modal, acceptButtonLabel, cancelButtonLabel, onAccept, open, onClose, ...props
+  modal, onAccept, open, onClose, ...props
 }) {
   return (
     <Modal
       open={open}
       modal={modal}
-      acceptButtonLabel={acceptButtonLabel}
-      cancelButtonLabel={cancelButtonLabel}
+      cancelButtonLabel="Cerrar"
       onAccept={onAccept}
       onClose={onClose}
     >
@@ -47,8 +46,6 @@ function Modals({
 Modals.propTypes = {
   onClose: PropTypes.func.isRequired,
   onAccept: PropTypes.func,
-  acceptButtonLabel: PropTypes.string,
-  cancelButtonLabel: PropTypes.string,
   modal: PropTypes.oneOf(Object.values(modals)),
   selectedSection: PropTypes.number,
   open: PropTypes.bool
@@ -56,8 +53,6 @@ Modals.propTypes = {
 
 Modals.defaultProps = {
   onAccept: undefined,
-  acceptButtonLabel: undefined,
-  cancelButtonLabel: undefined,
   selectedSection: undefined,
   modal: undefined,
   open: false
