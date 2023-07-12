@@ -49,7 +49,7 @@ function SectionHeader({
     }}
     >
       <Stack>
-        <Stack direction="row" spacing={2} justifyContent="center" alignItems="center">
+        <Stack direction="row" spacing={2} alignItems="center">
           <Typography variant="h6" fontWeight="bold">{section.label}</Typography>
           {
             isValid
