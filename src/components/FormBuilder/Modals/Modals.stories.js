@@ -28,7 +28,7 @@ function Template(args) {
 
 export const Interruption = Template.bind({});
 Interruption.args = {
-  modal: 1,
+  modal: 2,
   label: 'Select an option',
   options: [
     {
@@ -44,4 +44,4 @@ Interruption.args = {
 };
 
 export const ConfirmDeleteSection = Template.bind({});
-ConfirmDeleteSection.args = {modal: 2};
+ConfirmDeleteSection.args = {modal: 3};

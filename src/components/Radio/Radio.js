@@ -6,31 +6,46 @@ import Stack from '@mui/material/Stack';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
-
+import breakpoints from '@/constants/breakpoints';
+import useBreakpoint from '@/hooks/useBreakpoint';
 import {formikField, formikForm} from '@/utils/propTypes';
+
+import MobileRadio from './MobileRadio';
 
 function Radio({
   options, field, disabled, label, required, form, warnings
 }) {
-  return (
-    <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
-      <RadioGroup {...field}>
-        {options.map((option, index) => (
-          <FormControlLabel
-            data-testid={`radio-${index}`}
-            key={option.value}
-            value={option.value}
-            control={<MuiRadio />}
-            label={option.label}
-            disabled={disabled}
-            checked={option.value === field.value}
-          />
-        ))}
-      </RadioGroup>
-      <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
-    </Stack>
-  );
+  const {breakpoint} = useBreakpoint();
+  return breakpoint === breakpoints.EXTRA_SMALL
+    ? (
+      <MobileRadio
+        options={options}
+        field={field}
+        disabled={disabled}
+        label={label}
+        required={required}
+        form={form}
+        warnings={warnings}
+      />
+    ) : (
+      <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
+        <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
+        <RadioGroup {...field}>
+          {options.map((option, index) => (
+            <FormControlLabel
+              data-testid={`radio-${index}`}
+              key={option.value}
+              value={option.value}
+              control={<MuiRadio />}
+              label={option.label}
+              disabled={disabled}
+              checked={option.value === field.value}
+            />
+          ))}
+        </RadioGroup>
+        <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
+      </Stack>
+    );
 }
 
 Radio.propTypes = {
