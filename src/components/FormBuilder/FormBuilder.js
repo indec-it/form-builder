@@ -68,7 +68,7 @@ function FormBuilder({
       validationSchema={validateSchema}
       onSubmit={onSubmit}
     >
-      {({values, setValues}) => {
+      {({values, setValues, errors}) => {
         const warnings = getWarnings(warningSchema, values) || {};
         return (
           <Form>
@@ -88,10 +88,9 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
-                            isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
+                            isValid={!errors?.[section.name]?.[index]}
                           />
-                        )
-                        : (
+                        ) : (
                           <SectionHeader
                             onView={() => handleShowSurvey(currentSection.id, true)}
                             onEdit={() => handleShowSurvey(currentSection.id, false)}
@@ -100,7 +99,7 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
-                            isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
+                            isValid={!errors?.[section.name]?.[index]}
                           />
                         )
                     }
