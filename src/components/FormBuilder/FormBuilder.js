@@ -14,7 +14,6 @@ import getSchemas from '@/utils/getSchemas';
 import getLastId from '@/utils/getLastId';
 
 import Modals from './Modals';
-
 import SectionHeader from './SectionHeader';
 
 function FormBuilder({
@@ -28,11 +27,11 @@ function FormBuilder({
   isReadOnly
 }) {
   const [readOnlyMode, setReadOnlyMode] = useState(isReadOnly);
-  const [showSurvey, setShowSurvey] = useState(false);
+  const [showSurvey, setShowSurvey] = useState();
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
-  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
   const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
 
   const handleShowSurvey = (sectionId, readOnly) => {
     setShowSurvey(sectionId);
@@ -111,6 +110,7 @@ function FormBuilder({
                           section={section}
                           disabled={readOnlyMode}
                           warnings={warnings}
+                          errors={errors?.[section.name]?.[index]}
                         />
                       </Box>
                     )}

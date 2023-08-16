@@ -19,7 +19,7 @@ function Template(args) {
   const {
     withErrors, withWarnings, initialValues, section, ...props
   } = args;
-  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   return (
     <Formik initialValues={initialValues} validationSchema={withErrors ? validateSchema : null}>
       {({values, submitForm}) => {

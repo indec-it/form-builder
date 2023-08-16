@@ -13,14 +13,13 @@ import sectionPropTypes from '@/utils/propTypes/section';
 
 import Wrapper from './Wrapper';
 
-const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, values) => {
+const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, values, errors) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
   }
   let QuestionComponent;
   const {
-    validations,
     number,
     label,
     multiple,
@@ -32,7 +31,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
     metadata
   } = question;
   const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
-  const isRequired = validations.some(validation => validation.type === 'required');
+  const hasError = !!(errors && errors[name]);
   const labelWithNumber = `${number} - ${label}`;
   switch (type) {
   case questionTypes.NUMERIC_FIELD:
@@ -45,7 +44,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         name={questionName}
         type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -62,7 +61,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         options={options}
         name={questionName}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -78,7 +77,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         label={labelWithNumber}
         name={questionName}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -94,7 +93,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         options={options}
         label={labelWithNumber}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -110,7 +109,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         label={labelWithNumber}
         name={questionName}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -126,7 +125,7 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         placeholder={placeholder}
         name={questionName}
         disabled={disabled}
-        required={isRequired}
+        required={hasError}
         warnings={warnings}
         metadata={metadata}
         isMultiple={multiple}
@@ -141,12 +140,12 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
   return QuestionComponent;
 };
 
-function QuestionBuilder({values, section, index, disabled, warnings}) {
+function QuestionBuilder({values, section, index, disabled, warnings, errors}) {
   return (
     <Grid data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
         <Grid item key={value.id} mb={2}>
-          {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
+          {getComponent(section, index, valueIndex - 1, disabled, warnings, values, errors)}
         </Grid>
       ))}
     </Grid>
@@ -158,12 +157,14 @@ QuestionBuilder.propTypes = {
   disabled: PropTypes.bool,
   values: PropTypes.shape({}).isRequired,
   index: PropTypes.number.isRequired,
-  warnings: PropTypes.shape({})
+  warnings: PropTypes.shape({}),
+  errors: PropTypes.shape({})
 };
 
 QuestionBuilder.defaultProps = {
   disabled: false,
-  warnings: {}
+  warnings: {},
+  errors: undefined
 };
 
 export default QuestionBuilder;
