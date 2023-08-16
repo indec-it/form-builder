@@ -58,7 +58,7 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Write your name',
+      label: 'Select an option',
       name: 'S1P1',
       number: '1',
       type: 1,
@@ -66,14 +66,21 @@ const section = {
       validations: [
         {
           id: 1,
-          type: 'required',
-          params: [
+          rules: [
             {
               id: 1,
-              message: 'Must select an option'
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: '',
+                  type: 'eq',
+                  section: 'S2'
+                }
+              ]
             }
           ],
-          messageType: 'error'
+          message: {text: 'Must select an option', type: 'error'}
         }
       ],
       userVarName: 's1p1'
@@ -82,7 +89,7 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   const {withErrors, withWarnings, initialValues, ...props} = args;
   return (
     <Formik

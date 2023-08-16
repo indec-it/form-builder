@@ -41,26 +41,39 @@ const section = {
       validations: [
         {
           id: 1,
-          type: 'required',
-          params: [
+          rules: [
             {
               id: 1,
-              message: 'Must write your name'
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: '',
+                  type: 'eq',
+                  section: 'S2'
+                }
+              ]
             }
           ],
-          messageType: 'error'
+          message: {text: 'Must write your name', type: 'error'}
         },
         {
           id: 2,
-          params: [
+          rules: [
             {
               id: 1,
-              value: 2,
-              message: 'Your name shouldn`t have less than 2 characters'
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: 2,
+                  type: 'lt',
+                  section: 'S2'
+                }
+              ]
             }
           ],
-          type: 'min',
-          messageType: 'warning'
+          message: {text: 'Your name shouldn`t have less than 2 characters', type: 'warning'}
         }
       ],
       userVarName: 's1p1'
@@ -87,7 +100,7 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   const {withErrors, withWarnings, ...props} = args;
   return (
     <Formik

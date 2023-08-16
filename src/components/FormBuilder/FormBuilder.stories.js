@@ -62,14 +62,21 @@ const sections = [
         validations: [
           {
             id: 1,
-            type: 'required',
-            params: [
+            rules: [
               {
                 id: 1,
-                message: 'Debe seleccionar un tipo de transaccion'
+                conditions: [
+                  {
+                    id: 1,
+                    question: 'S2P1',
+                    value: '',
+                    type: 'eq',
+                    section: 'S2'
+                  }
+                ]
               }
             ],
-            messageType: 'error'
+            message: {text: 'Debe seleccionar un tipo de transaccion', type: 'error'}
           }
         ],
         subQuestions: [],
@@ -104,17 +111,7 @@ const sections = [
         ],
         multiple: false,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'suminstro'
@@ -144,14 +141,21 @@ const sections = [
         validations: [
           {
             id: 1,
-            type: 'required',
-            params: [
+            rules: [
               {
                 id: 1,
-                message: 'Debe ingresar un monto'
+                conditions: [
+                  {
+                    id: 1,
+                    question: 'S2P3',
+                    value: '',
+                    type: 'eq',
+                    section: 'S2'
+                  }
+                ]
               }
             ],
-            messageType: 'error'
+            message: {text: 'Debe ingresar un monto', type: 'error'}
           }
         ],
         subQuestions: [],
@@ -186,17 +190,7 @@ const sections = [
         ],
         multiple: true,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Pais'
@@ -251,17 +245,7 @@ const sections = [
         ],
         multiple: false,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'ServTot'
@@ -327,17 +311,7 @@ const sections = [
         ],
         multiple: false,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Transaccion'
@@ -370,17 +344,7 @@ const sections = [
         ],
         multiple: false,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Suministro'
@@ -425,17 +389,7 @@ const sections = [
         ],
         multiple: true,
         favorite: false,
-        validations: [
-          {
-            id: 1,
-            type: 'notRequired',
-            params: [
-              {
-                id: 1
-              }
-            ]
-          }
-        ],
+        validations: [],
         subQuestions: [
           {
             id: 1,

@@ -34,30 +34,51 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   }
 };
 
-const handleValidations = ({validator, validations, type, opts}) => {
+const isString = a => typeof a === 'string';
+
+const operations = {
+  eq: (a, b) => a === b,
+  ne: (a, b) => a !== b,
+  gt: (a, b) => (isString(a) ? a.length > b : a > b),
+  gte: (a, b) => (isString(a) ? a.length >= b : a >= b),
+  lt: (a, b) => (isString(a) ? a.length < b : a < b),
+  lte: (a, b) => (isString(a) ? a.length <= b : a <= b),
+  in: (a, b) => a.includes(b),
+  nin: (a, b) => !a.includes(b)
+};
+
+const handleValidations = ({validator, validations, type, opts, answers}) => {
   let newValidator = validator;
-  validations.forEach(validation => {
-    let validationType = validation.type;
+  validations.forEach((validation) => {
+    const validationType = validation.type;
+    const {type: messageType} = validation.message;
     if (
       (validationType === 'required' && type === questionTypes.RADIO_TABLE)
-      || (validation.messageType === 'warning' && opts.schemaType !== 'warning')
-      || (validation.messageType === 'error' && opts.schemaType !== 'error')
+      || (messageType === 'warning' && opts.schemaType !== 'warning')
+      || (messageType === 'error' && opts.schemaType !== 'error')
     ) {
       return;
     }
-    const newParams = [];
-    const isCheckboxRequired = validationType === 'required' && type === questionTypes.CHECKBOX;
-    validation.params.forEach(param => {
-      if (typeof param.value === 'number' || param.value || isCheckboxRequired) {
-        newParams.push(isCheckboxRequired ? 1 : param.value, param.message);
-      } else {
-        newParams.push(param.message);
+    const section = answers;
+    newValidator = newValidator.test(
+      'custom-validation',
+      validation.message.text,
+      // eslint-disable-next-line func-names
+      function () {
+        const rules = validation.rules.map(rule => rule.conditions.map(
+          condition => {
+            if (!Object.prototype.hasOwnProperty.call(section, condition.question)) {
+              return false;
+            }
+            return operations[condition.type](section[condition.question]?.answer?.value || '', condition.value);
+          }
+        ));
+        if (rules.every(rule => rule.some(value => value === true))) {
+          return this.createError({path: this.path, message: validation.message.text});
+        }
+        return true;
       }
-    });
-    if (isCheckboxRequired) {
-      validationType = 'min';
-    }
-    newValidator = validator[validationType](...newParams);
+    );
   });
   return newValidator;
 };
@@ -92,28 +113,37 @@ const buildAnswerObj = ({values = [], subQuestions, validator, multiple, opts}) 
   return multiple ? Yup.array().of(defaultSchema) : defaultSchema;
 };
 
-export default function buildYupSchema(schema, config, opts = {}) {
+export default function buildYupSchema(schema, config, values, opts = {}) {
   const schemaWithValidations = schema;
   const {
     name, type, validations, options, metadata, multiple, subQuestions = []
   } = config;
-  const requiredField = validations.some(validation => validation.type === 'required');
+  const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
     type,
     options,
     {
-      isRequired: requiredField,
-      message: requiredField?.params?.[0]?.message,
+      isRequired: !!requiredField,
+      message: requiredField?.message?.text,
       metadata
     }
   );
   if (!validator) {
     return schemaWithValidations;
   }
-  validator = handleValidations({validator, validations, type, opts});
+  validator = handleValidations({validator, validations, type, opts, answers: values});
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: Yup.lazy(values => buildAnswerObj({values, type, subQuestions, validator, multiple, opts}))
+    answer: Yup.lazy(
+      answerValues => buildAnswerObj({
+        values: answerValues,
+        type,
+        subQuestions,
+        validator,
+        multiple,
+        opts
+      })
+    )
   });
   return schemaWithValidations;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
-import {Button} from '@mui/material';
+import Button from '@mui/material/Button';
 
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
@@ -66,14 +66,21 @@ const section = {
       validations: [
         {
           id: 1,
-          type: 'required',
-          params: [
+          rules: [
             {
               id: 1,
-              message: 'Must select an option'
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: 1,
+                  type: 'lt',
+                  section: 'S2'
+                }
+              ]
             }
           ],
-          messageType: 'error'
+          message: {text: 'Must select an option', type: 'error'}
         }
       ],
       userVarName: 's1p1'
@@ -82,7 +89,7 @@ const section = {
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getSchemas(section);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   const {withErrors, withWarnings, initialValues, ...props} = args;
   return (
     <Formik
