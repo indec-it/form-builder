@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 
 import buildQuestions from '@/utils/buildQuestions';
 
-const useInitialValues = (values, section = {}) => {
+const useSectionInitialValues = (values, section = {}) => {
   const [initialValues, setInitialValues] = useState();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const useInitialValues = (values, section = {}) => {
   return {initialValues};
 };
 
-export default useInitialValues;
+export default useSectionInitialValues;
