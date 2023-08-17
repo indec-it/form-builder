@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
@@ -6,15 +5,12 @@ import Box from '@mui/material/Box';
 import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
-import useSectionInitialValues from '@/hooks/useSectionInitialValues';
-import buildQuestions from '@/utils/buildQuestions';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
-import getSchemas from '@/utils/getSchemas';
-import getLastId from '@/utils/getLastId';
 
 import Modals from './Modals';
 import SectionHeader from './SectionHeader';
+import useFormBuilder from './useFormBuilder';
 
 function FormBuilder({
   section,
@@ -26,39 +22,20 @@ function FormBuilder({
   initialValues,
   isReadOnly
 }) {
-  const [readOnlyMode, setReadOnlyMode] = useState(isReadOnly);
-  const [showSurvey, setShowSurvey] = useState();
-  const [selectedSectionId, setSelectedSelectionId] = useState();
-  const [openModal, setOpenModal] = useState();
-  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, section);
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
-
-  const handleShowSurvey = (sectionId, readOnly) => {
-    setShowSurvey(sectionId);
-    setReadOnlyMode(readOnly);
-  };
-
-  const handleOpenModal = (modal, sectionId) => {
-    setSelectedSelectionId(sectionId);
-    setOpenModal(modal);
-  };
-
-  const handleAcceptModal = (allSections, sectionHelpers) => {
-    if (openModal === modals.CONFIRM_DELETE_SECTION_MODAL) {
-      const index = allSections.findIndex(currentSection => currentSection.id === selectedSectionId);
-      sectionHelpers.remove(index);
-    }
-    setOpenModal(undefined);
-  };
-
-  const addNewSection = (setValues, values) => {
-    const newValues = values;
-    const lastSection = getLastId(values[section.name]);
-    const emptySection = buildQuestions(section)[section.name][0];
-    newValues[section.name].push({...emptySection, id: lastSection + 1});
-    setValues(newValues);
-  };
-
+  const {
+    readOnlyMode,
+    showSurvey,
+    formInitialValues,
+    validateSchema,
+    warningSchema,
+    selectedSectionId,
+    openModal,
+    handleAcceptModal,
+    addNewSection,
+    handleOpenModal,
+    handleShowSurvey,
+    setOpenModal
+  } = useFormBuilder({isReadOnly, section, initialValues});
   return (
     <Formik
       initialValues={formInitialValues}
@@ -182,13 +159,10 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  initialValues: undefined
-};
-
-FormBuilder.defaultProps = {
   isLastSection: false,
   isReadOnly: false,
-  components: {}
+  components: {},
+  initialValues: undefined
 };
 
 export default FormBuilder;
