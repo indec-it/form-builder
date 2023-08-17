@@ -3,8 +3,9 @@ import * as Yup from 'yup';
 import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
 import castArray from '@/utils/castArray';
+import operations from '@/utils/operations';
 
-const getValidatorType = (type, options, {isRequired, message, metadata}) => {
+const getValidatorType = (type, options, metadata) => {
   switch (type) {
   case questionTypes.TEXT_FIELD:
   case questionTypes.DROPDOWN:
@@ -18,12 +19,12 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   case questionTypes.RADIO_TABLE: {
     const opts = options.reduce((accumulator, currentValue) => ({
       ...accumulator,
-      [currentValue.name]: isRequired ? Yup.string().required(message) : Yup.string()
+      [currentValue.name]: Yup.string().default('')
     }), {});
     return Yup.object(opts);
   }
   case questionTypes.DATE: {
-    const field = isRequired ? Yup.string().required(message) : Yup.string();
+    const field = Yup.string().default('');
     if ([dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(metadata.dateType)) {
       return Yup.object({start: field, end: field});
     }
@@ -34,27 +35,12 @@ const getValidatorType = (type, options, {isRequired, message, metadata}) => {
   }
 };
 
-const isString = a => typeof a === 'string';
-
-const operations = {
-  eq: (a, b) => a === b,
-  ne: (a, b) => a !== b,
-  gt: (a, b) => (isString(a) ? a.length > b : a > b),
-  gte: (a, b) => (isString(a) ? a.length >= b : a >= b),
-  lt: (a, b) => (isString(a) ? a.length < b : a < b),
-  lte: (a, b) => (isString(a) ? a.length <= b : a <= b),
-  in: (a, b) => a.includes(b),
-  nin: (a, b) => !a.includes(b)
-};
-
-const handleValidations = ({validator, validations, type, opts, answers}) => {
+const handleValidations = ({validator, validations, opts, answers}) => {
   let newValidator = validator;
   validations.forEach((validation) => {
-    const validationType = validation.type;
     const {type: messageType} = validation.message;
     if (
-      (validationType === 'required' && type === questionTypes.RADIO_TABLE)
-      || (messageType === 'warning' && opts.schemaType !== 'warning')
+      (messageType === 'warning' && opts.schemaType !== 'warning')
       || (messageType === 'error' && opts.schemaType !== 'error')
     ) {
       return;
@@ -89,7 +75,6 @@ const buildSubQuestionsValidations = (subQuestions, opts) => subQuestions.reduce
   subQuestionValidator = handleValidations({
     validator: subQuestionValidator,
     validations: subQuestionValidations,
-    type: currentValue.type,
     opts
   });
   acc[currentValue.name] = Yup.object({answer: Yup.object({value: subQuestionValidator})});
@@ -118,20 +103,15 @@ export default function buildYupSchema(schema, config, values, opts = {}) {
   const {
     name, type, validations, options, metadata, multiple, subQuestions = []
   } = config;
-  const requiredField = validations.find(validation => validation.type === 'required');
   let validator = getValidatorType(
     type,
     options,
-    {
-      isRequired: !!requiredField,
-      message: requiredField?.message?.text,
-      metadata
-    }
+    metadata
   );
   if (!validator) {
     return schemaWithValidations;
   }
-  validator = handleValidations({validator, validations, type, opts, answers: values});
+  validator = handleValidations({validator, validations, opts, answers: values});
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
     answer: Yup.lazy(

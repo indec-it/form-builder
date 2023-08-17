@@ -21,7 +21,11 @@ function Template(args) {
   } = args;
   const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   return (
-    <Formik initialValues={initialValues} validationSchema={withErrors ? validateSchema : null}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={withErrors ? validateSchema : null}
+      onSubmit={() => {}}
+    >
       {({values, submitForm}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
@@ -58,14 +62,21 @@ const section = dateType => ({
       validations: [
         {
           id: 1,
-          type: 'required',
-          params: [
+          rules: [
             {
               id: 1,
-              message: 'Must select a date'
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: '',
+                  type: 'eq',
+                  section: 'S2'
+                }
+              ]
             }
           ],
-          messageType: 'error'
+          message: {text: 'Must select a date', type: 'error'}
         }
       ],
       userVarName: 's1p1'

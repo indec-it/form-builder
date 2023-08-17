@@ -44,14 +44,14 @@ function RadioTable({
               ))}
             </RadioGroup>
           </Stack>
-          <FieldMessage
-            warnings={warnings}
-            form={form}
-            field={{...field, name: `${field.name}.${option.name}`}}
-            disabled={disabled}
-          />
         </Box>
       ))}
+      <FieldMessage
+        warnings={warnings}
+        form={form}
+        field={field}
+        disabled={disabled}
+      />
     </Stack>
   );
 }
