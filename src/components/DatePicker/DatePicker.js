@@ -9,11 +9,12 @@ import dateTypes from '@/constants/dateTypes';
 import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 
+import FieldMessage from '../FieldMessage';
 import TextField from '../TextField';
 import DateTimePickerSelector from './DatePickerSelector';
 
 function DatePicker({
-  metadata: {dateType}, field, label, required, form, ...props
+  metadata: {dateType}, field, label, required, form, warnings, disabled, ...props
 }) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
@@ -36,6 +37,8 @@ function DatePicker({
                 value: params.inputProps.value
               }}
               required={required}
+              warnings={warnings}
+              disabled={disabled}
             />
           )}
         />
@@ -52,12 +55,15 @@ function DatePicker({
                 form={form}
                 field={{...field, name: `${field.name}.end`, value: params.inputProps.value}}
                 required={required}
+                warnings={warnings}
+                disabled={disabled}
               />
             )}
             disabled={!field.value.start}
           />
         )}
       </Stack>
+      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </LocalizationProvider>
   );
 }
@@ -67,9 +73,16 @@ DatePicker.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   required: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   metadata: PropTypes.shape({
     dateType: PropTypes.oneOf(Object.values(dateTypes)).isRequired
-  }).isRequired
+  }).isRequired,
+  warnings: PropTypes.shape({})
+};
+
+DatePicker.defaultProps = {
+  warnings: {},
+  disabled: false
 };
 
 export default DatePicker;
