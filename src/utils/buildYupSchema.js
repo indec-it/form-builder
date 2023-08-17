@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
 import castArray from '@/utils/castArray';
-import operations from '@/utils/operations';
+import getValidationRules from '@/utils/getValidationRules';
 
 const getValidatorType = (type, options, metadata) => {
   switch (type) {
@@ -45,21 +45,13 @@ const handleValidations = ({validator, validations, opts, answers}) => {
     ) {
       return;
     }
-    const section = answers;
     newValidator = newValidator.test(
       'custom-validation',
       validation.message.text,
       // eslint-disable-next-line func-names
       function () {
-        const rules = validation.rules.map(rule => rule.conditions.map(
-          condition => {
-            if (!Object.prototype.hasOwnProperty.call(section, condition.question)) {
-              return false;
-            }
-            return operations[condition.type](section[condition.question]?.answer?.value || '', condition.value);
-          }
-        ));
-        if (rules.every(rule => rule.some(value => value === true))) {
+        const rules = getValidationRules({validation, answers});
+        if (rules.some(value => value === true)) {
           return this.createError({path: this.path, message: validation.message.text});
         }
         return true;
