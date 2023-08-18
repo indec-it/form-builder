@@ -12,8 +12,11 @@ import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
 function Wrapper({
-  isMultiple, name, values, subQuestions, options, disabled, warnings, ...props
+  isMultiple, name, values, subQuestions, options, disabled, warnings, show, ...props
 }) {
+  if (!show) {
+    return null;
+  }
   let Component;
   if (isMultiple) {
     Component = (
@@ -84,17 +87,20 @@ function Wrapper({
 
 Wrapper.propTypes = {
   isMultiple: PropTypes.bool.isRequired,
+  show: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
   name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
   subQuestions: PropTypes.arrayOf(subQuestionPropTypes),
+  options: PropTypes.arrayOf(PropTypes.shape({})),
   warnings: PropTypes.shape({})
 };
 
 Wrapper.defaultProps = {
   subQuestions: [],
   warnings: {},
-  disabled: false
+  disabled: false,
+  options: []
 };
 
 export default Wrapper;

@@ -10,10 +10,24 @@ import Select from '@/components/Select';
 import TextField from '@/components/TextField';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
+import getValidationRules from '@/utils/getValidationRules';
 
 import Wrapper from './Wrapper';
 
-const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, values, errors) => {
+const actions = {
+  DISABLE: 'disable',
+  HIDE: 'hide'
+};
+
+const getComponent = (
+  section,
+  sectionIndex,
+  questionIndex,
+  disabled,
+  warnings,
+  values,
+  errors
+) => {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
@@ -28,11 +42,27 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
     placeholder,
     name,
     options,
-    metadata
+    metadata,
+    navigation = []
   } = question;
   const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
   const hasError = !!(errors && errors[name]);
   const labelWithNumber = `${number} - ${label}`;
+  let show = true;
+  const navigationRules = navigation.map(nav => {
+    if (!nav) {
+      return;
+    }
+    const rules = getValidationRules({validation: nav, answers: values});
+    // eslint-disable-next-line consistent-return
+    return {
+      action: nav.action,
+      result: rules.some(value => value)
+    };
+  });
+  const jump = navigationRules.find(rule => rule.result);
+  show = jump?.action !== actions.HIDE;
+  const isDisabled = jump?.action === actions.DISABLE || disabled;
   switch (type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
@@ -43,12 +73,13 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         placeholder={placeholder}
         name={questionName}
         type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
@@ -60,12 +91,13 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         placeholder={placeholder}
         options={options}
         name={questionName}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
@@ -76,12 +108,13 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         options={question.options}
         label={labelWithNumber}
         name={questionName}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
@@ -92,12 +125,13 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         name={questionName}
         options={options}
         label={labelWithNumber}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
@@ -108,12 +142,13 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         options={options}
         label={labelWithNumber}
         name={questionName}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
@@ -124,13 +159,14 @@ const getComponent = (section, sectionIndex, questionIndex, disabled, warnings, 
         label={label}
         placeholder={placeholder}
         name={questionName}
-        disabled={disabled}
+        disabled={isDisabled}
         required={hasError}
         warnings={warnings}
         metadata={metadata}
         isMultiple={multiple}
         values={values[name]}
         subQuestions={subQuestions}
+        show={show}
       />
     );
     break;
