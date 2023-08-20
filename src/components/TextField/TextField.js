@@ -14,7 +14,7 @@ function TextField({
   form, field, placeholder, label, disabled, tooltip, required, warnings, ...props
 }) {
   return (
-    <Box sx={{width: '100%'}}>
+    <>
       <InputLabel
         warnings={warnings}
         required={required}
@@ -53,7 +53,7 @@ function TextField({
         disabled={disabled}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
-    </Box>
+    </>
   );
 }
 
