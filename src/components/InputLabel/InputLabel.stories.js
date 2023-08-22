@@ -114,14 +114,6 @@ Basic.args = {
   warnings: {}
 };
 
-export const WithRequired = Template.bind({});
-WithRequired.args = {
-  label: 'Write your name',
-  required: true,
-  name: 'S1.0.S1P1.answer.value',
-  warnings: {}
-};
-
 export const WithErrors = Template.bind({});
 WithErrors.args = {
   label: 'Write your name',

@@ -8,11 +8,11 @@ import InputLabel from '@/components/InputLabel';
 import {formikField, formikForm} from '@/utils/propTypes';
 
 function MobileRadio({
-  options, field, disabled, label, required, form, warnings
+  options, field, disabled, label, form, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
+      <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map((option, index) => (
         <Button
           data-testid={`radio-${index}`}
@@ -31,7 +31,6 @@ function MobileRadio({
 }
 
 MobileRadio.propTypes = {
-  required: PropTypes.bool,
   disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
@@ -47,7 +46,6 @@ MobileRadio.propTypes = {
 
 MobileRadio.defaultProps = {
   warnings: {},
-  required: false,
   disabled: false
 };
 

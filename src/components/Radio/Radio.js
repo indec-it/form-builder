@@ -13,7 +13,7 @@ import {formikField, formikForm} from '@/utils/propTypes';
 import MobileRadio from './MobileRadio';
 
 function Radio({
-  options, field, disabled, label, required, form, warnings
+  options, field, disabled, label, form, warnings
 }) {
   const {breakpoint} = useBreakpoint();
   return breakpoint === breakpoints.EXTRA_SMALL
@@ -23,13 +23,12 @@ function Radio({
         field={field}
         disabled={disabled}
         label={label}
-        required={required}
         form={form}
         warnings={warnings}
       />
     ) : (
       <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
-        <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
+        <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
         <RadioGroup {...field}>
           {options.map((option, index) => (
             <FormControlLabel
@@ -49,7 +48,6 @@ function Radio({
 }
 
 Radio.propTypes = {
-  required: PropTypes.bool,
   disabled: PropTypes.bool,
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
@@ -65,7 +63,6 @@ Radio.propTypes = {
 
 Radio.defaultProps = {
   warnings: {},
-  required: false,
   disabled: false
 };
 

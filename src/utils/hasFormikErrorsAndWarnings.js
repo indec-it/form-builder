@@ -6,6 +6,7 @@ const hasFormikErrorsAndWarnings = ({form, field, warnings = {}}) => {
   const touched = getIn(form.touched, field.name);
   const formSubmittedOrTouched = form.submitCount > 0 || touched;
   return {
+    fieldMustBeCompleted: !!error,
     hasError: !!(formSubmittedOrTouched && error),
     error,
     hasWarning: !!(formSubmittedOrTouched && warning),

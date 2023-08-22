@@ -19,11 +19,11 @@ const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
 };
 
 function Checkbox({
-  options, label, field, form, disabled, required, warnings
+  options, label, field, form, disabled, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
+      <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       <FormGroup>
         {options.map((option, index) => (
           <FormControlLabel
@@ -51,13 +51,11 @@ Checkbox.propTypes = {
   options: PropTypes.arrayOf(optionPropTypes).isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  required: PropTypes.bool,
   disabled: PropTypes.bool,
   warnings: PropTypes.shape({}).isRequired
 };
 
 Checkbox.defaultProps = {
-  required: false,
   disabled: false
 };
 

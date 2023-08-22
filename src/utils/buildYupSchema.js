@@ -10,7 +10,7 @@ const getValidatorType = (type, options, metadata) => {
   case questionTypes.TEXT_FIELD:
   case questionTypes.DROPDOWN:
   case questionTypes.RADIO:
-    return Yup.string();
+    return Yup.string().default('');
   case questionTypes.NUMERIC_FIELD:
     return Yup.number()
       .transform(value => (Number.isNaN(value) || value === null || value === undefined || value === '' ? 0 : value));
@@ -35,7 +35,7 @@ const getValidatorType = (type, options, metadata) => {
   }
 };
 
-const handleValidations = ({validator, validations, opts, answers}) => {
+const handleValidations = ({validator, validations, opts, answers, questionName, multiple}) => {
   let newValidator = validator;
   validations.forEach((validation) => {
     const {type: messageType} = validation.message;
@@ -49,8 +49,10 @@ const handleValidations = ({validator, validations, opts, answers}) => {
       'custom-validation',
       validation.message.text,
       // eslint-disable-next-line func-names
-      function () {
-        const rules = getValidationRules({validation, answers});
+      function (currentValue) {
+        let formatAnswer = answers;
+        formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
+        const rules = getValidationRules({validation, answers: formatAnswer});
         if (rules.some(value => value === true)) {
           return this.createError({path: this.path, message: validation.message.text});
         }
@@ -103,7 +105,9 @@ export default function buildYupSchema(schema, config, values, opts = {}) {
   if (!validator) {
     return schemaWithValidations;
   }
-  validator = handleValidations({validator, validations, opts, answers: values});
+  validator = handleValidations({
+    validator, validations, opts, answers: values, questionName: name, multiple
+  });
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
     answer: Yup.lazy(

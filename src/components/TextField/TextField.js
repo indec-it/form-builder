@@ -11,13 +11,12 @@ import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm} from '@/utils/propTypes';
 
 function TextField({
-  form, field, placeholder, label, disabled, tooltip, required, warnings, ...props
+  form, field, placeholder, label, disabled, tooltip, warnings, ...props
 }) {
   return (
-    <>
+    <Box sx={{width: '100%'}}>
       <InputLabel
         warnings={warnings}
-        required={required}
         form={form}
         field={field}
         label={label}
@@ -53,7 +52,7 @@ function TextField({
         disabled={disabled}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
-    </>
+    </Box>
   );
 }
 
@@ -61,7 +60,6 @@ TextField.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   disabled: PropTypes.bool,
-  required: PropTypes.bool,
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   tooltip: PropTypes.string,
@@ -72,8 +70,7 @@ TextField.defaultProps = {
   placeholder: '[Ingrese texto]',
   tooltip: undefined,
   warnings: {},
-  disabled: false,
-  required: false
+  disabled: false
 };
 
 export default TextField;

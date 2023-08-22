@@ -10,9 +10,9 @@ import formikFormPropTypes from '@/utils/propTypes/formikForm';
 import formikFieldPropTypes from '@/utils/propTypes/formikField';
 
 function InputLabel({
-  required, label, form, field, disabled, warnings
+  label, form, field, disabled, warnings
 }) {
-  const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
+  const {hasWarning, hasError, fieldMustBeCompleted} = hasFormikErrorsAndWarnings({form, field, warnings});
   return (
     <Stack direction="row" spacing={2} data-testid="input-label">
       {hasError && !disabled && (
@@ -26,7 +26,7 @@ function InputLabel({
         </Box>
       )}
       <Box mb={0.5}>
-        <MuiInputLabel required={required}>{label}</MuiInputLabel>
+        <MuiInputLabel required={fieldMustBeCompleted}>{label}</MuiInputLabel>
       </Box>
     </Stack>
   );
@@ -34,7 +34,6 @@ function InputLabel({
 
 InputLabel.propTypes = {
   label: PropTypes.string.isRequired,
-  required: PropTypes.bool.isRequired,
   form: formikFormPropTypes.isRequired,
   field: formikFieldPropTypes.isRequired,
   disabled: PropTypes.bool.isRequired,

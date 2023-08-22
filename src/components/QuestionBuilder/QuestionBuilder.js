@@ -25,8 +25,7 @@ const getComponent = (
   questionIndex,
   disabled,
   warnings,
-  values,
-  errors
+  values
 ) => {
   const question = section.questions[questionIndex];
   if (!question) {
@@ -46,7 +45,6 @@ const getComponent = (
     navigation = []
   } = question;
   const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
-  const hasError = !!(errors && errors[name]);
   const labelWithNumber = `${number} - ${label}`;
   let show = true;
   const navigationRules = navigation.map(nav => {
@@ -74,7 +72,6 @@ const getComponent = (
         name={questionName}
         type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -92,7 +89,6 @@ const getComponent = (
         options={options}
         name={questionName}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -109,7 +105,6 @@ const getComponent = (
         label={labelWithNumber}
         name={questionName}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -126,7 +121,6 @@ const getComponent = (
         options={options}
         label={labelWithNumber}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -143,7 +137,6 @@ const getComponent = (
         label={labelWithNumber}
         name={questionName}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         isMultiple={multiple}
         values={values[name]}
@@ -160,7 +153,6 @@ const getComponent = (
         placeholder={placeholder}
         name={questionName}
         disabled={isDisabled}
-        required={hasError}
         warnings={warnings}
         metadata={metadata}
         isMultiple={multiple}
@@ -176,12 +168,12 @@ const getComponent = (
   return QuestionComponent;
 };
 
-function QuestionBuilder({values, section, index, disabled, warnings, errors}) {
+function QuestionBuilder({values, section, index, disabled, warnings}) {
   return (
     <Grid data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
         <Grid item key={value.id} mb={2}>
-          {getComponent(section, index, valueIndex - 1, disabled, warnings, values, errors)}
+          {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
         </Grid>
       ))}
     </Grid>
