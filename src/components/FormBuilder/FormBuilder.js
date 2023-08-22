@@ -87,7 +87,6 @@ function FormBuilder({
                           section={section}
                           disabled={readOnlyMode}
                           warnings={warnings}
-                          errors={errors?.[section.name]?.[index]}
                         />
                       </Box>
                     )}

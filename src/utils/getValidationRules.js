@@ -5,7 +5,9 @@ const getConditions = ({conditions, answers}) => conditions.map(
     if (!Object.prototype.hasOwnProperty.call(answers, condition.question)) {
       return false;
     }
-    return operations[condition.type](answers[condition.question]?.answer?.value || '', condition.value);
+    const question = answers[condition.question];
+    const value = question?.answer?.value;
+    return operations[condition.type](value || '', condition.value);
   }
 );
 

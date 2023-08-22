@@ -7,7 +7,7 @@ import {formikField, formikForm} from '@/utils/propTypes';
 import TextField from '../TextField';
 
 function Select({
-  options, field, label, form, required, loading, onClean, placeholder, disabled, keyValue, warnings, ...props
+  options, field, label, form, loading, onClean, placeholder, disabled, keyValue, warnings, ...props
 }) {
   const handleChange = selectedValue => {
     form.setFieldValue(field.name, selectedValue ? selectedValue[keyValue] : undefined);
@@ -17,7 +17,7 @@ function Select({
 
   return (
     <Autocomplete
-      disableClearable={required}
+      disableClearable={false}
       options={options}
       fullWidth
       noOptionsText="No hay opciones."
@@ -27,7 +27,6 @@ function Select({
           {...params}
           form={form}
           label={label}
-          required={required}
           field={{name: field.name}}
           placeholder={placeholder}
           disabled={disabled}
@@ -58,7 +57,6 @@ Select.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   disabled: PropTypes.bool,
-  required: PropTypes.bool,
   loading: PropTypes.bool,
   warnings: PropTypes.shape({})
 };
@@ -66,7 +64,6 @@ Select.propTypes = {
 Select.defaultProps = {
   options: [],
   loadingText: 'Cargando...',
-  required: false,
   loading: false,
   disabled: false,
   onClean: () => {},

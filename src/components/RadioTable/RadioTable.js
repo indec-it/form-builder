@@ -13,11 +13,11 @@ import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
 
 function RadioTable({
-  options, label, form, field, disabled, required, warnings
+  options, label, form, field, disabled, warnings
 }) {
   return (
     <Stack direction="column" spacing={2} sx={{width: '100%'}}>
-      <InputLabel warnings={warnings} required={required} form={form} field={field} label={label} disabled={disabled} />
+      <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map(option => (
         <Box key={option.id}>
           <Stack direction="row" spacing={5} alignItems="center">
@@ -69,14 +69,12 @@ RadioTable.propTypes = {
   ).isRequired,
   label: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  required: PropTypes.bool,
   warnings: PropTypes.shape({})
 };
 
 RadioTable.defaultProps = {
   warnings: {},
-  disabled: false,
-  required: false
+  disabled: false
 };
 
 export default RadioTable;

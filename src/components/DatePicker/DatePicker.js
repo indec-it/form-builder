@@ -14,12 +14,12 @@ import TextField from '../TextField';
 import DateTimePickerSelector from './DatePickerSelector';
 
 function DatePicker({
-  metadata: {dateType}, field, label, required, form, warnings, disabled, ...props
+  metadata: {dateType}, field, label, form, warnings, disabled, ...props
 }) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-      <MuiInputLabel required={required}>{label}</MuiInputLabel>
+      <MuiInputLabel>{label}</MuiInputLabel>
       <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
         <DateTimePickerSelector
           type={dateType}
@@ -36,7 +36,6 @@ function DatePicker({
                 name: isRange ? `${field.name}.start` : field.name,
                 value: params.inputProps.value
               }}
-              required={required}
               warnings={warnings}
               disabled={disabled}
             />
@@ -54,7 +53,6 @@ function DatePicker({
                 {...props}
                 form={form}
                 field={{...field, name: `${field.name}.end`, value: params.inputProps.value}}
-                required={required}
                 warnings={warnings}
                 disabled={disabled}
               />
@@ -72,7 +70,6 @@ DatePicker.propTypes = {
   label: PropTypes.string.isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  required: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,
   metadata: PropTypes.shape({
     dateType: PropTypes.oneOf(Object.values(dateTypes)).isRequired
