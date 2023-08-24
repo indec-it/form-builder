@@ -1,16 +1,18 @@
 import {useEffect, useState} from 'react';
 
-import castArray from '@/utils/castArray';
+import getNavigation from '@/utils/getNavigation';
 
-const useSubQuestions = (subQuestions, value) => {
+const useSubQuestions = ({subQuestions, value, name}) => {
   const [selectedQuestions, setSelectedSubQuestions] = useState([]);
-
   useEffect(() => {
     const subQuestionsFiltered = subQuestions.filter(
-      subQuestion => castArray(value).includes(subQuestion.optionId.toString())
+      subQuestion => {
+        const condition = getNavigation({navigation: subQuestion.navigation, answers: value});
+        return !condition;
+      }
     );
     setSelectedSubQuestions(subQuestionsFiltered);
-  }, [value]);
+  }, [value?.[name]?.answer?.value]);
 
   return {selectedQuestions};
 };

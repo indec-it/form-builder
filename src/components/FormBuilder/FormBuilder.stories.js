@@ -79,6 +79,7 @@ const sections = [
             message: {text: 'Debe seleccionar un tipo de transaccion', type: 'error'}
           }
         ],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Transaccion'
@@ -112,6 +113,7 @@ const sections = [
         multiple: false,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'suminstro'
@@ -158,6 +160,7 @@ const sections = [
             message: {text: 'Debe ingresar un monto', type: 'error'}
           }
         ],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Monto'
@@ -191,6 +194,7 @@ const sections = [
         multiple: true,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Pais'
@@ -246,6 +250,7 @@ const sections = [
         multiple: false,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'ServTot'
@@ -312,6 +317,7 @@ const sections = [
         multiple: false,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Transaccion'
@@ -345,6 +351,7 @@ const sections = [
         multiple: false,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [],
         metadata: {},
         userVarName: 'Suministro'
@@ -390,6 +397,7 @@ const sections = [
         multiple: true,
         favorite: false,
         validations: [],
+        navigation: [],
         subQuestions: [
           {
             id: 1,
@@ -400,12 +408,48 @@ const sections = [
             validations: [
               {
                 id: 1,
-                type: 'notRequired',
-                params: [
+                rules: [
                   {
-                    id: 1
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        type: 'eq',
+                        question: 'S2P4SQ1',
+                        value: '',
+                        section: 'S2'
+                      },
+                      {
+                        id: 2,
+                        type: 'eq',
+                        question: 'S1P4',
+                        value: '1',
+                        section: 'S2'
+                      }
+                    ]
                   }
-                ]
+                ],
+                message: {type: 'error', text: 'Debe completar el campo'}
+              }
+            ],
+            navigation: [
+              {
+                id: 1,
+                rules: [
+                  {
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        type: 'ne',
+                        question: 'S1P4',
+                        value: '1',
+                        section: 'S2'
+                      }
+                    ]
+                  }
+                ],
+                action: 'hide'
               }
             ],
             userVarName: 'monto1'
@@ -416,15 +460,25 @@ const sections = [
             type: '1',
             label: 'Monto pais',
             name: 'S2P4SQ2',
-            validations: [
+            validations: [],
+            navigation: [
               {
                 id: 1,
-                type: 'notRequired',
-                params: [
+                rules: [
                   {
-                    id: 1
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        type: 'ne',
+                        question: 'S1P4',
+                        value: '2',
+                        section: 'S2'
+                      }
+                    ]
                   }
-                ]
+                ],
+                action: 'hide'
               }
             ],
             userVarName: 'monto2'
@@ -435,15 +489,25 @@ const sections = [
             type: '1',
             label: 'Monto pais',
             name: 'S2P4SQ3',
-            validations: [
+            validations: [],
+            navigation: [
               {
                 id: 1,
-                type: 'notRequired',
-                params: [
+                rules: [
                   {
-                    id: 1
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        type: 'ne',
+                        question: 'S1P4',
+                        value: '3',
+                        section: 'S2'
+                      }
+                    ]
                   }
-                ]
+                ],
+                action: 'hide'
               }
             ],
             userVarName: 'monto3'
@@ -454,15 +518,25 @@ const sections = [
             type: '1',
             label: 'Monto pais',
             name: 'S2P4SQ4',
-            validations: [
+            validations: [],
+            navigation: [
               {
                 id: 1,
-                type: 'notRequired',
-                params: [
+                rules: [
                   {
-                    id: 1
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        type: 'ne',
+                        question: 'S1P4',
+                        value: '4',
+                        section: 'S2'
+                      }
+                    ]
                   }
-                ]
+                ],
+                action: 'hide'
               }
             ],
             userVarName: 'monto4'

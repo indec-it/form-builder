@@ -14,77 +14,80 @@ describe('<SubQuestions>', () => {
           id: 1,
           optionId: 1,
           type: '1',
-          label: 'Add specification',
-          name: 'S1P1SQ1',
-          validations: [
-            {
-              id: 1,
-              type: 'required',
-              params: [
-                {
-                  id: 1,
-                  message: 'Must add a specification for option 1'
-                }
-              ],
-              messageType: 'error'
-            },
-            {
-              id: 2,
-              type: 'min',
-              params: [
-                {
-                  id: 1,
-                  value: 2,
-                  message: 'Should have at least 2 characters'
-                }
-              ],
-              messageType: 'warning'
-            }
-          ],
-          userVarName: 'S1P1E1'
+          label: 'Monto pais',
+          name: 'S2P4SQ1',
+          validations: [],
+          navigation: [],
+          userVarName: 'monto1'
         },
         {
           id: 2,
           optionId: 2,
           type: '1',
-          label: 'Add specification',
-          name: 'S1P1SQ2',
-          validations: [
+          label: 'Monto pais',
+          name: 'S2P4SQ2',
+          validations: [],
+          navigation: [],
+          userVarName: 'monto2'
+        },
+        {
+          id: 3,
+          type: '1',
+          label: 'Monto pais',
+          name: 'S2P4SQ3',
+          validations: [],
+          navigation: [
             {
               id: 1,
-              type: 'required',
-              params: [
+              rules: [
                 {
                   id: 1,
-                  message: 'Must add a specification for option 2'
+                  conditions: [
+                    {
+                      id: 1,
+                      value: '2',
+                      type: 'ne',
+                      question: 'test',
+                      section: 'S2'
+                    }
+                  ]
                 }
               ],
-              messageType: 'error'
+              action: 'hide'
             }
           ],
-          userVarName: 'S1P1E2'
+          userVarName: 'monto3'
+        },
+        {
+          id: 4,
+          optionId: 4,
+          type: '1',
+          label: 'Monto pais',
+          name: 'S2P4SQ4',
+          validations: [],
+          navigation: [],
+          userVarName: 'monto4'
         }
       ],
       Component: TextField,
-      readOnlyMode: false,
-      name: 'test'
+      name: 'S1.S1P1.test'
     };
   });
 
-  describe('when `values.answer.value` matches with any subQuestion`s id', () => {
+  describe('when some subQuestion`s conditions matches', () => {
     beforeEach(() => {
-      props.values.answer.value = ['1', '2'];
+      props.values.answer.value = '2';
     });
 
     it('should render the selected subQuestions', () => {
       const {container} = getComponent();
-      expect(getAllByTestId(container, 'text-field').length).toBe(2);
+      expect(getAllByTestId(container, 'text-field').length).toBe(1);
     });
   });
 
-  describe('when `values.answer.value` doesn`t match with any subQuestion`s id', () => {
+  describe('when `values.answer.value` doesn`t match with any subQuestion`s condition', () => {
     beforeEach(() => {
-      props.values.answer.value = ['3'];
+      props.values.answer.value = '3';
     });
 
     it('should not render any subQuestions', () => {

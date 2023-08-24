@@ -10,7 +10,7 @@ import Select from '@/components/Select';
 import TextField from '@/components/TextField';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
-import getValidationRules from '@/utils/getValidationRules';
+import getNavigation from '@/utils/getNavigation';
 
 import Wrapper from './Wrapper';
 
@@ -47,18 +47,7 @@ const getComponent = (
   const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
   const labelWithNumber = `${number} - ${label}`;
   let show = true;
-  const navigationRules = navigation.map(nav => {
-    if (!nav) {
-      return;
-    }
-    const rules = getValidationRules({validation: nav, answers: values});
-    // eslint-disable-next-line consistent-return
-    return {
-      action: nav.action,
-      result: rules.some(value => value)
-    };
-  });
-  const jump = navigationRules.find(rule => rule.result);
+  const jump = getNavigation({navigation, answers: values});
   show = jump?.action !== actions.HIDE;
   const isDisabled = jump?.action === actions.DISABLE || disabled;
   switch (type) {

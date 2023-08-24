@@ -22,7 +22,7 @@ const getValue = question => {
   }
 };
 
-const getSubQuestions = subQuestions => Object.fromEntries(
+export const getSubQuestions = subQuestions => Object.fromEntries(
   subQuestions.map((subQuestion, index) => [
     subQuestion.name,
     {

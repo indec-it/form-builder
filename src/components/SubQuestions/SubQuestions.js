@@ -7,7 +7,8 @@ import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
 function SubQuestions({values, subQuestions, Component, name, ...props}) {
-  const {selectedQuestions} = useSubQuestions(subQuestions, values.answer.value);
+  const parentName = name.split('.')[2];
+  const {selectedQuestions} = useSubQuestions({subQuestions, value: {[parentName]: values}, name: parentName});
   return (
     <>
       {selectedQuestions.map(subQuestion => (
@@ -17,7 +18,6 @@ function SubQuestions({values, subQuestions, Component, name, ...props}) {
             name={`${name}.${subQuestion.name}.answer.value`}
             label={subQuestion.label}
             placeholder={subQuestion.placeholder}
-            required={subQuestion.validations.some(validation => validation.type === 'required')}
             {...props}
           />
         </Box>

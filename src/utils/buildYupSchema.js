@@ -1,9 +1,10 @@
+/* eslint-disable function-paren-newline */
 import * as Yup from 'yup';
 
 import dateTypes from '@/constants/dateTypes';
 import questionTypes from '@/constants/questionTypes';
-import castArray from '@/utils/castArray';
 import getValidationRules from '@/utils/getValidationRules';
+import getNavigation from '@/utils/getNavigation';
 
 const getValidatorType = (type, options, metadata) => {
   switch (type) {
@@ -35,7 +36,7 @@ const getValidatorType = (type, options, metadata) => {
   }
 };
 
-const handleValidations = ({validator, validations, opts, answers, questionName, multiple}) => {
+const handleValidations = ({validator, validations, opts, answers, questionName, multiple = false}) => {
   let newValidator = validator;
   validations.forEach((validation) => {
     const {type: messageType} = validation.message;
@@ -63,33 +64,65 @@ const handleValidations = ({validator, validations, opts, answers, questionName,
   return newValidator;
 };
 
-const buildSubQuestionsValidations = (subQuestions, opts) => subQuestions.reduce((acc, currentValue) => {
-  let subQuestionValidator = Yup.string();
-  const subQuestionValidations = currentValue.validations;
-  subQuestionValidator = handleValidations({
-    validator: subQuestionValidator,
-    validations: subQuestionValidations,
-    opts
+const buildSubQuestionsValidations = (
+  subQuestions, opts, answers, multiple
+) => subQuestions.reduce((acc, currentValue) => {
+  const subQuestionValidator = Yup.string();
+  acc[currentValue.name] = Yup.object({
+    answer: Yup.object({
+      value: Yup.lazy(value => handleValidations({
+        validator: subQuestionValidator,
+        validations: currentValue.validations,
+        opts,
+        answers: {
+          ...answers,
+          [currentValue.name]: {answer: {value}}
+        },
+        questionName: currentValue.name,
+        multiple
+      }))
+    })
   });
-  acc[currentValue.name] = Yup.object({answer: Yup.object({value: subQuestionValidator})});
   return acc;
 }, {});
 
-const buildAnswerObj = ({values = [], subQuestions, validator, multiple, opts}) => {
-  let defaultSchema = Yup.object({value: validator});
+const getSelectedSubQuestions = ({subQuestions, parentName, value}) => subQuestions.filter(
+  subQuestion => !getNavigation({
+    navigation: subQuestion.navigation, answers: {[parentName]: {answer: value}}
+  })
+);
+
+const getSubQuestionsSchema = (subQuestions, schema, opts, questionName, value, multiple) => {
+  let newSchema = schema;
   if (subQuestions.length > 0) {
-    const valuesToArray = multiple && values ? values.map(value => value.value) : castArray(values.value);
-    const selectedSubQuestions = subQuestions.filter(
-      subQuestion => valuesToArray.includes(subQuestion.optionId.toString())
-    );
-    const selectedQuestions = buildSubQuestionsValidations(selectedSubQuestions, opts);
-    defaultSchema = defaultSchema.concat(
+    const subQuestionsToRender = getSelectedSubQuestions({subQuestions, parentName: questionName, value});
+    newSchema = schema.concat(
       Yup.object({
-        specifications: Yup.object(selectedQuestions)
+        specifications: Yup.object(
+          buildSubQuestionsValidations(
+            subQuestionsToRender, opts, {[questionName]: {answer: value}}, multiple
+          )
+        )
       })
     );
   }
-  return multiple ? Yup.array().of(defaultSchema) : defaultSchema;
+  return newSchema;
+};
+
+const buildAnswerObj = ({answers, subQuestions, validator, multiple, opts, name: questionName}) => {
+  let schema = Yup.object({value: validator});
+  if (multiple) {
+    return Yup.array().of(
+      Yup.lazy(
+        value => {
+          schema = getSubQuestionsSchema(subQuestions, schema, opts, questionName, value, multiple);
+          return schema;
+        }
+      )
+    );
+  }
+  schema = getSubQuestionsSchema(subQuestions, schema, opts, questionName, answers[questionName].answer, multiple);
+  return schema;
 };
 
 export default function buildYupSchema(schema, config, values, opts = {}) {
@@ -97,11 +130,7 @@ export default function buildYupSchema(schema, config, values, opts = {}) {
   const {
     name, type, validations, options, metadata, multiple, subQuestions = []
   } = config;
-  let validator = getValidatorType(
-    type,
-    options,
-    metadata
-  );
+  let validator = getValidatorType(type, options, metadata);
   if (!validator) {
     return schemaWithValidations;
   }
@@ -110,16 +139,15 @@ export default function buildYupSchema(schema, config, values, opts = {}) {
   });
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: Yup.lazy(
-      answerValues => buildAnswerObj({
-        values: answerValues,
-        type,
-        subQuestions,
-        validator,
-        multiple,
-        opts
-      })
-    )
+    answer: buildAnswerObj({
+      answers: values,
+      type,
+      subQuestions,
+      validator,
+      multiple,
+      opts,
+      name
+    })
   });
   return schemaWithValidations;
 }

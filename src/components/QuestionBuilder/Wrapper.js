@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import {Field, FieldArray} from 'formik';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import SubQuestions from '@/components/SubQuestions';
 import TextField from '@/components/TextField';
+import {getSubQuestions} from '@/utils/buildQuestions';
 import getLastId from '@/utils/getLastId';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
@@ -39,19 +40,25 @@ function Wrapper({
               warnings={warnings}
               name={`${name}.${index}.specifications`}
             />
-            {values.answer.length === index + 1 && !disabled && (
-              <Button
-                startIcon={<AddCircleIcon />}
-                onClick={() => helpers.push({id: getLastId(values.answer) + 1, value: ''})}
-              />
-            )}
-            {index > 0 && !disabled && (
-              <Button
-                color="error"
-                startIcon={<DeleteIcon />}
-                onClick={() => helpers.remove(index)}
-              />
-            )}
+            <Stack direction={{xs: 'column', sm: 'row'}} spacing={2} justifyContent="center" sx={{width: '90px'}}>
+              {values.answer.length === index + 1 && !disabled && (
+                <IconButton
+                  onClick={
+                    () => helpers.push({
+                      id: getLastId(values.answer) + 1, value: '', specifications: getSubQuestions(subQuestions)
+                    })
+                  }
+                  color="primary"
+                >
+                  <AddCircleIcon />
+                </IconButton>
+              )}
+              {index > 0 && !disabled && (
+                <IconButton onClick={() => helpers.remove(index)} color="error">
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Stack>
           </Stack>
         ))}
       />
@@ -69,7 +76,7 @@ function Wrapper({
   }
   if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (
-      <>
+      <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
         {Component}
         <SubQuestions
           values={values}
@@ -79,7 +86,7 @@ function Wrapper({
           warnings={warnings}
           name={`${name}.specifications`}
         />
-      </>
+      </Stack>
     );
   }
   return Component;
