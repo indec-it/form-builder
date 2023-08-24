@@ -1,6 +1,8 @@
+import {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import {useFormikContext} from 'formik';
 
 import Checkbox from '@/components/Checkbox';
 import DatePicker from '@/components/DatePicker';
@@ -8,16 +10,13 @@ import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
 import Select from '@/components/Select';
 import TextField from '@/components/TextField';
+import questionActions from '@/constants/questionActions';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
-import getNavigation from '@/utils/getNavigation';
+import buildQuestions from '@/utils/buildQuestions';
+import getQuestionProps from '@/utils/getQuestionProps';
 
 import Wrapper from './Wrapper';
-
-const actions = {
-  DISABLE: 'disable',
-  HIDE: 'hide'
-};
 
 const getComponent = (
   section,
@@ -31,125 +30,43 @@ const getComponent = (
   if (!question) {
     return null;
   }
+  const {setFieldValue} = useFormikContext();
   let QuestionComponent;
   const {
-    number,
-    label,
-    multiple,
-    subQuestions,
-    type,
-    placeholder,
-    name,
-    options,
-    metadata,
-    navigation = []
-  } = question;
-  const questionName = `${section.name}.${sectionIndex}.${name}.answer`;
-  const labelWithNumber = `${number} - ${label}`;
-  let show = true;
-  const jump = getNavigation({navigation, answers: values});
-  show = jump?.action !== actions.HIDE;
-  const isDisabled = jump?.action === actions.DISABLE || disabled;
-  switch (type) {
+    props, questionName, jump, questionType
+  } = getQuestionProps({sectionIndex, section, question, values, disabled, warnings});
+  let shouldClean = false;
+  if (jump?.action === questionActions.DISABLE && !shouldClean) {
+    shouldClean = true;
+  }
+
+  useEffect(() => {
+    if (shouldClean) {
+      const defaultAnswerValue = buildQuestions(section)[section.name][0][question.name].answer;
+      setFieldValue(questionName, defaultAnswerValue);
+      shouldClean = false;
+    }
+  }, [shouldClean, questionName]);
+
+  switch (questionType) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
-    QuestionComponent = (
-      <Wrapper
-        component={TextField}
-        label={labelWithNumber}
-        placeholder={placeholder}
-        name={questionName}
-        type={type === questionTypes.TEXT_FIELD ? 'text' : 'number'}
-        disabled={isDisabled}
-        warnings={warnings}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={TextField} {...props} />;
     break;
   case questionTypes.DROPDOWN:
-    QuestionComponent = (
-      <Wrapper
-        component={Select}
-        label={labelWithNumber}
-        placeholder={placeholder}
-        options={options}
-        name={questionName}
-        disabled={isDisabled}
-        warnings={warnings}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={Select} {...props} />;
     break;
   case questionTypes.RADIO:
-    QuestionComponent = (
-      <Wrapper
-        component={Radio}
-        options={question.options}
-        label={labelWithNumber}
-        name={questionName}
-        disabled={isDisabled}
-        warnings={warnings}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={Radio} {...props} />;
     break;
   case questionTypes.CHECKBOX:
-    QuestionComponent = (
-      <Wrapper
-        component={Checkbox}
-        name={questionName}
-        options={options}
-        label={labelWithNumber}
-        disabled={isDisabled}
-        warnings={warnings}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={Checkbox} {...props} />;
     break;
   case questionTypes.RADIO_TABLE:
-    QuestionComponent = (
-      <Wrapper
-        component={RadioTable}
-        options={options}
-        label={labelWithNumber}
-        name={questionName}
-        disabled={isDisabled}
-        warnings={warnings}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={RadioTable} {...props} />;
     break;
   case questionTypes.DATE:
-    QuestionComponent = (
-      <Wrapper
-        component={DatePicker}
-        label={label}
-        placeholder={placeholder}
-        name={questionName}
-        disabled={isDisabled}
-        warnings={warnings}
-        metadata={metadata}
-        isMultiple={multiple}
-        values={values[name]}
-        subQuestions={subQuestions}
-        show={show}
-      />
-    );
+    QuestionComponent = <Wrapper component={DatePicker} {...props} />;
     break;
   default:
     QuestionComponent = <Typography>Invalid component.</Typography>;
@@ -161,7 +78,7 @@ function QuestionBuilder({values, section, index, disabled, warnings}) {
   return (
     <Grid data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
-        <Grid item key={value.id} mb={2}>
+        <Grid item key={value.id} mb={2} sx={{boxShadow: 1, p: 2, borderRadius: '10px'}}>
           {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
         </Grid>
       ))}

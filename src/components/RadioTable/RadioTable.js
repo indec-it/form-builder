@@ -8,15 +8,14 @@ import Stack from '@mui/material/Stack';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
-import formikField from '@/utils/propTypes/formikField';
-import formikForm from '@/utils/propTypes/formikForm';
+import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 import optionPropTypes from '@/utils/propTypes/option';
 
 function RadioTable({
   options, label, form, field, disabled, warnings
 }) {
   return (
-    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
+    <Stack direction="column" sx={{width: '100%'}}>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map(option => (
         <Box key={option.id}>
@@ -67,7 +66,7 @@ RadioTable.propTypes = {
       )
     })
   ).isRequired,
-  label: PropTypes.string.isRequired,
+  label: labelPropTypes.isRequired,
   disabled: PropTypes.bool,
   warnings: PropTypes.shape({})
 };

@@ -8,6 +8,7 @@ import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
 import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
+import labelPropTypes from '@/utils/propTypes/label';
 import optionPropTypes from '@/utils/propTypes/option';
 
 const handleChecked = (e, option, {name, value}, setFieldValue) => {
@@ -26,7 +27,7 @@ function Checkbox({
   options, label, field, form, disabled, warnings
 }) {
   return (
-    <Stack direction="column" spacing={2} sx={{width: '100%'}}>
+    <Stack direction="column" sx={{width: '100%'}}>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       <FormGroup>
         {options.map((option, index) => (
@@ -51,7 +52,7 @@ function Checkbox({
 }
 
 Checkbox.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: labelPropTypes.isRequired,
   options: PropTypes.arrayOf(optionPropTypes).isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,

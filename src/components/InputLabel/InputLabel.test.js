@@ -7,7 +7,7 @@ describe('<InputLabel>', () => {
   beforeEach(() => {
     props = {
       disabled: false,
-      label: 'test',
+      label: {text: 'test'},
       field: {name: 'test'},
       form: {submitCount: 0, errors: {}, touched: {test: false}},
       required: false
@@ -16,7 +16,7 @@ describe('<InputLabel>', () => {
 
   it('should display `props.label`', () => {
     const {container} = getComponent();
-    expect(getByText(container, props.label)).toBeInTheDocument();
+    expect(getByText(container, props.label.text)).toBeInTheDocument();
   });
 
   describe('when there is an error and `props.disabled` is `false`', () => {
