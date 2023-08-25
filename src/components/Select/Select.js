@@ -2,7 +2,7 @@ import {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import {formikField, formikForm} from '@/utils/propTypes';
+import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 import TextField from '../TextField';
 
@@ -50,7 +50,7 @@ Select.propTypes = {
       label: PropTypes.string
     })
   ),
-  label: PropTypes.string.isRequired,
+  label: labelPropTypes.isRequired,
   loadingText: PropTypes.string,
   placeholder: PropTypes.string,
   keyValue: PropTypes.string,

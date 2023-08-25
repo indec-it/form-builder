@@ -8,7 +8,7 @@ import HelpIcon from '@mui/icons-material/Help';
 
 import InputLabel from '@/components/InputLabel';
 import FieldMessage from '@/components/FieldMessage';
-import {formikField, formikForm} from '@/utils/propTypes';
+import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 function TextField({
   form, field, placeholder, label, disabled, tooltip, warnings, ...props
@@ -60,7 +60,7 @@ TextField.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   disabled: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: labelPropTypes.isRequired,
   placeholder: PropTypes.string,
   tooltip: PropTypes.string,
   warnings: PropTypes.shape({})

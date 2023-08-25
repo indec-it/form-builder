@@ -5,28 +5,30 @@ import Stack from '@mui/material/Stack';
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
 
-import {formikField, formikForm} from '@/utils/propTypes';
+import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 function MobileRadio({
   options, field, disabled, label, form, warnings
 }) {
   return (
-    <Stack direction="column" spacing={2} sx={{width: '100%'}} data-testid="radio">
+    <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      {options.map((option, index) => (
-        <Button
-          data-testid={`radio-${index}`}
-          key={option.value}
-          disabled={disabled}
-          variant={option.value === field.value ? 'contained' : 'outlined'}
-          onClick={
-            () => form.setFieldValue(field.name, option.value === field.value ? '' : option.value)
-          }
-          size="small"
-        >
-          {option.label}
-        </Button>
-      ))}
+      <Stack direction="column" spacing={2}>
+        {options.map((option, index) => (
+          <Button
+            data-testid={`radio-${index}`}
+            key={option.value}
+            disabled={disabled}
+            variant={option.value === field.value ? 'contained' : 'outlined'}
+            onClick={
+              () => form.setFieldValue(field.name, option.value === field.value ? '' : option.value)
+            }
+            size="small"
+          >
+            {option.label}
+          </Button>
+        ))}
+      </Stack>
       <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
     </Stack>
   );
@@ -34,7 +36,7 @@ function MobileRadio({
 
 MobileRadio.propTypes = {
   disabled: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  label: labelPropTypes.isRequired,
   field: formikField.isRequired,
   form: formikForm.isRequired,
   options: PropTypes.arrayOf(
