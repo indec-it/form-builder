@@ -1,4 +1,4 @@
-import {getByTestId, getByText} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText} from '@testing-library/react';
 
 import MobileRadio from './MobileRadio';
 
@@ -69,8 +69,21 @@ describe('<MobileRadio>', () => {
 
     it('should render the buttons enabled', () => {
       const {container} = getComponent();
-      props.options.forEach((option, index) => {
+      props.options.forEach((_, index) => {
         expect(getByTestId(container, `radio-${index}`)).not.toBeDisabled();
+      });
+    });
+
+    describe('when an option is clicked', () => {
+      beforeEach(() => {
+        const {container} = getComponent();
+        const optionSelected = getByTestId(container, 'radio-2');
+        fireEvent.click(optionSelected);
+      });
+
+      it('should fire `props.form.setFieldValue`', () => {
+        expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
+        expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '3');
       });
     });
   });
@@ -103,6 +116,19 @@ describe('<MobileRadio>', () => {
       const {container} = getComponent();
       const optionSelected = getByTestId(container, 'radio-1');
       expect(optionSelected).toHaveClass('MuiButton-outlined');
+    });
+
+    describe('and the selected option is clicked again', () => {
+      beforeEach(() => {
+        const {container} = getComponent();
+        const optionSelected = getByTestId(container, 'radio-2');
+        fireEvent.click(optionSelected);
+      });
+
+      it('should fire `props.form.setFieldValue`', () => {
+        expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
+        expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '');
+      });
     });
   });
 });

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
+import IconButton from '@mui/material/IconButton';
 import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
@@ -31,15 +33,25 @@ function Radio({
         <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
         <RadioGroup {...field}>
           {options.map((option, index) => (
-            <FormControlLabel
-              data-testid={`radio-${index}`}
-              key={option.value}
-              value={option.value}
-              control={<MuiRadio />}
-              label={option.label}
-              disabled={disabled}
-              checked={option.value === field.value}
-            />
+            <Stack key={option.value} direction="row">
+              <FormControlLabel
+                data-testid={`radio-${index}`}
+                value={option.value}
+                control={<MuiRadio />}
+                label={option.label}
+                disabled={disabled}
+                checked={option.value === field.value}
+              />
+              {option.value === field.value && !disabled && (
+                <IconButton
+                  onClick={() => form.setFieldValue(field.name, '')}
+                  color="error"
+                  data-testid={`clean-option-${index}`}
+                >
+                  <ClearIcon />
+                </IconButton>
+              )}
+            </Stack>
           ))}
         </RadioGroup>
         <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
