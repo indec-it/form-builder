@@ -150,3 +150,27 @@ WithErrors.args = {
   withErrors: true,
   options
 };
+
+export const WithExclusiveOptions = Template.bind({});
+WithExclusiveOptions.args = {
+  disabled: false,
+  label: 'Select an option',
+  required: false,
+  name: 'S1.0.S1P1.answer.value',
+  warnings: {},
+  options: [
+    ...options,
+    {
+      id: 4,
+      name: 'S1P1O1',
+      value: '4',
+      label: 'Option 4 (exclusive)',
+      subOptions: [
+        {
+          id: 1
+        }
+      ],
+      exclusive: true
+    }
+  ]
+};

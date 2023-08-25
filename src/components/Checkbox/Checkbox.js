@@ -10,11 +10,15 @@ import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 import optionPropTypes from '@/utils/propTypes/option';
 
-const handleChecked = (e, selectedValue, {name, value}, setFieldValue) => {
+const handleChecked = (e, option, {name, value}, setFieldValue) => {
+  const {value: selectedValue, exclusive} = option;
   const isChecked = e.target.checked;
-  const values = isChecked
-    ? [...value, selectedValue]
-    : value.filter(currentValue => currentValue !== selectedValue);
+  let values;
+  if (isChecked) {
+    values = exclusive ? [selectedValue] : [...value, selectedValue];
+  } else {
+    values = value.filter(currentValue => currentValue !== selectedValue);
+  }
   setFieldValue(name, values);
 };
 
@@ -33,7 +37,7 @@ function Checkbox({
               <MuiCheckbox
                 data-testid={`option-${index}`}
                 checked={field.value.includes(option.value)}
-                onChange={e => handleChecked(e, option.value, field, form.setFieldValue)}
+                onChange={e => handleChecked(e, option, field, form.setFieldValue)}
               />
             )}
             label={option.label}
