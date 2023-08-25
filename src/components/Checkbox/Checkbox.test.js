@@ -110,6 +110,50 @@ describe('<Checkbox>', () => {
         });
       });
     });
+
+    describe('when there are options selected', () => {
+      beforeEach(() => {
+        props.field.value = ['1', '2', '3'];
+      });
+
+      it('should be checked the selected options', () => {
+        const {container} = getComponent();
+        const firstSelectedOption = getByTestId(container, 'checkbox-0');
+        const secondSelectedOption = getByTestId(container, 'checkbox-1');
+        const thirdSelectedOption = getByTestId(container, 'checkbox-2');
+        expect(firstSelectedOption.querySelector('input').checked).toBe(true);
+        expect(secondSelectedOption.querySelector('input').checked).toBe(true);
+        expect(thirdSelectedOption.querySelector('input').checked).toBe(true);
+      });
+
+      describe('and an exclusive option is clicked', () => {
+        beforeEach(() => {
+          props.options = [
+            ...props.options,
+            {
+              id: 4,
+              name: 'S1P1O1',
+              value: '4',
+              label: 'Option 4',
+              subOptions: [
+                {
+                  id: 1
+                }
+              ],
+              exclusive: true
+            }
+          ];
+          const {container} = getComponent();
+          const fourthCheckbox = getByTestId(container, 'option-3');
+          fireEvent.click(fourthCheckbox);
+        });
+
+        it('should fire `props.form.setFieldValue` to set the selected value', () => {
+          expect(props.form.setFieldValue).toHaveBeenCalled();
+          expect(props.form.setFieldValue).toHaveBeenCalledWith('test', ['4']);
+        });
+      });
+    });
   });
 
   describe('when `props.disabled` is `true`', () => {
