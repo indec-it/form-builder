@@ -10,7 +10,6 @@ import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
 import Select from '@/components/Select';
 import TextField from '@/components/TextField';
-import questionActions from '@/constants/questionActions';
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
 import buildQuestions from '@/utils/buildQuestions';
@@ -36,7 +35,7 @@ const getComponent = (
     props, questionName, jump, questionType
   } = getQuestionProps({sectionIndex, section, question, values, disabled, warnings});
   let shouldClean = false;
-  if (jump?.action === questionActions.DISABLE && !shouldClean) {
+  if (!!jump?.action && !shouldClean) {
     shouldClean = true;
   }
 
@@ -78,7 +77,7 @@ function QuestionBuilder({values, section, index, disabled, warnings}) {
   return (
     <Grid data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => value.id && (
-        <Grid item key={value.id} mb={2} sx={{boxShadow: 1, p: 2, borderRadius: '10px'}}>
+        <Grid item key={value.id} mb={2}>
           {getComponent(section, index, valueIndex - 1, disabled, warnings, values)}
         </Grid>
       ))}
