@@ -19,8 +19,10 @@ function MobileRadio({
           key={option.value}
           disabled={disabled}
           variant={option.value === field.value ? 'contained' : 'outlined'}
-          sx={{justifyContent: 'flex-start'}}
-          onClick={() => form.setFieldValue(field.name, option.value)}
+          onClick={
+            () => form.setFieldValue(field.name, option.value === field.value ? '' : option.value)
+          }
+          size="small"
         >
           {option.label}
         </Button>
