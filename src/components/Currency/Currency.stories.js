@@ -1,55 +1,18 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
-import Button from '@mui/material/Button';
 
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import Select from './Select';
+import Currency from './Currency';
 
 export default {
-  title: 'Select',
-  component: Select,
+  title: 'Currency',
+  component: Currency,
   argTypes: {
     backgroundColor: {control: 'color'}
   }
 };
-
-const options = [
-  {
-    id: 1,
-    name: 'S1P1O1',
-    value: '1',
-    label: 'Option 1',
-    subOptions: [
-      {
-        id: 1
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'S1P1O1',
-    value: '2',
-    label: 'Option 2',
-    subOptions: [
-      {
-        id: 1
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'S1P1O1',
-    value: '3',
-    label: 'Option 3',
-    subOptions: [
-      {
-        id: 1
-      }
-    ]
-  }
-];
 
 const section = {
   id: 1,
@@ -58,11 +21,11 @@ const section = {
   questions: [
     {
       id: 1,
-      label: 'Write your name',
+      label: 'Write amount',
       name: 'S1P1',
       number: '1',
-      type: 1,
-      options,
+      type: 8,
+      options: [],
       validations: [
         {
           id: 1,
@@ -80,7 +43,25 @@ const section = {
               ]
             }
           ],
-          message: {text: 'Must select an option', type: 'error'}
+          message: {text: 'Must write an amount', type: 'error'}
+        },
+        {
+          id: 2,
+          rules: [
+            {
+              id: 1,
+              conditions: [
+                {
+                  id: 1,
+                  question: 'S1P1',
+                  value: 3000,
+                  type: 'lt',
+                  section: 'S2'
+                }
+              ]
+            }
+          ],
+          message: {text: 'The amount should not be less than 3000', type: 'warning'}
         }
       ],
       userVarName: 's1p1'
@@ -96,23 +77,12 @@ function Template(args) {
       initialValues={{S1: [{S1P1: {id: 1, answer: {value: initialValues || ''}}}]}}
       validationSchema={withErrors ? validateSchema : null}
       onSubmit={() => {}}
+      enableReinitialize
     >
-      {({values, submitForm}) => {
+      {({values}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
-          <>
-            <Field
-              component={Select}
-              {...props}
-              warnings={warnings}
-              keyValue="value"
-            />
-            {
-              withErrors
-                ? <Button onClick={submitForm} variant="contained">Click to validate form</Button>
-                : null
-            }
-          </>
+          <Field component={Currency} {...props} warnings={warnings} />
         );
       }}
     </Formik>
@@ -122,28 +92,33 @@ function Template(args) {
 export const Basic = Template.bind({});
 Basic.args = {
   disabled: false,
-  label: {text: 'Select an option'},
+  label: {text: 'Write amount'},
   name: 'S1.0.S1P1.answer.value',
-  warnings: {},
-  options
+  warnings: {}
 };
 
 export const WithReadOnlyMode = Template.bind({});
 WithReadOnlyMode.args = {
   disabled: true,
-  label: {text: 'Select an option'},
+  label: {text: 'Write amount'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
-  options,
-  initialValues: '2'
+  initialValues: '1.111,21'
 };
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
   disabled: false,
-  label: {text: 'Select an option'},
+  label: {text: 'Write amount'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
-  withErrors: true,
-  options
+  withErrors: true
+};
+
+export const WithWarnings = Template.bind({});
+WithWarnings.args = {
+  disabled: false,
+  label: {text: 'Write amount'},
+  name: 'S1.0.S1P1.answer.value',
+  withWarnings: true
 };

@@ -29,7 +29,7 @@ function Template(args) {
 export const Interruption = Template.bind({});
 Interruption.args = {
   modal: 2,
-  label: 'Select an option',
+  label: {text: 'Select an option'},
   options: [
     {
       value: '1',

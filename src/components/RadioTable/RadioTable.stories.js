@@ -172,8 +172,7 @@ function Template(args) {
 export const Basic = Template.bind({});
 Basic.args = {
   disabled: false,
-  label: 'Select an option',
-  required: false,
+  label: {text: 'Select an option'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options
@@ -182,8 +181,7 @@ Basic.args = {
 export const WithReadOnlyMode = Template.bind({});
 WithReadOnlyMode.args = {
   disabled: true,
-  label: 'Select an option',
-  required: false,
+  label: {text: 'Select an option'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   options,
@@ -193,8 +191,7 @@ WithReadOnlyMode.args = {
 export const WithErrors = Template.bind({});
 WithErrors.args = {
   disabled: false,
-  label: 'Select an option',
-  required: true,
+  label: {text: 'Select an option'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true,

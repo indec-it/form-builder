@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
 import Checkbox from '@/components/Checkbox';
+import Currency from '@/components/Currency';
 import DatePicker from '@/components/DatePicker';
 import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
@@ -51,6 +52,9 @@ const getComponent = (
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
     QuestionComponent = <Wrapper component={TextField} {...props} />;
+    break;
+  case questionTypes.CURRENCY:
+    QuestionComponent = <Wrapper component={Currency} {...props} />;
     break;
   case questionTypes.DROPDOWN:
     QuestionComponent = <Wrapper component={Select} {...props} />;

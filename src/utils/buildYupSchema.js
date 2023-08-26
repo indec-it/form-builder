@@ -11,6 +11,7 @@ const getValidatorType = (type, options, metadata) => {
   case questionTypes.TEXT_FIELD:
   case questionTypes.DROPDOWN:
   case questionTypes.RADIO:
+  case questionTypes.CURRENCY:
     return Yup.string().default('');
   case questionTypes.NUMERIC_FIELD:
     return Yup.number()
