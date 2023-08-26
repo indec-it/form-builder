@@ -5,5 +5,6 @@ export default {
   RADIO: 4,
   CHECKBOX: 5,
   DATE: 6,
-  RADIO_TABLE: 7
+  RADIO_TABLE: 7,
+  CURRENCY: 8
 };

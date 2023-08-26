@@ -25,11 +25,12 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
   switch (type) {
   case questionTypes.NUMERIC_FIELD:
   case questionTypes.TEXT_FIELD:
+  case questionTypes.CURRENCY:
     props = {
       label: {text: label, number},
       placeholder,
       name: questionName,
-      type: type === questionTypes.TEXT_FIELD ? 'text' : 'number',
+      type: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? 'text' : 'number',
       disabled: isDisabled,
       warnings,
       isMultiple: multiple,

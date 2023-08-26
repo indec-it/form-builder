@@ -9,7 +9,7 @@ describe('<TextField>', () => {
   const getComponent = () => render(TextField, props);
   beforeEach(() => {
     props = {
-      label: 'Write your name',
+      label: {text: 'Write your name'},
       disabled: false,
       field: {value: '', name: 'test', onChange: jest.fn()},
       form: {errors: {}, submitCount: 0},

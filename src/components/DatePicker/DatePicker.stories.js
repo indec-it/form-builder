@@ -89,7 +89,6 @@ export const Basic = Template.bind({});
 Basic.args = {
   readOnlyMode: false,
   label: 'Select dates',
-  required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -103,7 +102,6 @@ export const DateWithHour = Template.bind({});
 DateWithHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
-  required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -117,7 +115,6 @@ export const RangeWithoutHour = Template.bind({});
 RangeWithoutHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
-  required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -131,7 +128,6 @@ export const RangeWithHour = Template.bind({});
 RangeWithHour.args = {
   readOnlyMode: false,
   label: 'Select dates',
-  required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -145,7 +141,6 @@ export const WithErrors = Template.bind({});
 WithErrors.args = {
   readOnlyMode: false,
   label: 'Select dates',
-  required: false,
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {

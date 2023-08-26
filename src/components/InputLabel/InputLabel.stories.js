@@ -108,16 +108,14 @@ function Template(args) {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  label: 'Write your name',
-  required: false,
+  label: {text: 'Write your name'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {}
 };
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
-  label: 'Write your name',
-  required: true,
+  label: {text: 'Write your name'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   withErrors: true
@@ -125,8 +123,7 @@ WithErrors.args = {
 
 export const WithWarnings = Template.bind({});
 WithWarnings.args = {
-  label: 'Write your name',
-  required: false,
+  label: {text: 'Write your name'},
   name: 'S1.0.S1P1.answer.value',
   withWarnings: true
 };
