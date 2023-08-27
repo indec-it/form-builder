@@ -44,7 +44,7 @@ describe('<Checkbox>', () => {
           ]
         }
       ],
-      label: 'Select the options',
+      label: {text: 'Select the options'},
       field: {value: [], name: 'test'},
       form: {setFieldValue: jest.fn(), errors: {}, submitCount: 0},
       readOnlyMode: false,
@@ -151,6 +151,40 @@ describe('<Checkbox>', () => {
         it('should fire `props.form.setFieldValue` to set the selected value', () => {
           expect(props.form.setFieldValue).toHaveBeenCalled();
           expect(props.form.setFieldValue).toHaveBeenCalledWith('test', ['4']);
+        });
+      });
+    });
+
+    describe('when the exclusive option is selected', () => {
+      beforeEach(() => {
+        props.options = [
+          ...props.options,
+          {
+            id: 4,
+            name: 'S1P1O1',
+            value: '4',
+            label: 'Option 4',
+            subOptions: [
+              {
+                id: 1
+              }
+            ],
+            exclusive: true
+          }
+        ];
+        props.field.value = ['4'];
+      });
+
+      describe('and a new non exclusive option is clicked', () => {
+        beforeEach(() => {
+          const {container} = getComponent();
+          const thirdCheckbox = getByTestId(container, 'option-2');
+          fireEvent.click(thirdCheckbox);
+        });
+
+        it('should be unmark the exclusive option', () => {
+          expect(props.form.setFieldValue).toHaveBeenCalled();
+          expect(props.form.setFieldValue).toHaveBeenCalledWith('test', ['3']);
         });
       });
     });
