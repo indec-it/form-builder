@@ -13,7 +13,7 @@ describe('<SubQuestions>', () => {
         {
           id: 1,
           optionId: 1,
-          type: '1',
+          type: 1,
           label: 'Monto pais',
           name: 'S2P4SQ1',
           validations: [],
@@ -32,7 +32,7 @@ describe('<SubQuestions>', () => {
         },
         {
           id: 3,
-          type: '1',
+          type: 1,
           label: 'Monto pais',
           name: 'S2P4SQ3',
           validations: [],
@@ -61,7 +61,7 @@ describe('<SubQuestions>', () => {
         {
           id: 4,
           optionId: 4,
-          type: '1',
+          type: 1,
           label: 'Monto pais',
           name: 'S2P4SQ4',
           validations: [],

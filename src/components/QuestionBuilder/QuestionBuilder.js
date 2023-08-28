@@ -4,17 +4,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
-import Checkbox from '@/components/Checkbox';
-import Currency from '@/components/Currency';
-import DatePicker from '@/components/DatePicker';
-import Radio from '@/components/Radio';
-import RadioTable from '@/components/RadioTable';
-import Select from '@/components/Select';
-import TextField from '@/components/TextField';
-import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
 import buildQuestions from '@/utils/buildQuestions';
 import getQuestionProps from '@/utils/getQuestionProps';
+import getQuestionComponent from '@/utils/getQuestionComponent';
 
 import Wrapper from './Wrapper';
 
@@ -31,7 +24,6 @@ const getComponent = (
     return null;
   }
   const {setFieldValue} = useFormikContext();
-  let QuestionComponent;
   const {
     props, questionName, jump, questionType
   } = getQuestionProps({sectionIndex, section, question, values, disabled, warnings});
@@ -48,33 +40,10 @@ const getComponent = (
     }
   }, [shouldClean, questionName]);
 
-  switch (questionType) {
-  case questionTypes.NUMERIC_FIELD:
-  case questionTypes.TEXT_FIELD:
-    QuestionComponent = <Wrapper component={TextField} {...props} />;
-    break;
-  case questionTypes.CURRENCY:
-    QuestionComponent = <Wrapper component={Currency} {...props} />;
-    break;
-  case questionTypes.DROPDOWN:
-    QuestionComponent = <Wrapper component={Select} {...props} />;
-    break;
-  case questionTypes.RADIO:
-    QuestionComponent = <Wrapper component={Radio} {...props} />;
-    break;
-  case questionTypes.CHECKBOX:
-    QuestionComponent = <Wrapper component={Checkbox} {...props} />;
-    break;
-  case questionTypes.RADIO_TABLE:
-    QuestionComponent = <Wrapper component={RadioTable} {...props} />;
-    break;
-  case questionTypes.DATE:
-    QuestionComponent = <Wrapper component={DatePicker} {...props} />;
-    break;
-  default:
-    QuestionComponent = <Typography>Invalid component.</Typography>;
-  }
-  return QuestionComponent;
+  const Component = getQuestionComponent(questionType);
+  return Component
+    ? <Wrapper component={Component} {...props} />
+    : <Typography>Invalid component.</Typography>;
 };
 
 function QuestionBuilder({values, section, index, disabled, warnings}) {

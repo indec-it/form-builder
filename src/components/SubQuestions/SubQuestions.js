@@ -5,8 +5,10 @@ import Box from '@mui/material/Box';
 import useSubQuestions from '@/hooks/useSubQuestions';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
+import getQuestionComponent from '@/utils/getQuestionComponent';
+import getQuestionProps from '@/utils/getQuestionProps';
 
-function SubQuestions({values, subQuestions, Component, name, ...props}) {
+function SubQuestions({values, subQuestions, name, ...props}) {
   const parentName = name.split('.')[2];
   const {selectedQuestions} = useSubQuestions({subQuestions, value: {[parentName]: values}, name: parentName});
   return (
@@ -14,11 +16,13 @@ function SubQuestions({values, subQuestions, Component, name, ...props}) {
       {selectedQuestions.map(subQuestion => (
         <Box key={subQuestion.id} mb={2}>
           <Field
-            component={Component}
-            name={`${name}.${subQuestion.name}.answer.value`}
-            label={subQuestion.label}
-            placeholder={subQuestion.placeholder}
+            {...getQuestionProps({question: subQuestion, name, values}).props}
             {...props}
+            component={getQuestionComponent(subQuestion.type)}
+            name={`${name}.${subQuestion.name}.answer.value`}
+            label={{text: subQuestion.label}}
+            placeholder={subQuestion.placeholder}
+            sx={{minWidth: '300px'}}
           />
         </Box>
       ))}
@@ -27,7 +31,6 @@ function SubQuestions({values, subQuestions, Component, name, ...props}) {
 }
 
 SubQuestions.propTypes = {
-  Component: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   values: valuesPropTypes.isRequired,
   subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired

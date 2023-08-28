@@ -36,7 +36,6 @@ function Wrapper({
               values={{answer, id: answer.id}}
               subQuestions={subQuestions}
               disabled={disabled}
-              Component={TextField}
               warnings={warnings}
               name={`${name}.${index}.specifications`}
             />
