@@ -30,7 +30,7 @@ const getConditions = ({conditions, answers}) => conditions.map(
     ) {
       value = convertString(value);
     }
-    return operations[condition.type](value || '', condition.value);
+    return operations[condition.type](typeof value === 'number' ? value : value || '', condition.value);
   }
 );
 
