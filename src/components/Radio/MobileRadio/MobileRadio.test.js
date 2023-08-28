@@ -46,7 +46,7 @@ describe('<MobileRadio>', () => {
       required: false,
       label: 'Select an option',
       field: {value: '', name: 'test'},
-      form: {setFieldValue: jest.fn(), errors: {}, submitCount: 0}
+      form: {setFieldValue: jest.fn(), setFieldTouched: jest.fn(), errors: {}, submitCount: 0}
     };
   });
 

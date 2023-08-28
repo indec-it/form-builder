@@ -46,7 +46,7 @@ describe('<Checkbox>', () => {
       ],
       label: {text: 'Select the options'},
       field: {value: [], name: 'test'},
-      form: {setFieldValue: jest.fn(), errors: {}, submitCount: 0},
+      form: {setFieldValue: jest.fn(), setFieldTouched: jest.fn(), errors: {}, submitCount: 0},
       readOnlyMode: false,
       required: true,
       warnings: {}

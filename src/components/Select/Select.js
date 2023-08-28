@@ -11,6 +11,7 @@ function Select({
 }) {
   const handleChange = selectedValue => {
     form.setFieldValue(field.name, selectedValue ? selectedValue[keyValue] : undefined);
+    form.setFieldTouched(field.name, false);
     onClean(form);
   };
   const selectedValue = useMemo(() => options.find(option => option[keyValue] === field.value) || {}, [field?.value]);
@@ -39,6 +40,7 @@ function Select({
       getOptionLabel={option => option.label || ''}
       value={selectedValue}
       disabled={disabled}
+      onBlur={form.handleBlur}
     />
   );
 }

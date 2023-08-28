@@ -48,8 +48,13 @@ function TextField({
           )
         }}
         {...field}
+        onChange={e => {
+          field.onChange(e);
+          form.setFieldTouched(field.name, false);
+        }}
         {...props}
         disabled={disabled}
+        onBlur={form.handleBlur}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </Box>

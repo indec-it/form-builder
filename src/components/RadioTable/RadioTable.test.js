@@ -83,7 +83,7 @@ describe('<RadioTable>', () => {
       required: false,
       label: 'Select the correct options',
       field: {value: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}, name: 'test'},
-      form: {setFieldValue: jest.fn(), errors: {}, submitCount: 0}
+      form: {setFieldValue: jest.fn(), setFieldTouched: jest.fn(), errors: {}, submitCount: 0}
     };
   });
 

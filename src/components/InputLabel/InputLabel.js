@@ -16,7 +16,7 @@ import labelPropTypes from '@/utils/propTypes/label';
 function InputLabel({
   label, form, field, disabled, warnings
 }) {
-  const {hasWarning, hasError, fieldMustBeCompleted} = hasFormikErrorsAndWarnings({form, field, warnings});
+  const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   return (
     <Stack direction="row" spacing={2} data-testid="input-label">
       <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
@@ -38,7 +38,7 @@ function InputLabel({
         <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
           {label.text}
           {' '}
-          {fieldMustBeCompleted && '*'}
+          {hasError && '*'}
         </Typography>
       </Stack>
       {hasError && !disabled && (

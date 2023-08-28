@@ -33,7 +33,10 @@ function RadioTable({
                     <MuiRadio
                       checked={subOption.value === field.value[option.name]}
                       onChange={
-                        e => form.setFieldValue(`${field.name}.${option.name}`, e.target.value)
+                        e => {
+                          form.setFieldValue(`${field.name}.${option.name}`, e.target.value);
+                          form.setFieldTouched(field.name, false);
+                        }
                       }
                     />
                   )}

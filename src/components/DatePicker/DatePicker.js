@@ -25,7 +25,10 @@ function DatePicker({
           type={dateType}
           label={isRange ? 'Fecha de inicio' : ''}
           value={isRange ? field.value.start : field.value}
-          onChange={newValue => form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue)}
+          onChange={newValue => {
+            form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue);
+            form.setFieldTouched(isRange ? `${field.name}.start` : field.name, false);
+          }}
           renderInput={params => (
             <TextField
               {...params}
@@ -46,7 +49,10 @@ function DatePicker({
             type={dateType}
             label="Fecha de fin"
             value={field.value.end}
-            onChange={newValue => form.setFieldValue(`${field.name}.end`, newValue)}
+            onChange={newValue => {
+              form.setFieldValue(`${field.name}.end`, newValue);
+              form.setFieldTouched(`${field.name}.end`, false);
+            }}
             renderInput={params => (
               <TextField
                 {...params}

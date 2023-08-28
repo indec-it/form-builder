@@ -21,7 +21,10 @@ function MobileRadio({
             disabled={disabled}
             variant={option.value === field.value ? 'contained' : 'outlined'}
             onClick={
-              () => form.setFieldValue(field.name, option.value === field.value ? '' : option.value)
+              () => {
+                form.setFieldValue(field.name, option.value === field.value ? '' : option.value);
+                form.setFieldTouched(field.name, false);
+              }
             }
             size="small"
           >

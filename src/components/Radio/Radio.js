@@ -4,7 +4,7 @@ import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
-import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
@@ -31,7 +31,14 @@ function Radio({
     ) : (
       <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
         <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-        <RadioGroup {...field}>
+        <RadioGroup
+          {...field}
+          onBlur={form.handleBlur}
+          onChange={e => {
+            field.onChange(e);
+            form.setFieldTouched(field.name, false);
+          }}
+        >
           {options.map((option, index) => (
             <Stack key={option.value} direction="row">
               <FormControlLabel
@@ -48,7 +55,7 @@ function Radio({
                   color="error"
                   data-testid={`clean-option-${index}`}
                 >
-                  <ClearIcon />
+                  <DeleteIcon />
                 </IconButton>
               )}
             </Stack>

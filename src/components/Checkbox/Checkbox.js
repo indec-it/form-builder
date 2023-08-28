@@ -46,7 +46,10 @@ function Checkbox({
               <MuiCheckbox
                 data-testid={`option-${index}`}
                 checked={field.value.includes(option.value)}
-                onChange={e => handleChecked(e, options, option, field, form.setFieldValue)}
+                onChange={e => {
+                  handleChecked(e, options, option, field, form.setFieldValue);
+                  form.setFieldTouched(field.name, false);
+                }}
               />
             )}
             label={option.label}

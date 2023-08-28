@@ -4,13 +4,18 @@ const hasFormikErrorsAndWarnings = ({form, field, warnings = {}}) => {
   const warning = getIn(warnings, field.name);
   const error = getIn(form.errors, field.name);
   const touched = getIn(form.touched, field.name);
-  const formSubmittedOrTouched = form.submitCount > 0 || touched;
+  const formSubmittedOrTouched = form.submitCount > 0 && touched;
+  if (formSubmittedOrTouched || (touched && (error || warning))) {
+    return {
+      hasError: !!error,
+      error,
+      hasWarning: !!warning,
+      warning
+    };
+  }
   return {
-    fieldMustBeCompleted: !!error,
-    hasError: !!(formSubmittedOrTouched && error),
-    error,
-    hasWarning: !!(formSubmittedOrTouched && warning),
-    warning
+    hasError: false,
+    hasWarning: false
   };
 };
 
