@@ -12,7 +12,7 @@ describe('<TextField>', () => {
       label: {text: 'Write your name'},
       disabled: false,
       field: {value: '', name: 'test', onChange: jest.fn()},
-      form: {errors: {}, submitCount: 0},
+      form: {errors: {}, submitCount: 0, setFieldTouched: jest.fn()},
       required: false
     };
   });

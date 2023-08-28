@@ -8,7 +8,7 @@ function Currency({form, field, label, ...props}) {
   const handleChange = values => {
     const {formattedValue} = values;
     form.setFieldValue(field.name, formattedValue);
-    form.setFieldTouched(field.name, true);
+    form.setFieldTouched(field.name, false);
   };
 
   return (

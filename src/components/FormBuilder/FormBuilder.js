@@ -43,8 +43,9 @@ function FormBuilder({
       enableReinitialize
       validationSchema={validateSchema}
       onSubmit={onSubmit}
+      validateOnChange={false}
     >
-      {({values, setValues, errors}) => {
+      {({values, setValues}) => {
         const warnings = getWarnings(warningSchema, values) || {};
         return (
           <Form>
@@ -64,7 +65,7 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
-                            isValid={!errors?.[section.name]?.[index]}
+                            isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
                           />
                         ) : (
                           <SectionHeader
@@ -75,7 +76,7 @@ function FormBuilder({
                             section={section}
                             values={currentSection}
                             isReadOnly={isReadOnly}
-                            isValid={!errors?.[section.name]?.[index]}
+                            isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
                           />
                         )
                     }
