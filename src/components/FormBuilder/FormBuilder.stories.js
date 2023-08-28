@@ -402,7 +402,7 @@ const sections = [
           {
             id: 1,
             optionId: 1,
-            type: '1',
+            type: 1,
             label: 'Monto pais',
             name: 'S2P4SQ1',
             validations: [
@@ -457,7 +457,7 @@ const sections = [
           {
             id: 2,
             optionId: 2,
-            type: '1',
+            type: 1,
             label: 'Monto pais',
             name: 'S2P4SQ2',
             validations: [],
@@ -486,7 +486,7 @@ const sections = [
           {
             id: 3,
             optionId: 3,
-            type: '1',
+            type: 1,
             label: 'Monto pais',
             name: 'S2P4SQ3',
             validations: [],
@@ -515,7 +515,7 @@ const sections = [
           {
             id: 4,
             optionId: 4,
-            type: '1',
+            type: 1,
             label: 'Monto pais',
             name: 'S2P4SQ4',
             validations: [],

@@ -68,7 +68,7 @@ const handleValidations = ({validator, validations, opts, answers, questionName,
 const buildSubQuestionsValidations = (
   subQuestions, opts, answers, multiple
 ) => subQuestions.reduce((acc, currentValue) => {
-  const subQuestionValidator = Yup.string();
+  const subQuestionValidator = getValidatorType(currentValue.type, currentValue.options);
   acc[currentValue.name] = Yup.object({
     answer: Yup.object({
       value: Yup.lazy(value => handleValidations({
