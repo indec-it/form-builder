@@ -21,9 +21,9 @@ describe('<Currency>', () => {
       fireEvent.change(textField, {target: {name: props.field.name, value: '1000'}});
     });
 
-    it('should fire `props.field.onChange with thousand separator`', () => {
+    it('should fire `props.field.onChange without thousand separator`', () => {
       expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
-      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '1.000');
+      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, 1000);
     });
   });
 
@@ -34,9 +34,9 @@ describe('<Currency>', () => {
       fireEvent.change(textField, {target: {name: props.field.name, value: '1000,21'}});
     });
 
-    it('should fire `props.field.onChange with thousand and decimal separator`', () => {
+    it('should fire `props.field.onChange without thousand and decimal separator`', () => {
       expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
-      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '1.000,21');
+      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, 1000.21);
     });
   });
 });
