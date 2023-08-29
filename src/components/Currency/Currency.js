@@ -7,7 +7,7 @@ import TextField from '../TextField';
 function Currency({form, field, label, ...props}) {
   const handleChange = values => {
     const {floatValue} = values;
-    form.setFieldValue(field.name, floatValue);
+    form.setFieldValue(field.name, typeof floatValue === 'number' ? floatValue : '');
     form.setFieldTouched(field.name, false);
   };
 
