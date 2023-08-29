@@ -2,8 +2,8 @@ const getLastId = values => {
   if (!values || values.length === 0) {
     return undefined;
   }
-  const ids = values.map(value => value.id).sort();
-  return ids[ids.length - 1];
+  const sortedIds = values.map(value => value.id).sort((a, b) => a - b);
+  return sortedIds[sortedIds.length - 1];
 };
 
 export default getLastId;
