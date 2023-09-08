@@ -109,33 +109,31 @@ function FormBuilder({
               }
             />
             {
-              components.NavigationButtons
-                ? (
-                  <components.NavigationButtons
-                    schema={validateSchema}
-                    values={values ? values[section.name] : {}}
-                    onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                    onInterrupt={
-                      section.interruption.interruptible
-                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                        : undefined
-                    }
-                  />
-                )
-                : (
-                  <NavigationButtons
-                    onPrevious={onPrevious}
-                    disablePreviousButton={page === 0}
-                    isLastSection={isLastSection}
-                    onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                    onInterrupt={
-                      section.interruption.interruptible
-                        ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                        : undefined
-                    }
-                    readOnlyMode={isReadOnly}
-                  />
-                )
+              components.NavigationButtons ? (
+                <components.NavigationButtons
+                  schema={validateSchema}
+                  values={values ? values[section.name] : {}}
+                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                  onInterrupt={
+                    section.interruption.interruptible
+                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                      : undefined
+                  }
+                />
+              ) : (
+                <NavigationButtons
+                  onPrevious={onPrevious}
+                  disablePreviousButton={page === 0}
+                  isLastSection={isLastSection}
+                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                  onInterrupt={
+                    section.interruption.interruptible
+                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                      : undefined
+                  }
+                  readOnlyMode={isReadOnly}
+                />
+              )
             }
           </Form>
         );

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import {es} from 'date-fns/locale';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import MuiInputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
 
 import dateTypes from '@/constants/dateTypes';
@@ -10,8 +9,9 @@ import formikField from '@/utils/propTypes/formikField';
 import formikForm from '@/utils/propTypes/formikForm';
 
 import FieldMessage from '../FieldMessage';
+import InputLabel from '../InputLabel';
 import TextField from '../TextField';
-import DateTimePickerSelector from './DatePickerSelector';
+import DateTimePickerSelector from './DateTimePickerSelector';
 
 function DatePicker({
   metadata: {dateType}, field, label, form, warnings, disabled, ...props
@@ -19,7 +19,7 @@ function DatePicker({
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-      <MuiInputLabel>{label}</MuiInputLabel>
+      <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
       <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
         <DateTimePickerSelector
           type={dateType}
