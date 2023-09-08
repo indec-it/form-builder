@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
-import {blue} from '@mui/material/colors';
 
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -17,26 +15,13 @@ function InputLabel({
   label, form, field, disabled, warnings
 }) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
+  const labelNumber = label.number ? `${label.number} - ` : '';
+
   return (
     <Stack direction="row" spacing={2} data-testid="input-label">
       <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
-        {label.number && (
-          <Avatar
-            sx={{
-              bgcolor: blue[600],
-              mr: 1,
-              minWidth: 15,
-              minHeight: 15,
-              maxWidth: 25,
-              maxHeight: 25,
-              fontSize: '13px'
-            }}
-          >
-            {label.number}
-          </Avatar>
-        )}
         <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
-          {label.text}
+          {`${labelNumber}${label.text}`}
           {' '}
           {hasError && '*'}
         </Typography>

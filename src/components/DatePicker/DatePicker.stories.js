@@ -87,8 +87,8 @@ const section = dateType => ({
 
 export const Basic = Template.bind({});
 Basic.args = {
-  readOnlyMode: false,
-  label: 'Select dates',
+  disabled: false,
+  label: {text: 'Select dates'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -100,8 +100,8 @@ Basic.args = {
 
 export const DateWithHour = Template.bind({});
 DateWithHour.args = {
-  readOnlyMode: false,
-  label: 'Select dates',
+  disabled: false,
+  label: {text: 'Select dates'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -113,8 +113,8 @@ DateWithHour.args = {
 
 export const RangeWithoutHour = Template.bind({});
 RangeWithoutHour.args = {
-  readOnlyMode: false,
-  label: 'Select dates',
+  disabled: false,
+  label: {text: 'Select dates'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -126,8 +126,8 @@ RangeWithoutHour.args = {
 
 export const RangeWithHour = Template.bind({});
 RangeWithHour.args = {
-  readOnlyMode: false,
-  label: 'Select dates',
+  disabled: false,
+  label: {text: 'Select dates'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {
@@ -139,8 +139,8 @@ RangeWithHour.args = {
 
 export const WithErrors = Template.bind({});
 WithErrors.args = {
-  readOnlyMode: false,
-  label: 'Select dates',
+  disabled: false,
+  label: {text: 'Select dates'},
   name: 'S1.0.S1P1.answer.value',
   warnings: {},
   metadata: {

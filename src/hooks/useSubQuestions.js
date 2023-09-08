@@ -7,7 +7,9 @@ const useSubQuestions = ({subQuestions, value, name}) => {
   useEffect(() => {
     const subQuestionsFiltered = subQuestions.filter(
       subQuestion => {
-        const condition = getNavigation({navigation: subQuestion.navigation, answers: value});
+        const condition = getNavigation({
+          navigation: subQuestion.navigation, answers: value, questionType: subQuestion.type
+        });
         return !condition;
       }
     );

@@ -37,7 +37,7 @@ const getValidatorType = (type, options, metadata) => {
   }
 };
 
-const handleValidations = ({validator, validations, opts, answers, questionName, multiple = false}) => {
+const handleValidations = ({validator, validations, opts, answers, questionName, multiple = false, questionType}) => {
   let newValidator = validator;
   validations.forEach((validation) => {
     const {type: messageType} = validation.message;
@@ -54,7 +54,7 @@ const handleValidations = ({validator, validations, opts, answers, questionName,
       function (currentValue) {
         let formatAnswer = answers;
         formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
-        const rules = getValidationRules({validation, answers: formatAnswer});
+        const rules = getValidationRules({validation, answers: formatAnswer, questionType});
         if (rules.some(value => value === true)) {
           return this.createError({path: this.path, message: validation.message.text});
         }
@@ -136,7 +136,7 @@ export default function buildYupSchema(schema, config, values, opts = {}) {
     return schemaWithValidations;
   }
   validator = handleValidations({
-    validator, validations, opts, answers: values, questionName: name, multiple
+    validator, validations, opts, answers: values, questionName: name, multiple, questionType: type
   });
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
