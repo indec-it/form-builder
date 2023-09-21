@@ -92,9 +92,9 @@ function FormBuilder({
                       </Box>
                     )}
                     <Modals
-                      open={selectedSectionId === currentSection.id}
+                      open={selectedSectionId}
                       options={section.interruption.options}
-                      label={section.interruption.reason}
+                      label={{text: section.interruption.reason}}
                       name={`${section.name}.${index}.${section.interruption.name}`}
                       onAccept={
                         [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)

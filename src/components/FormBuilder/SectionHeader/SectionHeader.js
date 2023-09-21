@@ -58,7 +58,14 @@ function SectionHeader({
           }
         </Stack>
         {section.introduction && (
-          <Typography data-testid="introduction" fontWeight="bold" color="gray">{section.introduction}</Typography>
+          <Typography
+            data-testid="introduction"
+            fontWeight="bold"
+            color="gray"
+            whiteSpace="pre-line"
+          >
+            {section.introduction}
+          </Typography>
         )}
         <Typography>{getHeaders(section.questions, values, section.headers)}</Typography>
       </Stack>
