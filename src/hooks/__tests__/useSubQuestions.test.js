@@ -2,6 +2,12 @@ import {renderHook} from '@testing-library/react';
 
 import useSubQuestions from '../useSubQuestions';
 
+jest.mock('formik', () => ({
+  useFormikContext: jest.fn().mockReturnValue({
+    setFieldValue: jest.fn()
+  })
+}));
+
 const subQuestions = [
   {
     id: 1,
