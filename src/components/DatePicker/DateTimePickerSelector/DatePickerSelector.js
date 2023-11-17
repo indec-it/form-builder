@@ -12,6 +12,7 @@ function DateTimePickerSelector({type, onChange, value, ...props}) {
     return (
       <MuiDateTimePicker
         {...props}
+        timeSteps={{minutes: 1}}
         ampm={false}
         inputFormat="dd/MM/yyyy HH:mm"
         onChange={handleChange}
