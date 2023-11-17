@@ -47,6 +47,7 @@ function DatePicker({
         {isRange && (
           <DateTimePickerSelector
             type={dateType}
+            minutesStep={1}
             label="Fecha de fin"
             value={field.value.end}
             onChange={newValue => {
