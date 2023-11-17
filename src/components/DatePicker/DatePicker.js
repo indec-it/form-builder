@@ -22,6 +22,7 @@ function DatePicker({
       <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
       <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
         <DateTimePickerSelector
+          timeSteps={{minutes: 1}}
           type={dateType}
           label={isRange ? 'Fecha de inicio' : ''}
           value={isRange ? field.value.start : field.value}
@@ -47,6 +48,7 @@ function DatePicker({
         {isRange && (
           <DateTimePickerSelector
             type={dateType}
+            minutesStep={1}
             label="Fecha de fin"
             value={field.value.end}
             onChange={newValue => {
