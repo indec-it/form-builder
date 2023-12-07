@@ -22,6 +22,9 @@ function Select({
       options={options}
       fullWidth
       noOptionsText="No hay opciones."
+      clearText="Limpiar"
+      closeText="Cerrar"
+      openText="Abrir"
       {...props}
       renderInput={params => (
         <TextField
