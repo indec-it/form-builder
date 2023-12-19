@@ -10,7 +10,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:jest/recommended',
-    'plugin:storybook/recommended'
+    'plugin:storybook/recommended',
+    'prettier'
   ],
   settings: {
     'import/resolver': {
@@ -35,7 +36,6 @@ module.exports = {
     localStorage: true
   },
   rules: {
-    indent: ['error', 2],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
@@ -44,7 +44,6 @@ module.exports = {
     'object-curly-spacing': ['error', 'never'],
     'eol-last': ['error'],
     'comma-dangle': ['error', 'never'],
-    'max-len': ['error', 125],
     'react/jsx-filename-extension': [1, {
       extensions: ['.js', '.jsx']
     }],

@@ -113,14 +113,7 @@ function Template(args) {
           submitForm();
         }, []);
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
-        return (
-          <Field
-            component={FieldMessage}
-            {...props}
-            warnings={warnings}
-            disabled={false}
-          />
-        );
+        return <Field component={FieldMessage} {...props} warnings={warnings} disabled={false} />;
       }}
     </Formik>
   );

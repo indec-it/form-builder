@@ -3,34 +3,38 @@ import dateTypes from '@/constants/dateTypes';
 
 const getValue = question => {
   switch (question.type) {
-  case questionTypes.CHECKBOX:
-    return [];
-  case questionTypes.RADIO_TABLE: {
-    const opts = question.options.reduce((accumulator, currentValue) => ({
-      ...accumulator,
-      [currentValue.name]: undefined
-    }), {});
-    return opts;
-  }
-  case questionTypes.DATE:
-    if ([dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(question.metadata.dateType)) {
-      return {start: '', end: ''};
+    case questionTypes.CHECKBOX:
+      return [];
+    case questionTypes.RADIO_TABLE: {
+      const opts = question.options.reduce(
+        (accumulator, currentValue) => ({
+          ...accumulator,
+          [currentValue.name]: undefined
+        }),
+        {}
+      );
+      return opts;
     }
-    return '';
-  default:
-    return '';
+    case questionTypes.DATE:
+      if ([dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(question.metadata.dateType)) {
+        return {start: '', end: ''};
+      }
+      return '';
+    default:
+      return '';
   }
 };
 
-export const getSubQuestions = subQuestions => Object.fromEntries(
-  subQuestions.map((subQuestion, index) => [
-    subQuestion.name,
-    {
-      id: index + 1,
-      answer: {value: ''}
-    }
-  ])
-);
+export const getSubQuestions = subQuestions =>
+  Object.fromEntries(
+    subQuestions.map((subQuestion, index) => [
+      subQuestion.name,
+      {
+        id: index + 1,
+        answer: {value: ''}
+      }
+    ])
+  );
 
 const buildQuestions = section => {
   const values = {[section.name]: {id: 1}};

@@ -732,9 +732,13 @@ WithInitialValues.args = {
 
 function SectionHeader() {
   return (
-    <Box sx={{
-      display: 'flex', justifyContent: 'center', backgroundColor: '#98b9ed', height: '100px'
-    }}
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: '#98b9ed',
+        height: '100px'
+      }}
     >
       <Typography>My custom header</Typography>
     </Box>
@@ -752,7 +756,9 @@ function NavigationButtons() {
   return (
     <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
       <Button variant="outlined">Go back</Button>
-      <Button variant="outlined" color="error">Next</Button>
+      <Button variant="outlined" color="error">
+        Next
+      </Button>
     </Box>
   );
 }

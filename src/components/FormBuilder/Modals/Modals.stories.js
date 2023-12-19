@@ -14,14 +14,7 @@ export default {
 function Template(args) {
   return (
     <Formik initialValues={{S1: {id: 1, answer: ''}}} onSubmit={() => {}}>
-      <Modals
-        acceptButtonLabel="Accept"
-        cancelButtonLabel="Cancel"
-        onClose={() => {}}
-        onAccept={() => {}}
-        open
-        {...args}
-      />
+      <Modals acceptButtonLabel="Accept" cancelButtonLabel="Cancel" onClose={() => {}} onAccept={() => {}} open {...args} />
     </Formik>
   );
 }

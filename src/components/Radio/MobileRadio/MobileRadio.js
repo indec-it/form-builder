@@ -7,9 +7,7 @@ import InputLabel from '@/components/InputLabel';
 
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
-function MobileRadio({
-  options, field, disabled, label, form, warnings
-}) {
+function MobileRadio({options, field, disabled, label, form, warnings}) {
   return (
     <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
@@ -20,12 +18,10 @@ function MobileRadio({
             key={option.value}
             disabled={disabled}
             variant={option.value === field.value ? 'contained' : 'outlined'}
-            onClick={
-              () => {
-                form.setFieldValue(field.name, option.value === field.value ? '' : option.value);
-                form.setFieldTouched(field.name, false);
-              }
-            }
+            onClick={() => {
+              form.setFieldValue(field.name, option.value === field.value ? '' : option.value);
+              form.setFieldTouched(field.name, false);
+            }}
             size="small"
           >
             {option.label}

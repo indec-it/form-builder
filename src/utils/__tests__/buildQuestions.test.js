@@ -99,51 +99,53 @@ describe('buildQuestions', () => {
         id: 1,
         name: 'S1',
         label: 'Sección 1',
-        questions: [{
-          id: 1,
-          label: 'Checkbox',
-          name: 'S1P1',
-          number: '1',
-          type: 5,
-          options: [
-            {
-              id: 1,
-              name: 'S1P1O1',
-              value: '1',
-              label: 'Option 1',
-              subOptions: [
-                {
-                  id: 1
-                }
-              ]
-            },
-            {
-              id: 2,
-              name: 'S1P1O1',
-              value: '2',
-              label: 'Option 2',
-              subOptions: [
-                {
-                  id: 1
-                }
-              ]
-            },
-            {
-              id: 3,
-              name: 'S1P1O1',
-              value: '3',
-              label: 'Option 3',
-              subOptions: [
-                {
-                  id: 1
-                }
-              ]
-            }
-          ],
-          multiple: false,
-          favorite: false,
-          validations: []
-        }],
+        questions: [
+          {
+            id: 1,
+            label: 'Checkbox',
+            name: 'S1P1',
+            number: '1',
+            type: 5,
+            options: [
+              {
+                id: 1,
+                name: 'S1P1O1',
+                value: '1',
+                label: 'Option 1',
+                subOptions: [
+                  {
+                    id: 1
+                  }
+                ]
+              },
+              {
+                id: 2,
+                name: 'S1P1O1',
+                value: '2',
+                label: 'Option 2',
+                subOptions: [
+                  {
+                    id: 1
+                  }
+                ]
+              },
+              {
+                id: 3,
+                name: 'S1P1O1',
+                value: '3',
+                label: 'Option 3',
+                subOptions: [
+                  {
+                    id: 1
+                  }
+                ]
+              }
+            ],
+            multiple: false,
+            favorite: false,
+            validations: []
+          }
+        ],
         interruption: {
           name: 'S1I1',
           interruptible: false,
@@ -179,17 +181,19 @@ describe('buildQuestions', () => {
         id: 1,
         name: 'S1',
         label: 'Sección 1',
-        questions: [{
-          id: 1,
-          label: 'Text field',
-          name: 'S1P1',
-          number: '1',
-          type: 1,
-          options: [],
-          multiple: false,
-          favorite: false,
-          validations: []
-        }],
+        questions: [
+          {
+            id: 1,
+            label: 'Text field',
+            name: 'S1P1',
+            number: '1',
+            type: 1,
+            options: [],
+            multiple: false,
+            favorite: false,
+            validations: []
+          }
+        ],
         interruption: {
           name: 'S1I1',
           interruptible: false,
@@ -225,17 +229,19 @@ describe('buildQuestions', () => {
         id: 1,
         name: 'S1',
         label: 'Sección 1',
-        questions: [{
-          id: 1,
-          label: 'Text field',
-          name: 'S1P1',
-          number: '1',
-          type: 2,
-          options: [],
-          multiple: false,
-          favorite: false,
-          validations: []
-        }],
+        questions: [
+          {
+            id: 1,
+            label: 'Text field',
+            name: 'S1P1',
+            number: '1',
+            type: 2,
+            options: [],
+            multiple: false,
+            favorite: false,
+            validations: []
+          }
+        ],
         interruption: {
           name: 'S1I1',
           interruptible: false,
@@ -271,17 +277,19 @@ describe('buildQuestions', () => {
         id: 1,
         name: 'S1',
         label: 'Sección 1',
-        questions: [{
-          id: 1,
-          label: 'Text field',
-          name: 'S1P1',
-          number: '1',
-          type: 3,
-          options: [],
-          multiple: false,
-          favorite: false,
-          validations: []
-        }],
+        questions: [
+          {
+            id: 1,
+            label: 'Text field',
+            name: 'S1P1',
+            number: '1',
+            type: 3,
+            options: [],
+            multiple: false,
+            favorite: false,
+            validations: []
+          }
+        ],
         interruption: {
           name: 'S1I1',
           interruptible: false,
@@ -317,17 +325,19 @@ describe('buildQuestions', () => {
         id: 1,
         name: 'S1',
         label: 'Sección 1',
-        questions: [{
-          id: 1,
-          label: 'Text field',
-          name: 'S1P1',
-          number: '1',
-          type: 4,
-          options: [],
-          multiple: false,
-          favorite: false,
-          validations: []
-        }],
+        questions: [
+          {
+            id: 1,
+            label: 'Text field',
+            name: 'S1P1',
+            number: '1',
+            type: 4,
+            options: [],
+            multiple: false,
+            favorite: false,
+            validations: []
+          }
+        ],
         interruption: {
           name: 'S1I1',
           interruptible: false,

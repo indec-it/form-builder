@@ -1,7 +1,10 @@
 import getSelectedOptionLabel from '../getSelectedOptionLabel';
 
 describe('getSelectedOptionLabel', () => {
-  const options = [{value: 1, label: 'Option 1'}, {value: 2, label: 'Option 2'}];
+  const options = [
+    {value: 1, label: 'Option 1'},
+    {value: 2, label: 'Option 2'}
+  ];
   let selectedOption;
 
   describe('when `selectedOption` does not match with an option`s id', () => {

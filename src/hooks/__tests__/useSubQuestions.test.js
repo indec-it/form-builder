@@ -73,34 +73,36 @@ const subQuestions = [
 describe('useSubQuestions', () => {
   it('should filter the subQuestions', () => {
     const {result} = renderHook(() => useSubQuestions({subQuestions, value: {test: {answer: {value: '2'}}}, name: 'test'}));
-    expect(result.current.selectedQuestions).toEqual([{
-      id: 3,
-      optionId: 3,
-      type: '1',
-      label: 'Monto pais',
-      name: 'S2P4SQ3',
-      validations: [],
-      navigation: [
-        {
-          id: 1,
-          rules: [
-            {
-              id: 1,
-              conditions: [
-                {
-                  id: 1,
-                  value: '2',
-                  type: 'ne',
-                  question: 'test',
-                  section: 'S2'
-                }
-              ]
-            }
-          ],
-          action: 'hide'
-        }
-      ],
-      userVarName: 'monto3'
-    }]);
+    expect(result.current.selectedQuestions).toEqual([
+      {
+        id: 3,
+        optionId: 3,
+        type: '1',
+        label: 'Monto pais',
+        name: 'S2P4SQ3',
+        validations: [],
+        navigation: [
+          {
+            id: 1,
+            rules: [
+              {
+                id: 1,
+                conditions: [
+                  {
+                    id: 1,
+                    value: '2',
+                    type: 'ne',
+                    question: 'test',
+                    section: 'S2'
+                  }
+                ]
+              }
+            ],
+            action: 'hide'
+          }
+        ],
+        userVarName: 'monto3'
+      }
+    ]);
   });
 });

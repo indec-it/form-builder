@@ -7,14 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DoneIcon from '@mui/icons-material/Done';
 
-function NavigationButtons({
-  onPrevious,
-  disablePreviousButton,
-  onAddNew,
-  isLastSection,
-  onInterrupt,
-  readOnlyMode
-}) {
+function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, isLastSection, onInterrupt, readOnlyMode}) {
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
       <Button
@@ -29,12 +22,7 @@ function NavigationButtons({
       {!readOnlyMode && (
         <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
           {onAddNew && (
-            <Button
-              data-testid="add-new"
-              startIcon={<AddIcon />}
-              onClick={onAddNew}
-              variant="outlined"
-            >
+            <Button data-testid="add-new" startIcon={<AddIcon />} onClick={onAddNew} variant="outlined">
               Agregar nuevo
             </Button>
           )}

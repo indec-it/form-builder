@@ -263,9 +263,7 @@ const section = {
 describe('useFormBuilder', () => {
   describe('handleShowSurvey', () => {
     it('should update `showSurvey` and `readOnlyMode`', () => {
-      const {result} = renderHook(
-        () => useFormBuilder({isReadOnly: false, initialValues: undefined, section})
-      );
+      const {result} = renderHook(() => useFormBuilder({isReadOnly: false, initialValues: undefined, section}));
 
       act(() => {
         result.current.handleShowSurvey(1, false);
@@ -278,9 +276,7 @@ describe('useFormBuilder', () => {
 
   describe('handleOpenModal', () => {
     it('should update `selectedSectionId` and `openModal`', () => {
-      const {result} = renderHook(
-        () => useFormBuilder({isReadOnly: false, initialValues: undefined, section})
-      );
+      const {result} = renderHook(() => useFormBuilder({isReadOnly: false, initialValues: undefined, section}));
 
       act(() => {
         result.current.handleOpenModal(2, 1);

@@ -16,54 +16,48 @@ import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 const getHeaders = (questions, values, headers) => {
   if (headers.some(header => header.question)) {
     const headerQuestions = headers.map(header => header.question);
-    return questions.reduce((acc, question) => {
-      if (
-        headerQuestions.includes(question.id)
-        && !question.multiple
-        && values[question.name].answer?.value
-      ) {
-        const {value} = values[question.name].answer;
-        if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
-          acc.push(value);
-        } else {
-          acc.push(getSelectedOptionLabel(question.options, value));
+    return questions
+      .reduce((acc, question) => {
+        if (headerQuestions.includes(question.id) && !question.multiple && values[question.name].answer?.value) {
+          const {value} = values[question.name].answer;
+          if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
+            acc.push(value);
+          } else {
+            acc.push(getSelectedOptionLabel(question.options, value));
+          }
         }
-      }
-      return acc;
-    }, []).join(' | ');
+        return acc;
+      }, [])
+      .join(' | ');
   }
   return '';
 };
 
-function SectionHeader({
-  section, sectionsLength, onView, onEdit, onDelete, values, isReadOnly, isValid
-}) {
+function SectionHeader({section, sectionsLength, onView, onEdit, onDelete, values, isReadOnly, isValid}) {
   return (
-    <Box sx={{
-      display: 'flex',
-      backgroundColor: '#fff',
-      boxShadow: 2,
-      p: 2,
-      justifyContent: 'space-between',
-      flexWrap: 'wrap'
-    }}
+    <Box
+      sx={{
+        display: 'flex',
+        backgroundColor: '#fff',
+        boxShadow: 2,
+        p: 2,
+        justifyContent: 'space-between',
+        flexWrap: 'wrap'
+      }}
     >
       <Stack>
         <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6" fontWeight="bold">{section.label}</Typography>
-          {
-            isValid
-              ? <CheckCircleIcon color="success" data-testid="success-icon" />
-              : <ErrorIcon color="error" data-testid="error-icon" />
-          }
+          <Typography variant="h6" fontWeight="bold">
+            {section.label}
+          </Typography>
+          {isValid ? (
+            <CheckCircleIcon color="success" data-testid="success-icon" />
+          ) : (
+            <ErrorIcon color="error" data-testid="error-icon" />
+          )}
         </Stack>
         {section.introduction && (
-          <Typography
-            data-testid="introduction"
-            fontWeight="bold"
-            color="gray"
-            whiteSpace="pre-line"
-          >
+          <Typography data-testid="introduction" fontWeight="bold" color="gray" whiteSpace="pre-line">
             {section.introduction}
           </Typography>
         )}

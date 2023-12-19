@@ -12,9 +12,7 @@ import getLastId from '@/utils/getLastId';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
-function Wrapper({
-  isMultiple, name, values, subQuestions, options, disabled, warnings, show, ...props
-}) {
+function Wrapper({isMultiple, name, values, subQuestions, options, disabled, warnings, show, ...props}) {
   if (!show) {
     return null;
   }
@@ -23,55 +21,45 @@ function Wrapper({
     Component = (
       <FieldArray
         name={name}
-        render={helpers => values.answer.map((answer, index) => (
-          <Stack key={answer.id} direction={{xs: 'column', sm: 'row'}} spacing={2} mb={2}>
-            <Field
-              {...props}
-              options={options}
-              name={`${name}.${index}.value`}
-              disabled={disabled}
-              warnings={warnings}
-            />
-            <SubQuestions
-              values={{answer, id: answer.id}}
-              subQuestions={subQuestions}
-              disabled={disabled}
-              warnings={warnings}
-              name={`${name}.${index}.specifications`}
-            />
-            <Stack direction={{xs: 'column', sm: 'row'}} spacing={2} justifyContent="center" sx={{width: '90px'}}>
-              {values.answer.length === index + 1 && !disabled && (
-                <IconButton
-                  onClick={
-                    () => helpers.push({
-                      id: getLastId(values.answer) + 1, value: '', specifications: getSubQuestions(subQuestions)
-                    })
-                  }
-                  color="primary"
-                >
-                  <AddCircleIcon />
-                </IconButton>
-              )}
-              {index > 0 && !disabled && (
-                <IconButton onClick={() => helpers.remove(index)} color="error">
-                  <DeleteIcon />
-                </IconButton>
-              )}
+        render={helpers =>
+          values.answer.map((answer, index) => (
+            <Stack key={answer.id} direction={{xs: 'column', sm: 'row'}} spacing={2} mb={2}>
+              <Field {...props} options={options} name={`${name}.${index}.value`} disabled={disabled} warnings={warnings} />
+              <SubQuestions
+                values={{answer, id: answer.id}}
+                subQuestions={subQuestions}
+                disabled={disabled}
+                warnings={warnings}
+                name={`${name}.${index}.specifications`}
+              />
+              <Stack direction={{xs: 'column', sm: 'row'}} spacing={2} justifyContent="center" sx={{width: '90px'}}>
+                {values.answer.length === index + 1 && !disabled && (
+                  <IconButton
+                    onClick={() =>
+                      helpers.push({
+                        id: getLastId(values.answer) + 1,
+                        value: '',
+                        specifications: getSubQuestions(subQuestions)
+                      })
+                    }
+                    color="primary"
+                  >
+                    <AddCircleIcon />
+                  </IconButton>
+                )}
+                {index > 0 && !disabled && (
+                  <IconButton onClick={() => helpers.remove(index)} color="error">
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </Stack>
             </Stack>
-          </Stack>
-        ))}
+          ))
+        }
       />
     );
   } else {
-    Component = (
-      <Field
-        {...props}
-        options={options}
-        name={`${name}.value`}
-        disabled={disabled}
-        warnings={warnings}
-      />
-    );
+    Component = <Field {...props} options={options} name={`${name}.value`} disabled={disabled} warnings={warnings} />;
   }
   if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (

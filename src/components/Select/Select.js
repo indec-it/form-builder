@@ -6,9 +6,7 @@ import {formikField, formikForm, label as labelPropTypes} from '@/utils/propType
 
 import TextField from '../TextField';
 
-function Select({
-  options, field, label, form, loading, onClean, placeholder, disabled, keyValue, warnings, ...props
-}) {
+function Select({options, field, label, form, loading, onClean, placeholder, disabled, keyValue, warnings, ...props}) {
   const handleChange = selectedValue => {
     form.setFieldValue(field.name, selectedValue ? selectedValue[keyValue] : undefined);
     form.setFieldTouched(field.name, false);

@@ -12,16 +12,7 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({
-  section,
-  isLastSection,
-  page,
-  onSubmit,
-  onPrevious,
-  components,
-  initialValues,
-  isReadOnly
-}) {
+function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, components, initialValues, isReadOnly}) {
   const {
     readOnlyMode,
     showSurvey,
@@ -51,35 +42,32 @@ function FormBuilder({
           <Form>
             <FieldArray
               name={section.name}
-              render={
-                sectionHelpers => values?.[section.name]?.map((currentSection, index) => (
+              render={sectionHelpers =>
+                values?.[section.name]?.map((currentSection, index) => (
                   <Box key={currentSection.id} mb={2}>
-                    {
-                      components.SectionHeader
-                        ? (
-                          <components.SectionHeader
-                            onView={() => handleShowSurvey(currentSection.id, true)}
-                            onEdit={() => handleShowSurvey(currentSection.id, false)}
-                            onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                            sectionsLength={values[section.name].length}
-                            section={section}
-                            values={currentSection}
-                            isReadOnly={isReadOnly}
-                            isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
-                          />
-                        ) : (
-                          <SectionHeader
-                            onView={() => handleShowSurvey(currentSection.id, true)}
-                            onEdit={() => handleShowSurvey(currentSection.id, false)}
-                            onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                            sectionsLength={values[section.name].length}
-                            section={section}
-                            values={currentSection}
-                            isReadOnly={isReadOnly}
-                            isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
-                          />
-                        )
-                    }
+                    {components.SectionHeader ? (
+                      <components.SectionHeader
+                        onView={() => handleShowSurvey(currentSection.id, true)}
+                        onEdit={() => handleShowSurvey(currentSection.id, false)}
+                        onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
+                        sectionsLength={values[section.name].length}
+                        section={section}
+                        values={currentSection}
+                        isReadOnly={isReadOnly}
+                        isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
+                      />
+                    ) : (
+                      <SectionHeader
+                        onView={() => handleShowSurvey(currentSection.id, true)}
+                        onEdit={() => handleShowSurvey(currentSection.id, false)}
+                        onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
+                        sectionsLength={values[section.name].length}
+                        section={section}
+                        values={currentSection}
+                        isReadOnly={isReadOnly}
+                        isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
+                      />
+                    )}
                     {showSurvey === currentSection.id && (
                       <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
                         <QuestionBuilder
@@ -108,33 +96,31 @@ function FormBuilder({
                 ))
               }
             />
-            {
-              components.NavigationButtons ? (
-                <components.NavigationButtons
-                  schema={validateSchema}
-                  values={values ? values[section.name] : {}}
-                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                  onInterrupt={
-                    section.interruption.interruptible
-                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                      : undefined
-                  }
-                />
-              ) : (
-                <NavigationButtons
-                  onPrevious={onPrevious}
-                  disablePreviousButton={page === 0}
-                  isLastSection={isLastSection}
-                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                  onInterrupt={
-                    section.interruption.interruptible
-                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                      : undefined
-                  }
-                  readOnlyMode={isReadOnly}
-                />
-              )
-            }
+            {components.NavigationButtons ? (
+              <components.NavigationButtons
+                schema={validateSchema}
+                values={values ? values[section.name] : {}}
+                onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                onInterrupt={
+                  section.interruption.interruptible
+                    ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                    : undefined
+                }
+              />
+            ) : (
+              <NavigationButtons
+                onPrevious={onPrevious}
+                disablePreviousButton={page === 0}
+                isLastSection={isLastSection}
+                onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                onInterrupt={
+                  section.interruption.interruptible
+                    ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                    : undefined
+                }
+                readOnlyMode={isReadOnly}
+              />
+            )}
           </Form>
         );
       }}

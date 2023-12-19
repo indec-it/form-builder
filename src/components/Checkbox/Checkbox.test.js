@@ -1,6 +1,4 @@
-import {
-  fireEvent, getByTestId, getByText, queryByText
-} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText, queryByText} from '@testing-library/react';
 
 import Checkbox from './Checkbox';
 

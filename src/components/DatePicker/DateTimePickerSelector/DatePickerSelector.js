@@ -21,12 +21,7 @@ function DateTimePickerSelector({type, onChange, value, ...props}) {
     );
   }
   return (
-    <MuiDatePicker
-      {...props}
-      inputFormat="dd/MM/yyyy"
-      onChange={handleChange}
-      value={value ? new Date(value) : value}
-    />
+    <MuiDatePicker {...props} inputFormat="dd/MM/yyyy" onChange={handleChange} value={value ? new Date(value) : value} />
   );
 }
 

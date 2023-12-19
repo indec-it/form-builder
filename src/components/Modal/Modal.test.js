@@ -1,6 +1,4 @@
-import {
-  fireEvent, getByTestId, getByText, queryByTestId, cleanup
-} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText, queryByTestId, cleanup} from '@testing-library/react';
 import Modal from './Modal';
 
 describe('<Modal>', () => {

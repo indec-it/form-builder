@@ -11,9 +11,7 @@ import formikFormPropTypes from '@/utils/propTypes/formikForm';
 import formikFieldPropTypes from '@/utils/propTypes/formikField';
 import labelPropTypes from '@/utils/propTypes/label';
 
-function InputLabel({
-  label, form, field, disabled, warnings
-}) {
+function InputLabel({label, form, field, disabled, warnings}) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   const labelNumber = label.number ? `${label.number} - ` : '';
 
@@ -21,9 +19,7 @@ function InputLabel({
     <Stack direction="row" spacing={2} data-testid="input-label">
       <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
         <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
-          {`${labelNumber}${label.text}`}
-          {' '}
-          {hasError && '*'}
+          {`${labelNumber}${label.text}`} {hasError && '*'}
         </Typography>
       </Stack>
       {hasError && !disabled && (
