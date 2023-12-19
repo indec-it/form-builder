@@ -9,35 +9,25 @@ import modals from '@/constants/modals';
 
 const getChildren = (modal, {options, label, name}) => {
   switch (modal) {
-  case modals.CONFIRM_DELETE_SECTION_MODAL:
-    return (
-      <>
-        <Box sx={{display: 'flex', justifyContent: 'center'}}>
-          <Typography fontWeight="bold">Atención</Typography>
-        </Box>
-        <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
-      </>
-    );
-  case modals.INTERRUPTION_MODAL:
-    return (
-      <FastField component={Radio} options={options} label={label} name={name} />
-    );
-  default:
-    return null;
+    case modals.CONFIRM_DELETE_SECTION_MODAL:
+      return (
+        <>
+          <Box sx={{display: 'flex', justifyContent: 'center'}}>
+            <Typography fontWeight="bold">Atención</Typography>
+          </Box>
+          <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
+        </>
+      );
+    case modals.INTERRUPTION_MODAL:
+      return <FastField component={Radio} options={options} label={label} name={name} />;
+    default:
+      return null;
   }
 };
 
-function Modals({
-  modal, onAccept, open, onClose, ...props
-}) {
+function Modals({modal, onAccept, open, onClose, ...props}) {
   return (
-    <Modal
-      open={open}
-      modal={modal}
-      cancelButtonLabel="Cerrar"
-      onAccept={onAccept}
-      onClose={onClose}
-    >
+    <Modal open={open} modal={modal} cancelButtonLabel="Cerrar" onAccept={onAccept} onClose={onClose}>
       {getChildren(modal, props)}
     </Modal>
   );

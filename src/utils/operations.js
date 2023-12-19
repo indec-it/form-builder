@@ -3,9 +3,7 @@ import {isEqual, isBefore, isAfter} from 'date-fns';
 import questionTypes from '@/constants/questionTypes';
 
 const isString = value => typeof value === 'string';
-const isObject = value => typeof value === 'object'
-&& value !== null
-&& !Array.isArray(value);
+const isObject = value => typeof value === 'object' && value !== null && !Array.isArray(value);
 
 const operations = {
   eq: (a, b, questionType) => {
@@ -33,7 +31,7 @@ const operations = {
       const secondDate = new Date(b);
       return isAfter(firstDate, secondDate);
     }
-    return (isString(a) ? a.length > b : a > b);
+    return isString(a) ? a.length > b : a > b;
   },
   gte: (a, b) => (isString(a) ? a.length >= b : a >= b),
   lt: (a, b, questionType) => {
@@ -42,7 +40,7 @@ const operations = {
       const secondDate = new Date(b);
       return isBefore(firstDate, secondDate);
     }
-    return (isString(a) ? a.length < b : a < b);
+    return isString(a) ? a.length < b : a < b;
   },
   lte: (a, b) => (isString(a) ? a.length <= b : a <= b),
   in: (a, b) => a.includes(b),

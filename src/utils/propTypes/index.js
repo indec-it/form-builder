@@ -4,6 +4,4 @@ import label from './label';
 import user from './user';
 import validation from './validation';
 
-export {
-  formikField, formikForm, label, user, validation
-};
+export {formikField, formikForm, label, user, validation};

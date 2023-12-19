@@ -14,56 +14,46 @@ import {formikField, formikForm, label as labelPropTypes} from '@/utils/propType
 
 import MobileRadio from './MobileRadio';
 
-function Radio({
-  options, field, disabled, label, form, warnings
-}) {
+function Radio({options, field, disabled, label, form, warnings}) {
   const {breakpoint} = useBreakpoint();
-  return breakpoint === breakpoints.EXTRA_SMALL
-    ? (
-      <MobileRadio
-        options={options}
-        field={field}
-        disabled={disabled}
-        label={label}
-        form={form}
-        warnings={warnings}
-      />
-    ) : (
-      <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
-        <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-        <RadioGroup
-          {...field}
-          onBlur={form.handleBlur}
-          onChange={e => {
-            field.onChange(e);
-            form.setFieldTouched(field.name, false);
-          }}
-        >
-          {options.map((option, index) => (
-            <Stack key={option.value} direction="row">
-              <FormControlLabel
-                data-testid={`radio-${index}`}
-                value={option.value}
-                control={<MuiRadio />}
-                label={option.label}
-                disabled={disabled}
-                checked={option.value === field.value}
-              />
-              {option.value === field.value && !disabled && (
-                <IconButton
-                  onClick={() => form.setFieldValue(field.name, '')}
-                  color="error"
-                  data-testid={`clean-option-${index}`}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              )}
-            </Stack>
-          ))}
-        </RadioGroup>
-        <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
-      </Stack>
-    );
+  return breakpoint === breakpoints.EXTRA_SMALL ? (
+    <MobileRadio options={options} field={field} disabled={disabled} label={label} form={form} warnings={warnings} />
+  ) : (
+    <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
+      <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
+      <RadioGroup
+        {...field}
+        onBlur={form.handleBlur}
+        onChange={e => {
+          field.onChange(e);
+          form.setFieldTouched(field.name, false);
+        }}
+      >
+        {options.map((option, index) => (
+          <Stack key={option.value} direction="row">
+            <FormControlLabel
+              data-testid={`radio-${index}`}
+              value={option.value}
+              control={<MuiRadio />}
+              label={option.label}
+              disabled={disabled}
+              checked={option.value === field.value}
+            />
+            {option.value === field.value && !disabled && (
+              <IconButton
+                onClick={() => form.setFieldValue(field.name, '')}
+                color="error"
+                data-testid={`clean-option-${index}`}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </Stack>
+        ))}
+      </RadioGroup>
+      <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
+    </Stack>
+  );
 }
 
 Radio.propTypes = {

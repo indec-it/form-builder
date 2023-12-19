@@ -10,18 +10,10 @@ import InputLabel from '@/components/InputLabel';
 import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
-function TextField({
-  form, field, placeholder, label, disabled, tooltip, warnings, ...props
-}) {
+function TextField({form, field, placeholder, label, disabled, tooltip, warnings, ...props}) {
   return (
     <Box sx={{width: '100%'}}>
-      <InputLabel
-        warnings={warnings}
-        form={form}
-        field={field}
-        label={label}
-        disabled={disabled}
-      />
+      <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       <MuiTextField
         fullWidth
         id={`field-${field.name}`}
@@ -30,17 +22,8 @@ function TextField({
         InputProps={{
           endAdornment: tooltip && (
             <InputAdornment position="end">
-              <Tooltip
-                arrow
-                placement="top"
-                title={tooltip}
-              >
-                <Box
-                  display="flex"
-                  alignItems="center"
-                  flexWrap="wrap"
-                  px={2}
-                >
+              <Tooltip arrow placement="top" title={tooltip}>
+                <Box display="flex" alignItems="center" flexWrap="wrap" px={2}>
                   <HelpIcon fontSize="small" />
                 </Box>
               </Tooltip>

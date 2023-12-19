@@ -7,17 +7,19 @@ import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 const alertStyles = {justifyContent: 'center', mt: 2};
 
 function FieldMessage({form, field, disabled, warnings}) {
-  const {
-    hasWarning, warning, hasError, error
-  } = hasFormikErrorsAndWarnings({form, field, warnings});
+  const {hasWarning, warning, hasError, error} = hasFormikErrorsAndWarnings({form, field, warnings});
   if (hasError && !disabled) {
     return (
-      <Alert severity="error" sx={alertStyles}>{error}</Alert>
+      <Alert severity="error" sx={alertStyles}>
+        {error}
+      </Alert>
     );
   }
   if (hasWarning && !disabled) {
     return (
-      <Alert severity="warning" sx={alertStyles}>{warning}</Alert>
+      <Alert severity="warning" sx={alertStyles}>
+        {warning}
+      </Alert>
     );
   }
   return null;

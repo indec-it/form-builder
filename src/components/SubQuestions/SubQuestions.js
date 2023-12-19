@@ -12,7 +12,10 @@ import getQuestionProps from '@/utils/getQuestionProps';
 function SubQuestions({values, subQuestions, name, ...props}) {
   const parentName = name.split('.')[2];
   const {selectedQuestions} = useSubQuestions({
-    subQuestions, value: {[parentName]: values}, name: parentName, specificationsPathName: name
+    subQuestions,
+    value: {[parentName]: values},
+    name: parentName,
+    specificationsPathName: name
   });
   return selectedQuestions.length > 0 ? (
     <Stack spacing={2} sx={{width: '100%'}}>

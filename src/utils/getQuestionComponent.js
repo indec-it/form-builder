@@ -9,23 +9,23 @@ import questionTypes from '@/constants/questionTypes';
 
 const getQuestionComponent = questionType => {
   switch (questionType) {
-  case questionTypes.NUMERIC_FIELD:
-  case questionTypes.TEXT_FIELD:
-    return TextField;
-  case questionTypes.CURRENCY:
-    return Currency;
-  case questionTypes.DROPDOWN:
-    return Select;
-  case questionTypes.RADIO:
-    return Radio;
-  case questionTypes.CHECKBOX:
-    return Checkbox;
-  case questionTypes.RADIO_TABLE:
-    return RadioTable;
-  case questionTypes.DATE:
-    return DatePicker;
-  default:
-    return null;
+    case questionTypes.NUMERIC_FIELD:
+    case questionTypes.TEXT_FIELD:
+      return TextField;
+    case questionTypes.CURRENCY:
+      return Currency;
+    case questionTypes.DROPDOWN:
+      return Select;
+    case questionTypes.RADIO:
+      return Radio;
+    case questionTypes.CHECKBOX:
+      return Checkbox;
+    case questionTypes.RADIO_TABLE:
+      return RadioTable;
+    case questionTypes.DATE:
+      return DatePicker;
+    default:
+      return null;
   }
 };
 

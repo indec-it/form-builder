@@ -1,6 +1,4 @@
-import {
-  fireEvent, getByTestId, queryByText
-} from '@testing-library/react';
+import {fireEvent, getByTestId, queryByText} from '@testing-library/react';
 
 import TextField from './TextField';
 

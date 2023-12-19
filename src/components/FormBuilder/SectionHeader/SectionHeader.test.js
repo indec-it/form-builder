@@ -1,6 +1,4 @@
-import {
-  fireEvent, getByTestId, getByText, queryByTestId
-} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
 import SectionHeader from './SectionHeader';
 

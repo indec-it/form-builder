@@ -16,30 +16,20 @@ export default {
 };
 
 function Template(args) {
-  const {
-    withErrors, withWarnings, initialValues, section, ...props
-  } = args;
+  const {withErrors, withWarnings, initialValues, section, ...props} = args;
   const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={withErrors ? validateSchema : null}
-      onSubmit={() => {}}
-    >
+    <Formik initialValues={initialValues} validationSchema={withErrors ? validateSchema : null} onSubmit={() => {}}>
       {({values, submitForm}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
           <>
-            <Field
-              component={DatePicker}
-              warnings={warnings}
-              {...props}
-            />
-            {
-              withErrors
-                ? <Button onClick={submitForm} variant="contained">Click to validate form</Button>
-                : null
-            }
+            <Field component={DatePicker} warnings={warnings} {...props} />
+            {withErrors ? (
+              <Button onClick={submitForm} variant="contained">
+                Click to validate form
+              </Button>
+            ) : null}
           </>
         );
       }}

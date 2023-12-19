@@ -9,21 +9,21 @@ const useSubQuestions = ({subQuestions, value, name, specificationsPathName}) =>
   const {setFieldValue} = useFormikContext();
 
   useEffect(() => {
-    const allSubQuestions = subQuestions.map(
-      subQuestion => {
-        const condition = getNavigation({
-          navigation: subQuestion.navigation, answers: value, questionType: subQuestion.type
-        });
-        return {...subQuestion, show: !condition};
-      }
-    );
+    const allSubQuestions = subQuestions.map(subQuestion => {
+      const condition = getNavigation({
+        navigation: subQuestion.navigation,
+        answers: value,
+        questionType: subQuestion.type
+      });
+      return {...subQuestion, show: !condition};
+    });
     const hiddenSubQuestions = allSubQuestions.filter(subQuestion => !subQuestion.show);
     const showSubQuestions = allSubQuestions.filter(subQuestion => subQuestion.show);
     if (hiddenSubQuestions.length > 0) {
-      setFieldValue(
-        specificationsPathName,
-        {...value?.[name]?.answer?.specifications, ...getSubQuestions(hiddenSubQuestions)}
-      );
+      setFieldValue(specificationsPathName, {
+        ...value?.[name]?.answer?.specifications,
+        ...getSubQuestions(hiddenSubQuestions)
+      });
     }
     if (showSubQuestions.length > 0) {
       showSubQuestions.forEach(subQuestion => {

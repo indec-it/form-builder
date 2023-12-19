@@ -10,22 +10,20 @@ import getQuestionComponent from '@/utils/getQuestionComponent';
 
 import Wrapper from '../Wrapper';
 
-function Question({
-  section,
-  sectionIndex,
-  questionIndex,
-  disabled,
-  warnings,
-  values
-}) {
+function Question({section, sectionIndex, questionIndex, disabled, warnings, values}) {
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
   }
   const {setFieldValue} = useFormikContext();
-  const {
-    props, questionName, jump, questionType
-  } = getQuestionProps({sectionIndex, section, question, values, disabled, warnings});
+  const {props, questionName, jump, questionType} = getQuestionProps({
+    sectionIndex,
+    section,
+    question,
+    values,
+    disabled,
+    warnings
+  });
   let shouldClean = false;
   if (!!jump?.action && !shouldClean) {
     shouldClean = true;
@@ -40,9 +38,7 @@ function Question({
   }, [shouldClean, questionName]);
 
   const Component = getQuestionComponent(questionType);
-  return Component
-    ? <Wrapper component={Component} {...props} />
-    : <Typography>Invalid component.</Typography>;
+  return Component ? <Wrapper component={Component} {...props} /> : <Typography>Invalid component.</Typography>;
 }
 
 Question.propTypes = {

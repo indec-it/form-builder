@@ -79,13 +79,7 @@ function Template(args) {
     >
       {({values}) => {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
-        return (
-          <Field
-            component={TextField}
-            {...props}
-            warnings={warnings}
-          />
-        );
+        return <Field component={TextField} {...props} warnings={warnings} />;
       }}
     </Formik>
   );

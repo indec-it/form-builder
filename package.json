@@ -12,7 +12,8 @@
     "test:coverage": "jest --config=jest.config.json --coverage",
     "test:watch": "jest --config=jest.config.json --watch",
     "prepare": "husky install",
-    "validate": "npm run lint && npm run test",
+    "prettier": "prettier src/ --write",
+    "validate": "npm run prettier && npm run lint && npm run test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o docs-build"
   },
@@ -56,6 +57,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "eslint": "^8.41.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.27.5",
@@ -68,6 +70,7 @@
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "jest-watch-typeahead": "^2.2.2",
+    "prettier": "^3.1.1",
     "storybook": "^7.0.26"
   },
   "dependencies": {

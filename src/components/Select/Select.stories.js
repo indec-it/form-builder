@@ -101,17 +101,12 @@ function Template(args) {
         const warnings = withWarnings ? getWarnings(warningSchema, values) || {} : {};
         return (
           <>
-            <Field
-              component={Select}
-              {...props}
-              warnings={warnings}
-              keyValue="value"
-            />
-            {
-              withErrors
-                ? <Button onClick={submitForm} variant="contained">Click to validate form</Button>
-                : null
-            }
+            <Field component={Select} {...props} warnings={warnings} keyValue="value" />
+            {withErrors ? (
+              <Button onClick={submitForm} variant="contained">
+                Click to validate form
+              </Button>
+            ) : null}
           </>
         );
       }}

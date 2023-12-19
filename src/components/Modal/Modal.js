@@ -10,23 +10,19 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 import modals from '@/constants/modals';
 
-function Modal({
-  modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open
-}) {
+function Modal({modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open}) {
   return (
-    <MuiModal
-      open={modal > 0 && open}
-      onClose={onClose}
-    >
-      <Box sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'background.paper',
-        p: 4,
-        borderRadius: '20px'
-      }}
+    <MuiModal open={modal > 0 && open} onClose={onClose}>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          bgcolor: 'background.paper',
+          p: 4,
+          borderRadius: '20px'
+        }}
       >
         <Container>
           <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -37,13 +33,11 @@ function Modal({
           <Divider />
           {children}
           <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
-            <Button data-testid="close-button" onClick={onClose}>{cancelButtonLabel}</Button>
+            <Button data-testid="close-button" onClick={onClose}>
+              {cancelButtonLabel}
+            </Button>
             {onAccept && (
-              <Button
-                variant="contained"
-                data-testid="accept-button"
-                onClick={() => onAccept(modal)}
-              >
+              <Button variant="contained" data-testid="accept-button" onClick={() => onAccept(modal)}>
                 {acceptButtonLabel}
               </Button>
             )}

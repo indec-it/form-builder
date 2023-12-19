@@ -13,9 +13,7 @@ import InputLabel from '../InputLabel';
 import TextField from '../TextField';
 import DateTimePickerSelector from './DateTimePickerSelector';
 
-function DatePicker({
-  metadata: {dateType}, field, label, form, warnings, disabled, ...props
-}) {
+function DatePicker({metadata: {dateType}, field, label, form, warnings, disabled, ...props}) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>

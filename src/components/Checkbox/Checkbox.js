@@ -31,9 +31,7 @@ const handleChecked = (e, options, selectedOption, {name, value}, setFieldValue)
   setFieldValue(name, values);
 };
 
-function Checkbox({
-  options, label, field, form, disabled, warnings
-}) {
+function Checkbox({options, label, field, form, disabled, warnings}) {
   return (
     <Stack direction="column" sx={{width: '100%'}}>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
@@ -42,7 +40,7 @@ function Checkbox({
           <FormControlLabel
             key={option.value}
             data-testid={`checkbox-${index}`}
-            control={(
+            control={
               <MuiCheckbox
                 data-testid={`option-${index}`}
                 checked={field.value.includes(option.value)}
@@ -51,7 +49,7 @@ function Checkbox({
                   form.setFieldTouched(field.name, false);
                 }}
               />
-            )}
+            }
             label={option.label}
             disabled={disabled}
           />
