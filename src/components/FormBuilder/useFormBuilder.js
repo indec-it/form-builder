@@ -1,6 +1,8 @@
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 
+import questionTypes from '@/constants/questionTypes';
 import modals from '@/constants/modals';
+import validationTypes from '@/constants/validationTypes';
 import useSectionInitialValues from '@/hooks/useSectionInitialValues';
 import buildQuestions from '@/utils/buildQuestions';
 import getSchemas from '@/utils/getSchemas';
@@ -11,8 +13,6 @@ const useFormBuilder = ({isReadOnly, section, initialValues}) => {
   const [showSurvey, setShowSurvey] = useState();
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
-  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, section);
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
 
   const handleShowSurvey = (sectionId, readOnly) => {
     setShowSurvey(sectionId);
@@ -40,6 +40,81 @@ const useFormBuilder = ({isReadOnly, section, initialValues}) => {
     setValues(newValues);
   };
 
+  const transformedSection = useMemo(() => {
+    const questions = section.questions.map(question => {
+      if (
+        [questionTypes.DROPDOWN, questionTypes.RADIO, questionTypes.CHECKBOX].includes(question.type) &&
+        question.allOptionsNeedSpecification
+      ) {
+        return {
+          ...question,
+          subQuestions: question.options.map((option, index) => ({
+            id: index + 1,
+            type: question.metadata.specification.type,
+            optionId: option.id,
+            label: question.metadata.specification.label,
+            name: `S${section.id}P${question.id}SQ${index + 1}`,
+            userVarName: `${question.userVarName}_${option.value}`,
+            validations: [
+              {
+                id: 1,
+                rules: [
+                  {
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        section: 'S2',
+                        question: question.name,
+                        value: '',
+                        type:
+                          question.type === questionTypes.CHECKBOX ? validationTypes.NOT_INCLUDES : validationTypes.NOT_EQUAL
+                      },
+                      {
+                        id: 2,
+                        section: 'S2',
+                        question: `S${section.id}P${question.id}SQ${index + 1}`,
+                        value: '',
+                        type: validationTypes.EQUAL
+                      }
+                    ]
+                  }
+                ],
+                message: {text: 'Debe completar el campo', type: 'error'}
+              }
+            ],
+            navigation: [
+              {
+                id: 1,
+                rules: [
+                  {
+                    id: 1,
+                    conditions: [
+                      {
+                        id: 1,
+                        section: 'S2',
+                        question: question.name,
+                        value: option.value,
+                        type:
+                          question.type === questionTypes.CHECKBOX ? validationTypes.NOT_INCLUDES : validationTypes.NOT_EQUAL
+                      }
+                    ]
+                  }
+                ],
+                action: 'hide'
+              }
+            ]
+          }))
+        };
+      }
+      return question;
+    });
+    return {...section, questions};
+  }, [section]);
+
+  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, transformedSection);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section: transformedSection});
+
   return {
     readOnlyMode,
     showSurvey,
@@ -52,7 +127,8 @@ const useFormBuilder = ({isReadOnly, section, initialValues}) => {
     addNewSection,
     handleOpenModal,
     handleShowSurvey,
-    setOpenModal
+    setOpenModal,
+    transformedSection
   };
 };
 

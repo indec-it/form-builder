@@ -25,7 +25,8 @@ function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, compon
     addNewSection,
     handleOpenModal,
     handleShowSurvey,
-    setOpenModal
+    setOpenModal,
+    transformedSection
   } = useFormBuilder({isReadOnly, section, initialValues});
   return (
     <Formik
@@ -62,18 +63,18 @@ function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, compon
                         onEdit={() => handleShowSurvey(currentSection.id, false)}
                         onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
                         sectionsLength={values[section.name].length}
-                        section={section}
+                        section={transformedSection}
                         values={currentSection}
                         isReadOnly={isReadOnly}
                         isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
                       />
                     )}
                     {showSurvey === currentSection.id && (
-                      <Box sx={{backgroundColor: '#fff', boxShadow: 2, p: 2}}>
+                      <Box sx={{boxShadow: 2, p: 2}}>
                         <QuestionBuilder
                           values={currentSection}
                           index={index}
-                          section={section}
+                          section={transformedSection}
                           disabled={readOnlyMode}
                           warnings={warnings}
                         />
