@@ -38,7 +38,6 @@ function SectionHeader({section, sectionsLength, onView, onEdit, onDelete, value
     <Box
       sx={{
         display: 'flex',
-        backgroundColor: '#fff',
         boxShadow: 2,
         p: 2,
         justifyContent: 'space-between',
