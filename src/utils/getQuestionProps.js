@@ -71,6 +71,12 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         show
       };
       break;
+    case questionTypes.MESSAGE:
+      props = {
+        message: label,
+        show
+      };
+      break;
     default:
       return props;
   }
