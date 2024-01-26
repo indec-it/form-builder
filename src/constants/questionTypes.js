@@ -6,5 +6,6 @@ export default {
   CHECKBOX: 5,
   DATE: 6,
   RADIO_TABLE: 7,
-  CURRENCY: 8
+  CURRENCY: 8,
+  MESSAGE: 9
 };

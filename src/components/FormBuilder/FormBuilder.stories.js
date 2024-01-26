@@ -85,6 +85,32 @@ const sections = [
         userVarName: 'Transaccion'
       },
       {
+        id: 15,
+        label: 'Test message',
+        name: 'S1P5',
+        type: 9,
+        navigation: [
+          {
+            id: 1,
+            rules: [
+              {
+                id: 1,
+                conditions: [
+                  {
+                    id: 1,
+                    type: 'ne',
+                    question: 'S2P1',
+                    value: '1',
+                    section: 'S2'
+                  }
+                ]
+              }
+            ],
+            action: 'hide'
+          }
+        ]
+      },
+      {
         id: 2,
         label: 'Modo de suminstro',
         name: 'S2P2',

@@ -1,6 +1,7 @@
 import Checkbox from '@/components/Checkbox';
 import Currency from '@/components/Currency';
 import DatePicker from '@/components/DatePicker';
+import Message from '@/components/Message';
 import Radio from '@/components/Radio';
 import RadioTable from '@/components/RadioTable';
 import Select from '@/components/Select';
@@ -24,6 +25,8 @@ const getQuestionComponent = questionType => {
       return RadioTable;
     case questionTypes.DATE:
       return DatePicker;
+    case questionTypes.MESSAGE:
+      return Message;
     default:
       return null;
   }
