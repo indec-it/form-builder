@@ -16,23 +16,30 @@ function InputLabel({label, form, field, disabled, warnings}) {
   const labelNumber = label.number ? `${label.number} - ` : '';
 
   return (
-    <Stack direction="row" spacing={2} data-testid="input-label">
-      <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
-        <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
-          {`${labelNumber}${label.text}`} {hasError && '*'}
-        </Typography>
+    <>
+      <Stack direction="row" spacing={2} data-testid="input-label">
+        <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
+          <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
+            {`${labelNumber}${label.text}`} {hasError && '*'}
+          </Typography>
+        </Stack>
+        {hasError && !disabled && (
+          <Box>
+            <ErrorIcon color="error" data-testid="error-icon" />
+          </Box>
+        )}
+        {hasWarning && !disabled && !hasError && (
+          <Box>
+            <WarningIcon color="warning" data-testid="warning-icon" />
+          </Box>
+        )}
       </Stack>
-      {hasError && !disabled && (
-        <Box>
-          <ErrorIcon color="error" data-testid="error-icon" />
-        </Box>
+      {label.introduction && (
+        <Typography fontWeight="bold" color="gray">
+          {label.introduction}
+        </Typography>
       )}
-      {hasWarning && !disabled && !hasError && (
-        <Box>
-          <WarningIcon color="warning" data-testid="warning-icon" />
-        </Box>
-      )}
-    </Stack>
+    </>
   );
 }
 

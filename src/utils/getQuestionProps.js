@@ -4,7 +4,19 @@ import questionTypes from '@/constants/questionTypes';
 import getNavigation from './getNavigation';
 
 const getQuestionProps = ({sectionIndex, section, question, values, disabled, warnings}) => {
-  const {number, label, multiple, subQuestions, type, placeholder, name, options, metadata, navigation = []} = question;
+  const {
+    number,
+    label,
+    multiple,
+    subQuestions,
+    type,
+    placeholder,
+    name,
+    options,
+    metadata,
+    navigation = [],
+    introduction
+  } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
   const jump = section ? getNavigation({navigation, answers: values}) : '';
@@ -16,7 +28,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     case questionTypes.TEXT_FIELD:
     case questionTypes.CURRENCY:
       props = {
-        label: {text: label, number},
+        label: {text: label, number, introduction},
         placeholder,
         name: questionName,
         type: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? 'text' : 'number',
@@ -30,7 +42,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
       break;
     case questionTypes.DROPDOWN:
       props = {
-        label: {text: label, number},
+        label: {text: label, number, introduction},
         placeholder,
         name: questionName,
         options,
@@ -46,7 +58,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     case questionTypes.CHECKBOX:
     case questionTypes.RADIO_TABLE:
       props = {
-        label: {text: label, number},
+        label: {text: label, number, introduction},
         name: questionName,
         options,
         disabled: isDisabled,
@@ -59,7 +71,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
       break;
     case questionTypes.DATE:
       props = {
-        label: {text: label, number},
+        label: {text: label, number, introduction},
         placeholder,
         name: questionName,
         disabled: isDisabled,
