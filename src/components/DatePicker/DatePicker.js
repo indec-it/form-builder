@@ -41,6 +41,7 @@ function DatePicker({metadata: {dateType}, field, label, form, warnings, disable
               disabled={disabled}
             />
           )}
+          disabled={disabled}
         />
         {isRange && (
           <DateTimePickerSelector
