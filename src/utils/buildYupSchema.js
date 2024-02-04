@@ -41,122 +41,119 @@ const getValidatorType = (type, options, metadata) => {
   }
 };
 
-const handleValidations = ({validator, validations, opts, answers, questionName, multiple = false, questionType}) => {
-  let newValidator = validator;
-  validations.forEach(validation => {
-    const {type: messageType} = validation.message;
-    if (
-      (messageType === 'warning' && opts.schemaType !== 'warning') ||
-      (messageType === 'error' && opts.schemaType !== 'error')
-    ) {
-      return;
-    }
-    newValidator = newValidator.test(
-      'custom-validation',
-      validation.message.text,
-      // eslint-disable-next-line func-names
-      function (currentValue) {
-        let formatAnswer = answers;
-        formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
-        const rules = getValidationRules({validation, answers: formatAnswer, questionType});
-        if (rules.some(value => value === true)) {
-          return this.createError({path: this.path, message: validation.message.text});
-        }
-        return true;
+class ValidatorSchema {
+  constructor(props) {
+    Object.assign(this, props);
+  }
+
+  handleValidations({validator, validations, answers, questionName}) {
+    const {multiple, type} = this.question;
+    let newValidator = validator;
+    validations.forEach(validation => {
+      const {type: messageType} = validation.message;
+      if (
+        (messageType === 'warning' && this.opts.schemaType !== 'warning') ||
+        (messageType === 'error' && this.opts.schemaType !== 'error')
+      ) {
+        return;
       }
-    );
-  });
-  return newValidator;
-};
-
-const buildSubQuestionsValidations = (subQuestions, opts, answers, multiple) =>
-  subQuestions.reduce((acc, currentValue) => {
-    const subQuestionValidator = getValidatorType(currentValue.type, currentValue.options);
-    acc[currentValue.name] = Yup.object({
-      answer: Yup.object({
-        value: Yup.lazy(value =>
-          handleValidations({
-            validator: subQuestionValidator,
-            validations: currentValue.validations,
-            opts,
-            answers: {
-              ...answers,
-              [currentValue.name]: {answer: {value}}
-            },
-            questionName: currentValue.name,
-            multiple
-          })
-        )
-      })
+      newValidator = newValidator.test(
+        'custom-validation',
+        validation.message.text,
+        // eslint-disable-next-line func-names
+        function (currentValue) {
+          let formatAnswer = answers;
+          formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
+          const rules = getValidationRules({validation, answers: formatAnswer, questionType: type});
+          if (rules.some(value => value === true)) {
+            return this.createError({path: this.path, message: validation.message.text});
+          }
+          return true;
+        }
+      );
     });
-    return acc;
-  }, {});
+    return newValidator;
+  }
 
-const getSelectedSubQuestions = ({subQuestions, parentName, value}) =>
-  subQuestions.filter(
-    subQuestion =>
-      !getNavigation({
-        navigation: subQuestion.navigation,
-        answers: {[parentName]: {answer: value}}
-      })
-  );
+  buildSubQuestionsValidations(subQuestions, answers) {
+    return subQuestions.reduce((acc, currentValue) => {
+      const subQuestionValidator = getValidatorType(currentValue.type, currentValue.options);
+      acc[currentValue.name] = Yup.object({
+        answer: Yup.object({
+          value: Yup.lazy(value =>
+            this.handleValidations({
+              validator: subQuestionValidator,
+              validations: currentValue.validations,
+              answers: {
+                ...answers,
+                [currentValue.name]: {answer: {value}}
+              },
+              questionName: currentValue.name
+            })
+          )
+        })
+      });
+      return acc;
+    }, {});
+  }
 
-const getSubQuestionsSchema = (subQuestions, schema, opts, questionName, value, multiple) => {
-  let newSchema = schema;
-  if (subQuestions.length > 0) {
-    const subQuestionsToRender = getSelectedSubQuestions({subQuestions, parentName: questionName, value});
-    newSchema = schema.concat(
-      Yup.object({
-        specifications: Yup.object(
-          buildSubQuestionsValidations(subQuestionsToRender, opts, {[questionName]: {answer: value}}, multiple)
-        )
-      })
+  getSelectedSubQuestions({value}) {
+    return this.question.subQuestions.filter(
+      subQuestion =>
+        !getNavigation({
+          navigation: subQuestion.navigation,
+          answers: {[this.question.name]: {answer: value}}
+        })
     );
   }
-  return newSchema;
-};
 
-const buildAnswerObj = ({answers, subQuestions, validator, multiple, opts, name: questionName}) => {
-  let schema = Yup.object({value: validator});
-  if (multiple) {
-    return Yup.array().of(
-      Yup.lazy(value => {
-        schema = getSubQuestionsSchema(subQuestions, schema, opts, questionName, value, multiple);
-        return schema;
-      })
-    );
+  getSubQuestionsSchema(schema, value) {
+    let newSchema = schema;
+    if (this.question.subQuestions.length > 0) {
+      const subQuestionsToRender = this.getSelectedSubQuestions({value});
+      newSchema = schema.concat(
+        Yup.object({
+          specifications: Yup.object(
+            this.buildSubQuestionsValidations(subQuestionsToRender, {[this.question.name]: {answer: value}})
+          )
+        })
+      );
+    }
+    return newSchema;
   }
-  schema = getSubQuestionsSchema(subQuestions, schema, opts, questionName, answers[questionName].answer, multiple);
-  return schema;
-};
 
-export default function buildYupSchema(schema, config, values, opts = {}) {
+  buildAnswerObj({validator}) {
+    let schema = Yup.object({value: validator});
+    if (this.question.multiple) {
+      return Yup.array().of(
+        Yup.lazy(value => {
+          schema = this.getSubQuestionsSchema(schema, value);
+          return schema;
+        })
+      );
+    }
+    schema = this.getSubQuestionsSchema(schema, this.answers[this.question.name].answer);
+    return schema;
+  }
+}
+
+export default function buildYupSchema(schema, question, values, opts = {}) {
   const schemaWithValidations = schema;
-  const {name, type, validations, options, metadata, multiple, subQuestions = []} = config;
+  const {name, type, options, metadata} = question;
   let validator = getValidatorType(type, options, metadata);
   if (!validator) {
     return schemaWithValidations;
   }
-  validator = handleValidations({
+  const validationSchema = new ValidatorSchema({answers: values, question, opts});
+  validator = validationSchema.handleValidations({
     validator,
-    validations,
-    opts,
+    validations: question.validations,
     answers: values,
-    questionName: name,
-    multiple,
-    questionType: type
+    questionName: name
   });
   schemaWithValidations[name] = Yup.object({
     id: Yup.number().required(),
-    answer: buildAnswerObj({
-      answers: values,
-      type,
-      subQuestions,
-      validator,
-      multiple,
-      opts,
-      name
-    })
+    answer: validationSchema.buildAnswerObj({validator})
   });
   return schemaWithValidations;
 }
