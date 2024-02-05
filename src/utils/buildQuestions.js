@@ -36,32 +36,33 @@ export const getSubQuestions = subQuestions =>
     ])
   );
 
-const buildQuestions = section => {
-  const values = {[section.name]: {id: 1}};
-  if (section.interruption.interruptible) {
-    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: {value: ''}};
-  }
-  section.questions.forEach(question => {
-    const {id} = question;
-    values[section.name][question.name] = {id, answer: {value: getValue(question)}};
-    if (question.subQuestions && question.subQuestions.length > 0) {
-      values[section.name][question.name] = {
-        ...values[section.name][question.name],
-        answer: {
-          ...values[section.name][question.name].answer,
-          specifications: getSubQuestions(question.subQuestions)
-        }
-      };
+const buildQuestions = sections =>
+  sections.reduce((acc, section) => {
+    const values = {[section.name]: {id: 1}};
+    if (section.interruption.interruptible) {
+      values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: {value: ''}};
     }
-    if (question.multiple) {
-      values[section.name][question.name] = {
-        ...values[section.name][question.name],
-        answer: [{id: 1, ...values[section.name][question.name].answer}]
-      };
-    }
-  });
-  values[section.name] = [values[section.name]];
-  return values;
-};
+    section.questions.forEach(question => {
+      const {id} = question;
+      values[section.name][question.name] = {id, answer: {value: getValue(question)}};
+      if (question.subQuestions && question.subQuestions.length > 0) {
+        values[section.name][question.name] = {
+          ...values[section.name][question.name],
+          answer: {
+            ...values[section.name][question.name].answer,
+            specifications: getSubQuestions(question.subQuestions)
+          }
+        };
+      }
+      if (question.multiple) {
+        values[section.name][question.name] = {
+          ...values[section.name][question.name],
+          answer: [{id: 1, ...values[section.name][question.name].answer}]
+        };
+      }
+    });
+    acc[section.name] = [values[section.name]];
+    return acc;
+  }, {});
 
 export default buildQuestions;

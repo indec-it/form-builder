@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
@@ -12,7 +13,8 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, components, initialValues, isReadOnly}) {
+function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}) {
+  const [page, setPage] = useState(0);
   const {
     readOnlyMode,
     showSurvey,
@@ -27,14 +29,24 @@ function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, compon
     handleShowSurvey,
     setOpenModal,
     transformedSection
-  } = useFormBuilder({isReadOnly, section, initialValues});
+  } = useFormBuilder({isReadOnly, sections, initialValues, page});
+  const section = sections[page];
+  const isLastSection = sections.length === page + 1;
+
+  const handleSubmit = values => {
+    if (!isLastSection) {
+      setPage(page + 1);
+    }
+    onSubmit(values);
+  };
+
   return (
     <Formik
       initialValues={formInitialValues}
       validateOnMount
       enableReinitialize
       validationSchema={validateSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       validateOnChange={false}
     >
       {({values, setValues}) => {
@@ -110,7 +122,7 @@ function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, compon
               />
             ) : (
               <NavigationButtons
-                onPrevious={onPrevious}
+                onPrevious={() => setPage(page - 1)}
                 disablePreviousButton={page === 0}
                 isLastSection={isLastSection}
                 onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
@@ -131,10 +143,7 @@ function FormBuilder({section, isLastSection, page, onSubmit, onPrevious, compon
 
 FormBuilder.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onPrevious: PropTypes.func.isRequired,
-  section: sectionPropTypes.isRequired,
-  page: PropTypes.number.isRequired,
-  isLastSection: PropTypes.bool,
+  sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
   isReadOnly: PropTypes.bool,
   components: PropTypes.shape({
     SectionHeader: PropTypes.node,
@@ -144,7 +153,6 @@ FormBuilder.propTypes = {
 };
 
 FormBuilder.defaultProps = {
-  isLastSection: false,
   isReadOnly: false,
   components: {},
   initialValues: undefined
