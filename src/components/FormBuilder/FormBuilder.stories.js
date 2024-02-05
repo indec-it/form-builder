@@ -594,24 +594,9 @@ const sections = [
 ];
 
 function Template(args) {
-  const [page, setPage] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!sections[page]) {
-      setPage(0);
-    }
-  }, [page]);
-
   return (
     <Container>
-      <FormBuilder
-        {...args}
-        section={sections[page]}
-        page={page}
-        onSubmit={() => setPage(page + 1)}
-        onPrevious={() => setPage(page - 1)}
-        isLastSection={sections.length - 1 === page}
-      />
+      <FormBuilder {...args} sections={sections} onSubmit={() => {}} />
     </Container>
   );
 }

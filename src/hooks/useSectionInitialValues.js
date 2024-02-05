@@ -2,12 +2,12 @@ import {useState, useEffect} from 'react';
 
 import buildQuestions from '@/utils/buildQuestions';
 
-const useSectionInitialValues = (values, section = {}) => {
+const useSectionInitialValues = (values, sections) => {
   const [initialValues, setInitialValues] = useState();
 
   useEffect(() => {
-    setInitialValues(values || buildQuestions(section));
-  }, [section]);
+    setInitialValues(values || buildQuestions(sections));
+  }, [sections]);
 
   return {initialValues};
 };
