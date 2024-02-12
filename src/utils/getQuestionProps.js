@@ -3,7 +3,7 @@ import questionTypes from '@/constants/questionTypes';
 
 import getNavigation from './getNavigation';
 
-const getQuestionProps = ({sectionIndex, section, question, values, disabled, warnings}) => {
+const getQuestionProps = ({sectionIndex, section, question, values, disabled, warnings, initialValues, sections}) => {
   const {
     number,
     label,
@@ -19,7 +19,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
   } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
-  const jump = section ? getNavigation({navigation, answers: values}) : '';
+  const jump = section ? getNavigation({navigation, answers: values, section, initialValues, sections}) : '';
   const show = jump?.action !== questionActions.HIDE;
   const isDisabled = jump?.action === questionActions.DISABLE || disabled;
   let props;

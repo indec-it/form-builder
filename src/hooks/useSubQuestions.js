@@ -4,16 +4,23 @@ import {useFormikContext} from 'formik';
 import {getSubQuestions} from '@/utils/buildQuestions';
 import getNavigation from '@/utils/getNavigation';
 
+import useForm from './useForm';
+
 const useSubQuestions = ({subQuestions, value, name, specificationsPathName}) => {
   const [selectedQuestions, setSelectedSubQuestions] = useState([]);
   const {setFieldValue} = useFormikContext();
+  const {sections, initialValues, section} = useForm();
 
   useEffect(() => {
     const allSubQuestions = subQuestions.map(subQuestion => {
       const condition = getNavigation({
         navigation: subQuestion.navigation,
         answers: value,
-        questionType: subQuestion.type
+        section,
+        initialValues,
+        sections,
+        questionName: name,
+        isSubQuestion: true
       });
       return {...subQuestion, show: !condition};
     });

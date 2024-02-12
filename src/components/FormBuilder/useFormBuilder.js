@@ -36,7 +36,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
   const addNewSection = (setValues, values) => {
     const newValues = values;
     const lastSection = getLastId(values[section.name]);
-    const emptySection = buildQuestions([section])[section.name][0];
+    const emptySection = buildQuestions(section)[section.name][0];
     newValues[section.name].push({...emptySection, id: lastSection + 1});
     setValues(newValues);
   };
@@ -65,7 +65,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
                     conditions: [
                       {
                         id: 1,
-                        section: 'S2',
+                        section: section.name,
                         question: question.name,
                         value: '',
                         type:
@@ -93,7 +93,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
                     conditions: [
                       {
                         id: 1,
-                        section: 'S2',
+                        section: section.name,
                         question: question.name,
                         value: option.value,
                         type:
@@ -113,8 +113,8 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
     return {...section, questions};
   }, [section]);
 
-  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, sections);
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({sections});
+  const {initialValues: formInitialValues} = useSectionInitialValues(initialValues, transformedSection);
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section: transformedSection, sections, initialValues});
 
   return {
     readOnlyMode,

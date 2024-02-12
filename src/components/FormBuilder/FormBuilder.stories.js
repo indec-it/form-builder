@@ -219,7 +219,26 @@ const sections = [
         ],
         multiple: true,
         favorite: false,
-        validations: [],
+        validations: [
+          {
+            id: 1,
+            rules: [
+              {
+                id: 1,
+                conditions: [
+                  {
+                    id: 1,
+                    type: 'eq',
+                    question: 'S2P4',
+                    value: '',
+                    section: 'S2'
+                  }
+                ]
+              }
+            ],
+            message: {type: 'error', text: 'Debe completar el campo'}
+          }
+        ],
         navigation: [],
         subQuestions: [],
         metadata: {},
@@ -443,14 +462,14 @@ const sections = [
                         type: 'eq',
                         question: 'S2P4SQ1',
                         value: '',
-                        section: 'S2'
+                        section: 'S1'
                       },
                       {
                         id: 2,
                         type: 'eq',
                         question: 'S1P4',
                         value: '1',
-                        section: 'S2'
+                        section: 'S1'
                       }
                     ]
                   }
@@ -470,7 +489,7 @@ const sections = [
                         type: 'ne',
                         question: 'S1P4',
                         value: '1',
-                        section: 'S2'
+                        section: 'S1'
                       }
                     ]
                   }
@@ -499,7 +518,7 @@ const sections = [
                         type: 'ne',
                         question: 'S1P4',
                         value: '2',
-                        section: 'S2'
+                        section: 'S1'
                       }
                     ]
                   }
@@ -528,7 +547,7 @@ const sections = [
                         type: 'ne',
                         question: 'S1P4',
                         value: '3',
-                        section: 'S2'
+                        section: 'S1'
                       }
                     ]
                   }
@@ -557,7 +576,7 @@ const sections = [
                         type: 'ne',
                         question: 'S1P4',
                         value: '4',
-                        section: 'S2'
+                        section: 'S1'
                       }
                     ]
                   }
@@ -594,9 +613,22 @@ const sections = [
 ];
 
 function Template(args) {
+  const [values, setValues] = React.useState();
+
+  React.useEffect(() => {
+    if (args?.initialValues) {
+      setValues(args?.initialValues);
+    }
+  }, [args]);
+
   return (
     <Container>
-      <FormBuilder {...args} sections={sections} onSubmit={() => {}} />
+      <FormBuilder
+        {...args}
+        sections={sections}
+        onSubmit={sectionValues => setValues(values ? {...values, ...sectionValues} : values)}
+        initialValues={values}
+      />
     </Container>
   );
 }
