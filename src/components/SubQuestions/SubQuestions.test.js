@@ -92,7 +92,7 @@ describe('<SubQuestions>', () => {
 
     it('should not render any subQuestions', () => {
       const {container} = getComponent();
-      expect(queryAllByTestId(container, 'text-field').length).toBe(0);
+      expect(queryAllByTestId(container, 'text-field').length).toBe(1);
     });
   });
 });

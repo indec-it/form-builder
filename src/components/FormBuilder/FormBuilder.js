@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
+import FormProvider from '@/context/form';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 
@@ -35,109 +36,111 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
 
   const handleSubmit = values => {
     if (!isLastSection) {
+      // TODO redirect next page
       setPage(page + 1);
     }
-    onSubmit(values);
+    onSubmit(values, isLastSection);
   };
 
   return (
-    <Formik
-      initialValues={formInitialValues}
-      validateOnMount
-      enableReinitialize
-      validationSchema={validateSchema}
-      onSubmit={handleSubmit}
-      validateOnChange={false}
-    >
-      {({values, setValues}) => {
-        const warnings = getWarnings(warningSchema, values) || {};
-        return (
-          <Form>
-            <FieldArray
-              name={section.name}
-              render={sectionHelpers =>
-                values?.[section.name]?.map((currentSection, index) => (
-                  <Box key={currentSection.id} mb={2}>
-                    {components.SectionHeader ? (
-                      <components.SectionHeader
-                        onView={() => handleShowSurvey(currentSection.id, true)}
-                        onEdit={() => handleShowSurvey(currentSection.id, false)}
-                        onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                        sectionsLength={values[section.name].length}
-                        section={section}
-                        values={currentSection}
-                        isReadOnly={isReadOnly}
-                        isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
-                      />
-                    ) : (
-                      <SectionHeader
-                        onView={() => handleShowSurvey(currentSection.id, true)}
-                        onEdit={() => handleShowSurvey(currentSection.id, false)}
-                        onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                        sectionsLength={values[section.name].length}
-                        section={transformedSection}
-                        values={currentSection}
-                        isReadOnly={isReadOnly}
-                        isValid={validateSchema.isValidSync({[section.name]: values?.[section.name]})}
-                      />
-                    )}
-                    {showSurvey === currentSection.id && (
-                      <Box sx={{boxShadow: 2, p: 2}}>
-                        <QuestionBuilder
+    <FormProvider section={transformedSection} sections={sections} initialValues={initialValues}>
+      <Formik
+        initialValues={formInitialValues}
+        validateOnMount
+        enableReinitialize
+        validationSchema={validateSchema}
+        onSubmit={handleSubmit}
+        validateOnChange={false}
+      >
+        {({values, setValues}) => {
+          const warnings = getWarnings(warningSchema, values) || {};
+          return (
+            <Form>
+              <FieldArray
+                name={section.name}
+                render={sectionHelpers =>
+                  values?.[section.name]?.map((currentSection, index) => (
+                    <Box key={currentSection.id} mb={2}>
+                      {components.SectionHeader ? (
+                        <components.SectionHeader
+                          onView={() => handleShowSurvey(currentSection.id, true)}
+                          onEdit={() => handleShowSurvey(currentSection.id, false)}
+                          onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
+                          sectionsLength={values[section.name].length}
+                          section={section}
                           values={currentSection}
-                          index={index}
-                          section={transformedSection}
-                          disabled={readOnlyMode}
-                          warnings={warnings}
+                          isReadOnly={isReadOnly}
+                          isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                         />
-                      </Box>
-                    )}
-                    <Modals
-                      open={selectedSectionId}
-                      options={section.interruption.options}
-                      label={{text: section.interruption.reason}}
-                      name={`${section.name}.${index}.${section.interruption.name}`}
-                      onAccept={
-                        [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)
-                          ? () => handleAcceptModal(values[section.name], sectionHelpers)
-                          : undefined
-                      }
-                      onClose={() => setOpenModal(undefined)}
-                      modal={openModal}
-                    />
-                  </Box>
-                ))
-              }
-            />
-            {components.NavigationButtons ? (
-              <components.NavigationButtons
-                schema={validateSchema}
-                values={values ? values[section.name] : {}}
-                onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                onInterrupt={
-                  section.interruption.interruptible
-                    ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                    : undefined
+                      ) : (
+                        <SectionHeader
+                          onView={() => handleShowSurvey(currentSection.id, true)}
+                          onEdit={() => handleShowSurvey(currentSection.id, false)}
+                          onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
+                          sectionsLength={values[section.name].length}
+                          section={transformedSection}
+                          values={currentSection}
+                          isReadOnly={isReadOnly}
+                          isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
+                        />
+                      )}
+                      {showSurvey === currentSection.id && (
+                        <Box sx={{boxShadow: 2, p: 2}}>
+                          <QuestionBuilder
+                            values={currentSection}
+                            index={index}
+                            disabled={readOnlyMode}
+                            warnings={warnings}
+                          />
+                        </Box>
+                      )}
+                      <Modals
+                        open={selectedSectionId}
+                        options={section.interruption.options}
+                        label={{text: section.interruption.reason}}
+                        name={`${section.name}.${index}.${section.interruption.name}`}
+                        onAccept={
+                          [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)
+                            ? () => handleAcceptModal(values[section.name], sectionHelpers)
+                            : undefined
+                        }
+                        onClose={() => setOpenModal(undefined)}
+                        modal={openModal}
+                      />
+                    </Box>
+                  ))
                 }
               />
-            ) : (
-              <NavigationButtons
-                onPrevious={() => setPage(page - 1)}
-                disablePreviousButton={page === 0}
-                isLastSection={isLastSection}
-                onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
-                onInterrupt={
-                  section.interruption.interruptible
-                    ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
-                    : undefined
-                }
-                readOnlyMode={isReadOnly}
-              />
-            )}
-          </Form>
-        );
-      }}
-    </Formik>
+              {components.NavigationButtons ? (
+                <components.NavigationButtons
+                  schema={validateSchema}
+                  values={values ? values[section.name] : {}}
+                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                  onInterrupt={
+                    section.interruption.interruptible
+                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                      : undefined
+                  }
+                />
+              ) : (
+                <NavigationButtons
+                  onPrevious={() => setPage(page - 1)}
+                  disablePreviousButton={page === 0}
+                  isLastSection={isLastSection}
+                  onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
+                  onInterrupt={
+                    section.interruption.interruptible
+                      ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
+                      : undefined
+                  }
+                  readOnlyMode={isReadOnly}
+                />
+              )}
+            </Form>
+          );
+        }}
+      </Formik>
+    </FormProvider>
   );
 }
 

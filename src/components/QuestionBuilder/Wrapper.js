@@ -9,10 +9,11 @@ import SubQuestions from '@/components/SubQuestions';
 import TextField from '@/components/TextField';
 import {getSubQuestions} from '@/utils/buildQuestions';
 import getLastId from '@/utils/getLastId';
+import sectionPropTypes from '@/utils/propTypes/section';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 
-function Wrapper({isMultiple, name, values, subQuestions, options, disabled, warnings, show, ...props}) {
+function Wrapper({isMultiple, name, values, subQuestions, options, disabled, warnings, show, section, ...props}) {
   if (!show) {
     return null;
   }
@@ -31,6 +32,7 @@ function Wrapper({isMultiple, name, values, subQuestions, options, disabled, war
                 disabled={disabled}
                 warnings={warnings}
                 name={`${name}.${index}.specifications`}
+                section={section}
               />
               <Stack direction={{xs: 'column', sm: 'row'}} spacing={2} justifyContent="center" sx={{width: '90px'}}>
                 {values.answer.length === index + 1 && !disabled && (
@@ -72,6 +74,7 @@ function Wrapper({isMultiple, name, values, subQuestions, options, disabled, war
           Component={TextField}
           warnings={warnings}
           name={`${name}.specifications`}
+          section={section}
         />
       </Stack>
     );
@@ -80,6 +83,7 @@ function Wrapper({isMultiple, name, values, subQuestions, options, disabled, war
 }
 
 Wrapper.propTypes = {
+  section: sectionPropTypes.isRequired,
   isMultiple: PropTypes.bool.isRequired,
   show: PropTypes.bool.isRequired,
   disabled: PropTypes.bool,

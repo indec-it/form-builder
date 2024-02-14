@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
-import sectionPropTypes from '@/utils/propTypes/section';
+import useForm from '@/hooks/useForm';
 import buildQuestions from '@/utils/buildQuestions';
 import getQuestionProps from '@/utils/getQuestionProps';
 import getQuestionComponent from '@/utils/getQuestionComponent';
 
 import Wrapper from '../Wrapper';
 
-function Question({section, sectionIndex, questionIndex, disabled, warnings, values}) {
+function Question({sectionIndex, questionIndex, disabled, warnings, values}) {
+  const {sections, initialValues, section} = useForm();
   const question = section.questions[questionIndex];
   if (!question) {
     return null;
@@ -22,7 +23,9 @@ function Question({section, sectionIndex, questionIndex, disabled, warnings, val
     question,
     values,
     disabled,
-    warnings
+    warnings,
+    sections,
+    initialValues
   });
   let shouldClean = false;
   if (!!jump?.action && !shouldClean) {
@@ -31,18 +34,21 @@ function Question({section, sectionIndex, questionIndex, disabled, warnings, val
 
   useEffect(() => {
     if (shouldClean) {
-      const defaultAnswerValue = buildQuestions([section])[section.name][0][question.name].answer;
+      const defaultAnswerValue = buildQuestions(section)[section.name][0][question.name].answer;
       setFieldValue(questionName, defaultAnswerValue);
       shouldClean = false;
     }
   }, [shouldClean, questionName]);
 
   const Component = getQuestionComponent(questionType);
-  return Component ? <Wrapper component={Component} {...props} /> : <Typography>Invalid component.</Typography>;
+  return Component ? (
+    <Wrapper component={Component} section={section} {...props} />
+  ) : (
+    <Typography>Invalid component.</Typography>
+  );
 }
 
 Question.propTypes = {
-  section: sectionPropTypes.isRequired,
   disabled: PropTypes.bool,
   values: PropTypes.shape({}).isRequired,
   sectionIndex: PropTypes.number.isRequired,

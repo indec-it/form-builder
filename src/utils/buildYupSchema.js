@@ -14,9 +14,7 @@ const getValidatorType = (type, options, metadata) => {
       return Yup.string().default('');
     case questionTypes.CURRENCY:
     case questionTypes.NUMERIC_FIELD:
-      return Yup.number().transform(value =>
-        Number.isNaN(value) || value === null || value === undefined || value === '' ? 0 : value
-      );
+      return Yup.number().transform(value => (Number.isNaN(value) || value === null || value === '' ? undefined : value));
     case questionTypes.CHECKBOX:
       return Yup.array().of(Yup.string());
     case questionTypes.RADIO_TABLE: {
@@ -46,8 +44,9 @@ class ValidatorSchema {
     Object.assign(this, props);
   }
 
-  handleValidations({validator, validations, answers, questionName}) {
-    const {multiple, type} = this.question;
+  handleValidations({validator, validations, answers, questionName, isSubQuestion = false}) {
+    const {multiple, name} = this.question;
+    const {initialValues, section, sections} = this;
     let newValidator = validator;
     validations.forEach(validation => {
       const {type: messageType} = validation.message;
@@ -64,7 +63,15 @@ class ValidatorSchema {
         function (currentValue) {
           let formatAnswer = answers;
           formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
-          const rules = getValidationRules({validation, answers: formatAnswer, questionType: type});
+          const rules = getValidationRules({
+            validation,
+            answers: formatAnswer,
+            initialValues,
+            section,
+            sections,
+            isSubQuestion,
+            questionName: name
+          });
           if (rules.some(value => value === true)) {
             return this.createError({path: this.path, message: validation.message.text});
           }
@@ -88,7 +95,8 @@ class ValidatorSchema {
                 ...answers,
                 [currentValue.name]: {answer: {value}}
               },
-              questionName: currentValue.name
+              questionName: currentValue.name,
+              isSubQuestion: true
             })
           )
         })
@@ -102,49 +110,48 @@ class ValidatorSchema {
       subQuestion =>
         !getNavigation({
           navigation: subQuestion.navigation,
-          answers: {[this.question.name]: {answer: value}}
+          answers: {[this.question.name]: {answer: value}},
+          section: this.section,
+          initialValues: this.initialValues,
+          sections: this.sections
         })
     );
   }
 
   getSubQuestionsSchema(schema, value) {
     let newSchema = schema;
-    if (this.question.subQuestions.length > 0) {
-      const subQuestionsToRender = this.getSelectedSubQuestions({value});
-      newSchema = schema.concat(
-        Yup.object({
-          specifications: Yup.object(
-            this.buildSubQuestionsValidations(subQuestionsToRender, {[this.question.name]: {answer: value}})
-          )
-        })
-      );
-    }
+    const subQuestionsToRender = this.getSelectedSubQuestions({value});
+    newSchema = schema.concat(
+      Yup.object({
+        specifications: Yup.object(
+          this.buildSubQuestionsValidations(subQuestionsToRender, {[this.question.name]: {answer: value}})
+        )
+      })
+    );
     return newSchema;
   }
 
   buildAnswerObj({validator}) {
-    let schema = Yup.object({value: validator});
+    const schema = Yup.object({value: validator});
     if (this.question.multiple) {
       return Yup.array().of(
-        Yup.lazy(value => {
-          schema = this.getSubQuestionsSchema(schema, value);
-          return schema;
-        })
+        Yup.lazy(value => (this.question.subQuestions.length > 0 ? this.getSubQuestionsSchema(schema, value) : schema))
       );
     }
-    schema = this.getSubQuestionsSchema(schema, this.answers[this.question.name].answer);
-    return schema;
+    return this.question.subQuestions.length > 0
+      ? this.getSubQuestionsSchema(schema, this.answers[this.question.name].answer)
+      : schema;
   }
 }
 
-export default function buildYupSchema(schema, question, values, opts = {}) {
+export default function buildYupSchema(schema, question, sections, section, initialValues, values, opts = {}) {
   const schemaWithValidations = schema;
   const {name, type, options, metadata} = question;
   let validator = getValidatorType(type, options, metadata);
   if (!validator) {
     return schemaWithValidations;
   }
-  const validationSchema = new ValidatorSchema({answers: values, question, opts});
+  const validationSchema = new ValidatorSchema({answers: values, question, opts, initialValues, section, sections});
   validator = validationSchema.handleValidations({
     validator,
     validations: question.validations,
