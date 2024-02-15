@@ -2,7 +2,7 @@ import getValidationRules from './getValidationRules';
 
 const getNavigation = ({navigation = [], answers, section, initialValues, sections, questionName, isSubQuestion}) => {
   if (navigation.length === 0) {
-    return true;
+    return {valid: true};
   }
   const navigationRules = navigation.map(nav => {
     const rules = getValidationRules({
@@ -14,13 +14,13 @@ const getNavigation = ({navigation = [], answers, section, initialValues, sectio
       questionName,
       isSubQuestion
     });
-    // eslint-disable-next-line consistent-return
     return {
       action: nav.action,
-      result: rules.some(value => value)
+      result: rules.some(value => value),
+      valid: false
     };
   });
-  return navigationRules.find(rule => rule.result);
+  return navigationRules.find(rule => rule.result) || {valid: true};
 };
 
 export default getNavigation;

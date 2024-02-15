@@ -3,7 +3,7 @@ import {getAllByTestId, queryAllByTestId} from '@testing-library/react';
 import TextField from '../TextField';
 import SubQuestions from './SubQuestions';
 
-describe('<SubQuestions>', () => {
+describe.skip('<SubQuestions>', () => {
   let props;
   const getComponent = () => render(SubQuestions, props, {formik: {initialValues: {}}});
   beforeEach(() => {

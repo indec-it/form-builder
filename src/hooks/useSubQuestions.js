@@ -22,7 +22,7 @@ const useSubQuestions = ({subQuestions, value, name, specificationsPathName}) =>
         questionName: name,
         isSubQuestion: true
       });
-      return {...subQuestion, show: !condition};
+      return {...subQuestion, show: condition.valid};
     });
     const hiddenSubQuestions = allSubQuestions.filter(subQuestion => !subQuestion.show);
     const showSubQuestions = allSubQuestions.filter(subQuestion => subQuestion.show);
