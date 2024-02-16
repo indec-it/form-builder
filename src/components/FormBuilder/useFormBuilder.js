@@ -73,7 +73,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
                       },
                       {
                         id: 2,
-                        section: 'S2',
+                        section: section.name,
                         question: `S${section.id}P${question.id}SQ${index + 1}`,
                         value: '',
                         type: validationTypes.EQUAL
