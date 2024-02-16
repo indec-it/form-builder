@@ -27,13 +27,13 @@ const evaluateConditions = ({conditions, answers, initialValues, currentSection,
     const type = question?.type;
 
     const answer =
-      condition.section === currentSection.name
+      condition.section === currentSection.name && answers
         ? answers[condition.question]
         : (initialValues?.[condition.section] || []).map(initialValue => initialValue?.[condition.question]);
 
     if (Array.isArray(answer)) {
       return answer.some(currentQuestion => {
-        if (Array.isArray(currentQuestion.answer)) {
+        if (Array.isArray(currentQuestion?.answer)) {
           return currentQuestion.answer.some(currentAnswer => getResult(condition, currentAnswer, type));
         }
         return getResult(condition, currentQuestion.answer, type);

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
@@ -7,6 +7,7 @@ import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
 import FormProvider from '@/context/form';
+import getNavigation from '@/utils/getNavigation';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 
@@ -14,10 +15,12 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}) {
+function FormBuilder({sections, onSubmit, onPrevious, components, initialValues, isReadOnly}) {
   const [page, setPage] = useState(0);
+  const [nextPage, setNextPage] = useState();
   const {
     readOnlyMode,
+    setReadOnlyMode,
     showSurvey,
     formInitialValues,
     validateSchema,
@@ -34,13 +37,38 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
   const section = sections[page];
   const isLastSection = sections.length === page + 1;
 
+  const navigation = useMemo(
+    () =>
+      getNavigation({
+        navigation: sections?.[nextPage]?.navigation,
+        initialValues,
+        sections,
+        section
+      }),
+    [nextPage]
+  );
+
   const handleSubmit = values => {
-    if (!isLastSection) {
-      // TODO redirect next page
-      setPage(page + 1);
-    }
+    setNextPage(page + 1);
     onSubmit(values, isLastSection);
   };
+
+  const handlePrevious = values => {
+    setNextPage(page - 1);
+    onPrevious(values);
+  };
+
+  useEffect(() => {
+    if (nextPage >= 0) {
+      if (navigation.valid || navigation.action === 'disable') {
+        setPage(nextPage);
+      }
+      if (navigation.action === 'hide') {
+        setNextPage(nextPage < page ? nextPage - 1 : nextPage + 1);
+      }
+      setReadOnlyMode(navigation.action === 'disable' || isReadOnly);
+    }
+  }, [nextPage, isLastSection]);
 
   return (
     <FormProvider section={transformedSection} sections={sections} initialValues={initialValues}>
@@ -69,7 +97,7 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
                           sectionsLength={values[section.name].length}
                           section={section}
                           values={currentSection}
-                          isReadOnly={isReadOnly}
+                          isReadOnly={readOnlyMode}
                           isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                         />
                       ) : (
@@ -80,7 +108,7 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
                           sectionsLength={values[section.name].length}
                           section={transformedSection}
                           values={currentSection}
-                          isReadOnly={isReadOnly}
+                          isReadOnly={readOnlyMode}
                           isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                         />
                       )}
@@ -124,7 +152,7 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
                 />
               ) : (
                 <NavigationButtons
-                  onPrevious={() => setPage(page - 1)}
+                  onPrevious={() => handlePrevious(values)}
                   disablePreviousButton={page === 0}
                   isLastSection={isLastSection}
                   onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
@@ -146,6 +174,7 @@ function FormBuilder({sections, onSubmit, components, initialValues, isReadOnly}
 
 FormBuilder.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onPrevious: PropTypes.func.isRequired,
   sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
   isReadOnly: PropTypes.bool,
   components: PropTypes.shape({

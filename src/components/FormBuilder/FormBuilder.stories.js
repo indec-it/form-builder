@@ -17,7 +17,7 @@ export default {
 const sections = [
   {
     name: 'S2',
-    label: 'INGRESOS',
+    label: 'Seccion 1',
     questions: [
       {
         id: 1,
@@ -320,12 +320,13 @@ const sections = [
     ],
     id: 2,
     userVarName: 'Ingreso',
-    introduction: 'Seleccione aquellos Items para los cuales tuvo Ingresos'
+    introduction: 'Seleccione aquellos Items para los cuales tuvo Ingresos',
+    navigation: []
   },
   {
     id: 1,
     name: 'S1',
-    label: 'EGRESOS',
+    label: 'Seccion 2',
     questions: [
       {
         id: 1,
@@ -608,7 +609,178 @@ const sections = [
         id: 1
       }
     ],
-    userVarName: 'Egresos'
+    userVarName: 'Egresos',
+    navigation: [
+      {
+        id: 1,
+        rules: [
+          {
+            id: 1,
+            conditions: [
+              {
+                id: 1,
+                question: 'S2P1',
+                value: '1',
+                type: 'eq',
+                section: 'S2'
+              }
+            ]
+          }
+        ],
+        action: 'hide'
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: 'S4',
+    label: 'Seccion 3',
+    questions: [
+      {
+        id: 1,
+        label: 'Tipo de Transaccion',
+        name: 'S4P1',
+        number: '1',
+        type: 3,
+        options: [
+          {
+            id: 1,
+            name: 'S1P1O1',
+            subOptions: [
+              {
+                id: 1
+              }
+            ],
+            label: '2.1 Manufatura sobre insumos fisicos',
+            value: '1',
+            needSpecification: false
+          },
+          {
+            id: 2,
+            needSpecification: false,
+            label: '2.1.1 Bienes enviados al exterior',
+            value: '2'
+          },
+          {
+            id: 3,
+            needSpecification: false,
+            label: '2.2 Mantenimiento y reparaciones',
+            value: '3'
+          }
+        ],
+        multiple: false,
+        favorite: false,
+        validations: [],
+        navigation: [],
+        subQuestions: [],
+        metadata: {},
+        userVarName: 'Transaccion'
+      }
+    ],
+    multiple: false,
+    favorite: false,
+    interruption: {
+      name: 'S1I1',
+      interruptible: false,
+      reason: '',
+      options: [
+        {
+          id: 1
+        }
+      ]
+    },
+    headers: [
+      {
+        id: 1
+      }
+    ],
+    userVarName: 'Egresos',
+    navigation: [
+      {
+        id: 1,
+        rules: [
+          {
+            id: 1,
+            conditions: [
+              {
+                id: 1,
+                question: 'S2P1',
+                value: '1',
+                type: 'eq',
+                section: 'S2'
+              }
+            ]
+          }
+        ],
+        action: 'hide'
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: 'S3',
+    label: 'Seccion 4',
+    questions: [
+      {
+        id: 1,
+        label: 'Tipo de Transaccion',
+        name: 'S3P1',
+        number: '1',
+        type: 3,
+        options: [
+          {
+            id: 1,
+            name: 'S1P1O1',
+            subOptions: [
+              {
+                id: 1
+              }
+            ],
+            label: '2.1 Manufatura sobre insumos fisicos',
+            value: '1',
+            needSpecification: false
+          },
+          {
+            id: 2,
+            needSpecification: false,
+            label: '2.1.1 Bienes enviados al exterior',
+            value: '2'
+          },
+          {
+            id: 3,
+            needSpecification: false,
+            label: '2.2 Mantenimiento y reparaciones',
+            value: '3'
+          }
+        ],
+        multiple: false,
+        favorite: false,
+        validations: [],
+        navigation: [],
+        subQuestions: [],
+        metadata: {},
+        userVarName: 'Transaccion'
+      }
+    ],
+    multiple: false,
+    favorite: false,
+    interruption: {
+      name: 'S1I1',
+      interruptible: false,
+      reason: '',
+      options: [
+        {
+          id: 1
+        }
+      ]
+    },
+    headers: [
+      {
+        id: 1
+      }
+    ],
+    userVarName: 'Egresos',
+    navigation: []
   }
 ];
 
@@ -626,7 +798,7 @@ function Template(args) {
       <FormBuilder
         {...args}
         sections={sections}
-        onSubmit={sectionValues => setValues(values ? {...values, ...sectionValues} : values)}
+        onSubmit={sectionValues => setValues(values ? {...values, ...sectionValues} : sectionValues)}
         initialValues={values}
       />
     </Container>

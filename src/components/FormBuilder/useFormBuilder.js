@@ -129,7 +129,8 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
     handleOpenModal,
     handleShowSurvey,
     setOpenModal,
-    transformedSection
+    transformedSection,
+    setReadOnlyMode
   };
 };
 

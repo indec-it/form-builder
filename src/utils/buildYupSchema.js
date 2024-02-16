@@ -106,16 +106,16 @@ class ValidatorSchema {
   }
 
   getSelectedSubQuestions({value}) {
-    return this.question.subQuestions.filter(
-      subQuestion =>
-        !getNavigation({
-          navigation: subQuestion.navigation,
-          answers: {[this.question.name]: {answer: value}},
-          section: this.section,
-          initialValues: this.initialValues,
-          sections: this.sections
-        })
-    );
+    return this.question.subQuestions.filter(subQuestion => {
+      const navigation = getNavigation({
+        navigation: subQuestion.navigation,
+        answers: {[this.question.name]: {answer: value}},
+        section: this.section,
+        initialValues: this.initialValues,
+        sections: this.sections
+      });
+      return navigation.valid;
+    });
   }
 
   getSubQuestionsSchema(schema, value) {
