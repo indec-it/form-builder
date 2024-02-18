@@ -626,6 +626,53 @@ describe('buildQuestions', () => {
     });
   });
 
+  describe('when the section has a Message question`s type', () => {
+    beforeEach(() => {
+      section = {
+        id: 1,
+        name: 'S1',
+        label: 'Sección 1',
+        questions: [
+          {
+            id: 1,
+            label: 'Select a date',
+            name: 'S1P1',
+            number: '1',
+            type: 9,
+            metadata: {},
+            options: [],
+            validations: [],
+            userVarName: 's1p1'
+          }
+        ],
+        interruption: {
+          name: 'S1I1',
+          interruptible: false,
+          reason: '',
+          options: [
+            {
+              id: 1
+            }
+          ]
+        },
+        headers: [],
+        userVarName: 'S1'
+      };
+    });
+
+    it('should return an array with `id` without `answer` section.question.name`', () => {
+      expect(buildQuestions(section)).toEqual({
+        S1: [
+          expect.objectContaining({
+            S1P1: {
+              id: 1
+            }
+          })
+        ]
+      });
+    });
+  });
+
   describe('when the section has a question with subQuestions', () => {
     beforeEach(() => {
       section = {

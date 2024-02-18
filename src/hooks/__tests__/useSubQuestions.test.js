@@ -1090,6 +1090,7 @@ describe('useSubQuestions', () => {
       {
         id: 3,
         optionId: 3,
+        show: true,
         type: 1,
         label: 'Monto pais',
         name: 'S2P4SQ3',

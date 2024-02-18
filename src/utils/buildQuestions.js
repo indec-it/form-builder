@@ -43,21 +43,25 @@ const buildQuestions = section => {
   }
   section.questions.forEach(question => {
     const {id} = question;
-    values[section.name][question.name] = {id, answer: {value: getValue(question)}};
-    if (question.subQuestions && question.subQuestions.length > 0) {
-      values[section.name][question.name] = {
-        ...values[section.name][question.name],
-        answer: {
-          ...values[section.name][question.name].answer,
-          specifications: getSubQuestions(question.subQuestions)
-        }
-      };
-    }
-    if (question.multiple) {
-      values[section.name][question.name] = {
-        ...values[section.name][question.name],
-        answer: [{id: 1, ...values[section.name][question.name].answer}]
-      };
+    if (question.type === questionTypes.MESSAGE) {
+      values[section.name][question.name] = {id};
+    } else {
+      values[section.name][question.name] = {id, answer: {value: getValue(question)}};
+      if (question.subQuestions && question.subQuestions.length > 0) {
+        values[section.name][question.name] = {
+          ...values[section.name][question.name],
+          answer: {
+            ...values[section.name][question.name].answer,
+            specifications: getSubQuestions(question.subQuestions)
+          }
+        };
+      }
+      if (question.multiple) {
+        values[section.name][question.name] = {
+          ...values[section.name][question.name],
+          answer: [{id: 1, ...values[section.name][question.name].answer}]
+        };
+      }
     }
   });
   values[section.name] = [values[section.name]];
