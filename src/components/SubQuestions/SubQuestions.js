@@ -17,6 +17,7 @@ function SubQuestions({values, subQuestions, name, ...props}) {
     name: parentName,
     specificationsPathName: name
   });
+
   return selectedQuestions.length > 0 ? (
     <Stack spacing={2} sx={{width: '100%'}}>
       {selectedQuestions.map(subQuestion => (
