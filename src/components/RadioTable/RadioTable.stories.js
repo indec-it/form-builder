@@ -112,7 +112,7 @@ const section = {
                   question: 'S1P1',
                   value: '',
                   type: 'eq',
-                  section: 'S2'
+                  section: 'S1'
                 }
               ]
             }
@@ -120,14 +120,15 @@ const section = {
           message: {text: 'Must select an option', type: 'error'}
         }
       ],
+      subQuestions: [],
       userVarName: 's1p1'
     }
   ]
 };
 
 function Template(args) {
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
   const {withErrors, withWarnings, initialValues, ...props} = args;
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section]});
   return (
     <Formik
       initialValues={{

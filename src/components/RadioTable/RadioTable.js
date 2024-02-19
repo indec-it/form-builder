@@ -19,7 +19,7 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
         <Box key={option.id}>
           <Stack direction="row" spacing={5} alignItems="center">
             <Box sx={{width: '400px'}}>
-              <Typography>{option.title}</Typography>
+              <Typography sx={{opacity: disabled ? 0.5 : 1}}>{option.title}</Typography>
             </Box>
             <RadioGroup row>
               {option.subOptions.map(subOption => (
