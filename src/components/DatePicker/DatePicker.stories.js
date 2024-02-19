@@ -17,7 +17,7 @@ export default {
 
 function Template(args) {
   const {withErrors, withWarnings, initialValues, section, ...props} = args;
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section});
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section]});
   return (
     <Formik initialValues={initialValues} validationSchema={withErrors ? validateSchema : null} onSubmit={() => {}}>
       {({values, submitForm}) => {
@@ -61,7 +61,7 @@ const section = dateType => ({
                   question: 'S1P1',
                   value: '',
                   type: 'eq',
-                  section: 'S2'
+                  section: 'S1'
                 }
               ]
             }
@@ -69,6 +69,7 @@ const section = dateType => ({
           message: {text: 'Must select a date', type: 'error'}
         }
       ],
+      subQuestions: [],
       userVarName: 's1p1'
     }
   ],
