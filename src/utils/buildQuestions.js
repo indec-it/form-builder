@@ -27,10 +27,10 @@ const getValue = question => {
 
 export const getSubQuestions = subQuestions =>
   Object.fromEntries(
-    subQuestions.map((subQuestion, index) => [
+    subQuestions.map(subQuestion => [
       subQuestion.name,
       {
-        id: index + 1,
+        id: subQuestion.id,
         answer: {value: ''}
       }
     ])
