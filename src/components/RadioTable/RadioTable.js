@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiRadio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
-import RadioGroup from '@mui/material/RadioGroup';
 import Stack from '@mui/material/Stack';
 
 import FieldMessage from '@/components/FieldMessage';
@@ -13,15 +12,17 @@ import optionPropTypes from '@/utils/propTypes/option';
 
 function RadioTable({options, label, form, field, disabled, warnings}) {
   return (
-    <Stack direction="column" sx={{width: '100%'}}>
+    <Stack direction="column">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map(option => (
         <Box key={option.id}>
-          <Stack direction="row" spacing={5} alignItems="center">
-            <Box sx={{width: '400px'}}>
-              <Typography sx={{opacity: disabled ? 0.5 : 1}}>{option.title}</Typography>
+          <Stack direction={{xs: 'column', sm: 'row'}}>
+            <Box sx={{minWidth: '400px', maxWidth: '400px'}}>
+              <Typography noWrap sx={{opacity: disabled ? 0.5 : 1}}>
+                {option.title}
+              </Typography>
             </Box>
-            <RadioGroup row>
+            <Stack direction="row" flexWrap="wrap">
               {option.subOptions.map(subOption => (
                 <FormControlLabel
                   key={subOption.value}
@@ -40,7 +41,7 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
                   disabled={disabled}
                 />
               ))}
-            </RadioGroup>
+            </Stack>
           </Stack>
         </Box>
       ))}
