@@ -11,6 +11,14 @@ import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 function TextField({form, field, placeholder, label, disabled, tooltip, warnings, ...props}) {
+  const handleBlur = e => {
+    const event = e;
+    if (field.onChange && event.target.value) {
+      event.target.value = event.target.value.trim();
+      field.onChange(e);
+    }
+  };
+
   return (
     <Box sx={{width: '100%'}}>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
@@ -37,7 +45,7 @@ function TextField({form, field, placeholder, label, disabled, tooltip, warnings
         }}
         {...props}
         disabled={disabled}
-        onBlur={form.handleBlur}
+        onBlur={handleBlur}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </Box>

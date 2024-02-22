@@ -54,6 +54,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
             type: question.metadata.specification.type,
             optionId: option.id,
             label: question.metadata.specification.label,
+            placeholder: question.metadata.specification.placeholder,
             name: `S${section.id}P${question.id}SQ${index + 1}`,
             userVarName: `${question.userVarName}_${option.value}`,
             validations: [
