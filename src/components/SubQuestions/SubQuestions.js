@@ -19,7 +19,7 @@ function SubQuestions({values, subQuestions, name, ...props}) {
   });
 
   return selectedQuestions.length > 0 ? (
-    <Stack spacing={2} sx={{width: '100%'}}>
+    <Stack spacing={2} sx={{width: '100%'}} justifyContent="flex-end">
       {selectedQuestions.map(subQuestion => (
         <Box key={subQuestion.id}>
           <Field
