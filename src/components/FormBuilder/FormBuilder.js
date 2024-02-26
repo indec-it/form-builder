@@ -113,14 +113,7 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
                         />
                       )}
                       {showSurvey === currentSection.id && (
-                        <Box sx={{boxShadow: 2, p: 2}}>
-                          <QuestionBuilder
-                            values={currentSection}
-                            index={index}
-                            disabled={readOnlyMode}
-                            warnings={warnings}
-                          />
-                        </Box>
+                        <QuestionBuilder values={currentSection} index={index} disabled={readOnlyMode} warnings={warnings} />
                       )}
                       <Modals
                         open={selectedSectionId}

@@ -2,43 +2,65 @@ import {isEqual, isBefore, isAfter} from 'date-fns';
 
 import questionTypes from '@/constants/questionTypes';
 
+import isObject from './isObject';
+
 const isString = value => typeof value === 'string';
-const isObject = value => typeof value === 'object' && value !== null && !Array.isArray(value);
+
+const dateNotEquals = (a, b) => !isEqual(a, b);
+
+const dateOperators = {
+  lt: isBefore,
+  gt: isAfter,
+  eq: isEqual,
+  ne: dateNotEquals
+};
+
+const validateDateRange = (dates, endDate, operator) => {
+  let isValid = false;
+  const secondDate = new Date(endDate);
+  isValid = Object.values(dates).some(date => dateOperators[operator](new Date(date), secondDate));
+  return {isValid};
+};
 
 const operations = {
   eq: (a, b, questionType) => {
-    if (questionType === questionTypes.DATE) {
-      const firstDate = new Date(a);
-      const secondDate = new Date(b);
-      return isEqual(firstDate, secondDate);
-    }
     if (isObject(a)) {
+      if (questionType === questionTypes.DATE) {
+        const {isValid} = validateDateRange(a, b, 'eq');
+        return isValid;
+      }
       return Object.values(a).some(value => value === b);
     }
     return a === b;
   },
   ne: (a, b, questionType) => {
-    if (questionType === questionTypes.DATE) {
-      const firstDate = new Date(a);
-      const secondDate = new Date(b);
-      return !isEqual(firstDate, secondDate);
+    if (isObject(a)) {
+      if (questionType === questionTypes.DATE) {
+        const {isValid} = validateDateRange(a, b, 'ne');
+        return isValid;
+      }
+      return Object.values(a).some(value => value === b);
     }
     return a !== b;
   },
   gt: (a, b, questionType) => {
-    if (questionType === questionTypes.DATE) {
-      const firstDate = new Date(a);
-      const secondDate = new Date(b);
-      return isAfter(firstDate, secondDate);
+    if (isObject(a)) {
+      if (questionType === questionTypes.DATE) {
+        const {isValid} = validateDateRange(a, b, 'gt');
+        return isValid;
+      }
+      return Object.values(a).some(value => value === b);
     }
     return isString(a) ? a.length > b : a > b;
   },
   gte: (a, b) => (isString(a) ? a.length >= b : a >= b),
   lt: (a, b, questionType) => {
-    if (questionType === questionTypes.DATE) {
-      const firstDate = new Date(a);
-      const secondDate = new Date(b);
-      return isBefore(firstDate, secondDate);
+    if (isObject(a)) {
+      if (questionType === questionTypes.DATE) {
+        const {isValid} = validateDateRange(a, b, 'lt');
+        return isValid;
+      }
+      return Object.values(a).some(value => value === b);
     }
     return isString(a) ? a.length < b : a < b;
   },

@@ -1,10 +1,17 @@
+import questionTypes from '@/constants/questionTypes';
+
+import isObject from './isObject';
 import operations from './operations';
 
 const getAnswerValue = (answer = {}) => answer.value;
 
 const getResult = (condition, answer, type) => {
   const value = getAnswerValue(answer);
-  return operations[condition.type](typeof value === 'number' ? value : value || '', condition.value, type);
+  let parsedValue = typeof value === 'number' ? value : value || '';
+  if (type === questionTypes.DATE && !isObject(parsedValue)) {
+    parsedValue = {parsedValue};
+  }
+  return operations[condition.type](parsedValue, condition.value, type);
 };
 
 const evaluateConditions = ({

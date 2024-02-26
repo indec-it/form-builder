@@ -17,7 +17,7 @@ export default {
 
 function Template(args) {
   const {withErrors, withWarnings, initialValues, section, ...props} = args;
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section]});
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section], initialValues});
   return (
     <Formik initialValues={initialValues} validationSchema={withErrors ? validateSchema : null} onSubmit={() => {}}>
       {({values, submitForm}) => {
@@ -25,11 +25,11 @@ function Template(args) {
         return (
           <>
             <Field component={DatePicker} warnings={warnings} {...props} />
-            {withErrors ? (
+            {withErrors && (
               <Button onClick={submitForm} variant="contained">
                 Click to validate form
               </Button>
-            ) : null}
+            )}
           </>
         );
       }}

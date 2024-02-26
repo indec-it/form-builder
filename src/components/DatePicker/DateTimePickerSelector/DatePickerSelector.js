@@ -4,7 +4,7 @@ import {DateTimePicker as MuiDateTimePicker} from '@mui/x-date-pickers/DateTimeP
 
 import dateTypes from '@/constants/dateTypes';
 
-function DateTimePickerSelector({type, onChange, value, ...props}) {
+function DateTimePickerSelector({type, onChange, value, placeholder, ...props}) {
   const handleChange = date => {
     onChange(date ? date.toISOString() : date);
   };
@@ -16,23 +16,42 @@ function DateTimePickerSelector({type, onChange, value, ...props}) {
         ampm={false}
         inputFormat="dd/MM/yyyy HH:mm"
         onChange={handleChange}
-        value={value ? new Date(value) : value}
+        value={value ? new Date(value) : undefined}
+        slotProps={{
+          textField: {
+            error: false,
+            placeholder
+          }
+        }}
       />
     );
   }
   return (
-    <MuiDatePicker {...props} inputFormat="dd/MM/yyyy" onChange={handleChange} value={value ? new Date(value) : value} />
+    <MuiDatePicker
+      {...props}
+      inputFormat="dd/MM/yyyy"
+      onChange={handleChange}
+      value={value ? new Date(value) : undefined}
+      slotProps={{
+        textField: {
+          error: false,
+          placeholder
+        }
+      }}
+    />
   );
 }
 
 DateTimePickerSelector.propTypes = {
   onChange: PropTypes.func.isRequired,
   type: PropTypes.oneOf(Object.values(dateTypes)).isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  placeholder: PropTypes.string
 };
 
 DateTimePickerSelector.defaultProps = {
-  value: undefined
+  value: undefined,
+  placeholder: '[Seleccione fecha]'
 };
 
 export default DateTimePickerSelector;
