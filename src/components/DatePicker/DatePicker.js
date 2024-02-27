@@ -13,67 +13,72 @@ import InputLabel from '../InputLabel';
 import TextField from '../TextField';
 import DateTimePickerSelector from './DateTimePickerSelector';
 
-function DatePicker({metadata: {dateType}, field, label, form, warnings, disabled, ...props}) {
+function DatePicker({metadata: {dateType}, field, label, form, warnings, disabled, placeholder, ...props}) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-      <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
-      <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
-        <DateTimePickerSelector
-          type={dateType}
-          label={isRange ? 'Fecha de inicio' : ''}
-          value={isRange ? field.value.start : field.value}
-          onChange={newValue => {
-            form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue);
-            form.setFieldTouched(isRange ? `${field.name}.start` : field.name, false);
-          }}
-          renderInput={params => (
-            <TextField
-              {...params}
-              {...props}
-              form={form}
-              field={{
-                ...field,
-                name: isRange ? `${field.name}.start` : field.name,
-                value: params.inputProps.value
-              }}
-              warnings={warnings}
-              disabled={disabled}
-            />
-          )}
-          disabled={disabled}
-        />
-        {isRange && (
+      <Stack>
+        <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
+        <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
           <DateTimePickerSelector
             type={dateType}
-            minutesStep={1}
-            label="Fecha de fin"
-            value={field.value.end}
+            label={isRange ? 'Fecha de inicio' : ''}
+            value={isRange ? field.value.start : field.value}
             onChange={newValue => {
-              form.setFieldValue(`${field.name}.end`, newValue);
-              form.setFieldTouched(`${field.name}.end`, false);
+              form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue);
+              form.setFieldTouched(isRange ? `${field.name}.start` : field.name, false);
             }}
             renderInput={params => (
               <TextField
                 {...params}
                 {...props}
                 form={form}
-                field={{...field, name: `${field.name}.end`, value: params.inputProps.value}}
+                field={{
+                  ...field,
+                  name: isRange ? `${field.name}.start` : field.name,
+                  value: params.inputProps.value
+                }}
                 warnings={warnings}
                 disabled={disabled}
               />
             )}
-            disabled={!field.value.start}
+            disabled={disabled}
+            placeholder={placeholder}
           />
-        )}
+          {isRange && (
+            <DateTimePickerSelector
+              type={dateType}
+              minutesStep={1}
+              label="Fecha de fin"
+              value={field.value.end}
+              onChange={newValue => {
+                form.setFieldValue(`${field.name}.end`, newValue);
+                form.setFieldTouched(`${field.name}.end`, false);
+              }}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  {...props}
+                  form={form}
+                  field={{...field, name: `${field.name}.end`, value: params.inputProps.value}}
+                  warnings={warnings}
+                  disabled={disabled}
+                />
+              )}
+              disabled={!field.value.start}
+              placeholder={placeholder}
+            />
+          )}
+        </Stack>
+        <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
       </Stack>
-      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </LocalizationProvider>
   );
 }
 
 DatePicker.propTypes = {
   label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   field: formikField.isRequired,
   form: formikForm.isRequired,
   disabled: PropTypes.bool,
@@ -85,7 +90,8 @@ DatePicker.propTypes = {
 
 DatePicker.defaultProps = {
   warnings: {},
-  disabled: false
+  disabled: false,
+  placeholder: '[Seleccione fecha]'
 };
 
 export default DatePicker;

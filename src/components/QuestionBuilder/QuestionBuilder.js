@@ -5,7 +5,7 @@ import Question from './Question';
 
 function QuestionBuilder({values, index, disabled, warnings}) {
   return (
-    <Grid data-testid="question-builder">
+    <Grid data-testid="question-builder" sx={{boxShadow: 2, p: 2}}>
       {Object.values(values).map((value, valueIndex) => {
         if (value.id) {
           return (

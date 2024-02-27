@@ -26,11 +26,13 @@ describe('operations', () => {
 
     describe('when `questionType` is date', () => {
       it('should return `true` if `a` is equal to `b`', () => {
-        expect(operations.eq('2023-09-01T16:54:00.000Z', '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(true);
+        expect(operations.eq({date: '2023-09-01T16:54:00.000Z'}, '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(true);
       });
 
       it('should return `false` if `a` is not equal to `b`', () => {
-        expect(operations.eq('2023-09-01T16:53:00.000Z', '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(false);
+        expect(operations.eq({date: '2023-09-01T16:53:00.000Z'}, '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(
+          false
+        );
       });
     });
   });
@@ -46,11 +48,13 @@ describe('operations', () => {
 
     describe('when `questionType` is date', () => {
       it('should return `false` if `a` is equal to `b`', () => {
-        expect(operations.ne('2023-09-01T16:54:00.000Z', '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(false);
+        expect(operations.ne({date: '2023-09-01T16:54:00.000Z'}, '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(
+          false
+        );
       });
 
       it('should return `true` if `a` is not equal to `b`', () => {
-        expect(operations.ne('2023-09-01T16:53:00.000Z', '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(true);
+        expect(operations.ne({date: '2023-09-01T16:53:00.000Z'}, '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(true);
       });
     });
   });
@@ -86,11 +90,13 @@ describe('operations', () => {
 
     describe('when `questionType` is date', () => {
       it('should return `true` if `a` is before than `b`', () => {
-        expect(operations.lt('2023-09-01T16:54:00.000Z', '2023-09-01T16:55:00.000Z', questionTypes.DATE)).toBe(true);
+        expect(operations.lt({date: '2023-09-01T16:54:00.000Z'}, '2023-09-01T16:55:00.000Z', questionTypes.DATE)).toBe(true);
       });
 
       it('should return `false` if `a` is not before than `b`', () => {
-        expect(operations.lt('2023-09-01T16:55:00.000Z', '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(false);
+        expect(operations.lt({date: '2023-09-01T16:55:00.000Z'}, '2023-09-01T16:54:00.000Z', questionTypes.DATE)).toBe(
+          false
+        );
       });
     });
   });
