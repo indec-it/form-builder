@@ -17,8 +17,13 @@ const dateOperators = {
 
 const validateDateRange = (dates, endDate, operator) => {
   let isValid = false;
-  const secondDate = new Date(endDate);
-  isValid = Object.values(dates).some(date => dateOperators[operator](new Date(date), secondDate));
+  const secondDate = endDate ? new Date(endDate) : '';
+  isValid = Object.values(dates).some(date => {
+    if (!date && !secondDate) {
+      return true;
+    }
+    return dateOperators[operator](new Date(date), secondDate);
+  });
   return {isValid};
 };
 
