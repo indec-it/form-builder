@@ -29,7 +29,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     case questionTypes.CURRENCY:
       props = {
         label: {text: label, number, introduction},
-        placeholder,
+        placeholder: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? '' : placeholder,
         name: questionName,
         type: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? 'text' : 'number',
         disabled: isDisabled,
