@@ -14,6 +14,7 @@ function Currency({form, field, label, ...props}) {
   return (
     <NumericFormat
       {...props}
+      placeholder="Ingrese Valor"
       value={field.value}
       onValueChange={handleChange}
       thousandSeparator="."
