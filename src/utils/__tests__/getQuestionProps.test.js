@@ -379,7 +379,7 @@ describe('getQuestionProps', () => {
         props: {
           label: {text: 'question 1', number: '1', introduction: undefined},
           name: 'S1.0.S1P1.answer',
-          placeholder: undefined,
+          placeholder: 'Ingrese Valor',
           type: 'number',
           disabled: true,
           warnings: {},
@@ -414,7 +414,7 @@ describe('getQuestionProps', () => {
         props: {
           label: {text: 'question 1', number: '1', introduction: undefined},
           name: 'S1.0.S1P1.answer',
-          placeholder: undefined,
+          placeholder: 'Ingrese Valor',
           type: 'text',
           disabled: true,
           warnings: {},

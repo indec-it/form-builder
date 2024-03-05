@@ -3,6 +3,8 @@ import questionTypes from '@/constants/questionTypes';
 
 import getNavigation from './getNavigation';
 
+const isNumericOrCurrency = type => [questionTypes.NUMERIC_FIELD, questionTypes.CURRENCY].includes(type);
+
 const getQuestionProps = ({sectionIndex, section, question, values, disabled, warnings, initialValues, sections}) => {
   const {
     number,
@@ -29,7 +31,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     case questionTypes.CURRENCY:
       props = {
         label: {text: label, number, introduction},
-        placeholder,
+        placeholder: !placeholder && isNumericOrCurrency(type) ? 'Ingrese Valor' : placeholder,
         name: questionName,
         type: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? 'text' : 'number',
         disabled: isDisabled,
