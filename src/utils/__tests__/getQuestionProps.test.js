@@ -360,7 +360,7 @@ describe('getQuestionProps', () => {
     });
   });
 
-  describe('when `question.type` is number', () => {
+  describe('when `question.type` is number and placeholder value is empty', () => {
     beforeEach(() => {
       question = {
         type: 2,
@@ -395,7 +395,42 @@ describe('getQuestionProps', () => {
     });
   });
 
-  describe('when `question.type` is currency', () => {
+  describe('when `question.type` is number and placeholder value is not empty', () => {
+    beforeEach(() => {
+      question = {
+        type: 2,
+        name: 'S1P1',
+        label: 'question 1',
+        placeholder: 'Lorem Ipsum',
+        number: '1',
+        multiple: false,
+        subQuestions: []
+      };
+    });
+
+    it('should return props', () => {
+      expect(
+        getQuestionProps({sectionIndex, section, question, values, disabled, warnings, initialValues, sections})
+      ).toEqual({
+        props: {
+          label: {text: 'question 1', number: '1', introduction: undefined},
+          name: 'S1.0.S1P1.answer',
+          placeholder: 'Lorem Ipsum',
+          type: 'number',
+          disabled: true,
+          warnings: {},
+          isMultiple: false,
+          show: true,
+          subQuestions: [],
+          values: {answer: {value: ''}, id: 1}
+        },
+        questionName: 'S1.0.S1P1.answer',
+        questionType: 2,
+        jump: {valid: true}
+      });
+    });
+  });
+  describe('when `question.type` is currency and placeholder value is empty', () => {
     beforeEach(() => {
       question = {
         type: 8,
@@ -415,6 +450,42 @@ describe('getQuestionProps', () => {
           label: {text: 'question 1', number: '1', introduction: undefined},
           name: 'S1.0.S1P1.answer',
           placeholder: 'Ingrese Valor',
+          type: 'text',
+          disabled: true,
+          warnings: {},
+          isMultiple: false,
+          show: true,
+          subQuestions: [],
+          values: {answer: {value: ''}, id: 1}
+        },
+        questionName: 'S1.0.S1P1.answer',
+        questionType: 8,
+        jump: {valid: true}
+      });
+    });
+  });
+
+  describe('when `question.type` is currency and placeholder value is not empty', () => {
+    beforeEach(() => {
+      question = {
+        type: 8,
+        name: 'S1P1',
+        label: 'question 1',
+        placeholder: 'Lorem Ipsum',
+        number: '1',
+        multiple: false,
+        subQuestions: []
+      };
+    });
+
+    it('should return props', () => {
+      expect(
+        getQuestionProps({sectionIndex, section, question, values, disabled, warnings, initialValues, sections})
+      ).toEqual({
+        props: {
+          label: {text: 'question 1', number: '1', introduction: undefined},
+          name: 'S1.0.S1P1.answer',
+          placeholder: 'Lorem Ipsum',
           type: 'text',
           disabled: true,
           warnings: {},
