@@ -128,3 +128,12 @@ WithWarnings.args = {
   name: 'S1.0.S1P1.answer.value',
   withWarnings: true
 };
+
+export const WithMultiline = Template.bind({});
+WithMultiline.args = {
+  disabled: false,
+  label: {text: 'Write your name'},
+  name: 'S1.0.S1P1.answer.value',
+  warnings: {},
+  multiline: true
+};

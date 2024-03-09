@@ -10,7 +10,7 @@ import InputLabel from '@/components/InputLabel';
 import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
-function TextField({form, field, placeholder, label, disabled, tooltip, warnings, ...props}) {
+function TextField({form, field, placeholder, label, disabled, tooltip, warnings, multiline, ...props}) {
   const handleBlur = e => {
     const event = e;
     if (field.onChange && event.target.value) {
@@ -46,6 +46,8 @@ function TextField({form, field, placeholder, label, disabled, tooltip, warnings
         {...props}
         disabled={disabled}
         onBlur={handleBlur}
+        multiline={multiline}
+        rows={multiline ? 2 : 1}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
     </Box>
@@ -56,6 +58,7 @@ TextField.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
   disabled: PropTypes.bool,
+  multiline: PropTypes.bool,
   label: labelPropTypes.isRequired,
   placeholder: PropTypes.string,
   tooltip: PropTypes.string,
@@ -66,7 +69,8 @@ TextField.defaultProps = {
   placeholder: '[Ingrese texto]',
   tooltip: undefined,
   warnings: {},
-  disabled: false
+  disabled: false,
+  multiline: false
 };
 
 export default TextField;

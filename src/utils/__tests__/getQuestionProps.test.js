@@ -337,6 +337,62 @@ describe('getQuestionProps', () => {
       };
     });
 
+    describe('and `question.multiline` is `true`', () => {
+      beforeEach(() => {
+        question.multiline = true;
+      });
+
+      it('should have `props.multiline` as `true`', () => {
+        expect(
+          getQuestionProps({sectionIndex, section, question, values, disabled, warnings, initialValues, sections})
+        ).toEqual(
+          expect.objectContaining({
+            props: {
+              label: {text: 'question 1', number: '1', introduction: undefined},
+              name: 'S1.0.S1P1.answer',
+              placeholder: undefined,
+              type: 'text',
+              disabled: true,
+              warnings: {},
+              isMultiple: false,
+              show: true,
+              subQuestions: [],
+              values: {answer: {value: ''}, id: 1},
+              multiline: true
+            }
+          })
+        );
+      });
+    });
+
+    describe('and `question.multiline` is `false`', () => {
+      beforeEach(() => {
+        question.multiline = false;
+      });
+
+      it('should have `props.multiline` as `false`', () => {
+        expect(
+          getQuestionProps({sectionIndex, section, question, values, disabled, warnings, initialValues, sections})
+        ).toEqual(
+          expect.objectContaining({
+            props: {
+              label: {text: 'question 1', number: '1', introduction: undefined},
+              name: 'S1.0.S1P1.answer',
+              placeholder: undefined,
+              type: 'text',
+              disabled: true,
+              warnings: {},
+              isMultiple: false,
+              show: true,
+              subQuestions: [],
+              values: {answer: {value: ''}, id: 1},
+              multiline: false
+            }
+          })
+        );
+      });
+    });
+
     it('should return props', () => {
       expect(
         getQuestionProps({sectionIndex, section, question, values, disabled, warnings, initialValues, sections})
@@ -351,7 +407,8 @@ describe('getQuestionProps', () => {
           isMultiple: false,
           show: true,
           subQuestions: [],
-          values: {answer: {value: ''}, id: 1}
+          values: {answer: {value: ''}, id: 1},
+          multiline: false
         },
         questionName: 'S1.0.S1P1.answer',
         questionType: 1,
@@ -386,7 +443,8 @@ describe('getQuestionProps', () => {
           isMultiple: false,
           show: true,
           subQuestions: [],
-          values: {answer: {value: ''}, id: 1}
+          values: {answer: {value: ''}, id: 1},
+          multiline: false
         },
         questionName: 'S1.0.S1P1.answer',
         questionType: 2,
@@ -422,7 +480,8 @@ describe('getQuestionProps', () => {
           isMultiple: false,
           show: true,
           subQuestions: [],
-          values: {answer: {value: ''}, id: 1}
+          values: {answer: {value: ''}, id: 1},
+          multiline: false
         },
         questionName: 'S1.0.S1P1.answer',
         questionType: 2,
@@ -456,7 +515,8 @@ describe('getQuestionProps', () => {
           isMultiple: false,
           show: true,
           subQuestions: [],
-          values: {answer: {value: ''}, id: 1}
+          values: {answer: {value: ''}, id: 1},
+          multiline: false
         },
         questionName: 'S1.0.S1P1.answer',
         questionType: 8,
@@ -492,7 +552,8 @@ describe('getQuestionProps', () => {
           isMultiple: false,
           show: true,
           subQuestions: [],
-          values: {answer: {value: ''}, id: 1}
+          values: {answer: {value: ''}, id: 1},
+          multiline: false
         },
         questionName: 'S1.0.S1P1.answer',
         questionType: 8,
