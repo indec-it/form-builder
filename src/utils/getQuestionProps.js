@@ -17,7 +17,8 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     options,
     metadata,
     navigation = [],
-    introduction
+    introduction,
+    multiline = false
   } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
@@ -39,7 +40,8 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         isMultiple: multiple,
         values: values[name],
         subQuestions,
-        show
+        show,
+        multiline: type === questionTypes.TEXT_FIELD ? multiline : false
       };
       break;
     case questionTypes.DROPDOWN:
