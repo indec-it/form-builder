@@ -1,17 +1,14 @@
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
 import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
+
+import ActionButtons from './ActionButtons';
+import Introduction from './Introduction';
+import TitleWithIcon from './TitleWithIcon';
 
 const getHeaders = (questions, values, headers) => {
   if (headers.some(header => header.question)) {
@@ -33,53 +30,38 @@ const getHeaders = (questions, values, headers) => {
   return '';
 };
 
-function SectionHeader({section, sectionsLength, onView, onEdit, onDelete, values, isReadOnly, isValid}) {
+function SectionHeader({
+  section,
+  sectionsLength,
+  onView,
+  onEdit,
+  onDelete,
+  values,
+  isReadOnly,
+  isValid,
+  onMoveUp,
+  onMoveDown,
+  position
+}) {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        boxShadow: 2,
-        p: 2,
-        justifyContent: 'space-between',
-        flexWrap: 'wrap'
-      }}
-    >
+    <Stack direction="row" boxShadow={2} p={2} justifyContent="space-between" flexWrap="wrap">
       <Stack>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Typography variant="h6" fontWeight="bold">
-            {section.label}
-          </Typography>
-          {isValid ? (
-            <CheckCircleIcon color="success" data-testid="success-icon" />
-          ) : (
-            <ErrorIcon color="error" data-testid="error-icon" />
-          )}
-        </Stack>
-        {section.introduction && (
-          <Typography data-testid="introduction" fontWeight="bold" color="gray" whiteSpace="pre-line">
-            {section.introduction}
-          </Typography>
-        )}
+        <TitleWithIcon title={section.label} isValid={isValid} />
+        <Introduction introduction={section.introduction} />
         <Typography>{getHeaders(section.questions, values, section.headers)}</Typography>
       </Stack>
-      <Box>
-        <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
-          <VisibilityIcon />
-        </IconButton>
-        {!isReadOnly && (
-          <>
-            <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-            {section.multiple && sectionsLength > 1 && (
-              <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
-                <DeleteIcon />
-              </IconButton>
-            )}
-          </>
-        )}
-      </Box>
-    </Box>
+      <ActionButtons
+        isSectionMultiple={section.multiple}
+        sectionsLength={sectionsLength}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onView={onView}
+        onMoveDown={onMoveDown}
+        onMoveUp={onMoveUp}
+        isReadOnly={isReadOnly}
+        position={position}
+      />
+    </Stack>
   );
 }
 
@@ -87,7 +69,10 @@ SectionHeader.propTypes = {
   onView: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onMoveUp: PropTypes.func.isRequired,
+  onMoveDown: PropTypes.func.isRequired,
   sectionsLength: PropTypes.number.isRequired,
+  position: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
   values: PropTypes.shape({}).isRequired,
   isValid: PropTypes.bool.isRequired,

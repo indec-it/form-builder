@@ -110,6 +110,9 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
                           values={currentSection}
                           isReadOnly={readOnlyMode}
                           isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
+                          onMoveDown={() => sectionHelpers.swap(index, index + 1)}
+                          onMoveUp={() => sectionHelpers.swap(index, index - 1)}
+                          position={index}
                         />
                       )}
                       {showSurvey === currentSection.id && (
