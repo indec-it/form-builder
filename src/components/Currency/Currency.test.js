@@ -23,7 +23,20 @@ describe('<Currency>', () => {
 
     it('should fire `props.field.onChange without thousand separator`', () => {
       expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
-      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, 1000);
+      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '1000');
+    });
+  });
+
+  describe('when a value without decimal and greater than 999999999999999999 is written', () => {
+    beforeEach(() => {
+      const {container} = getComponent();
+      const textField = getByTestId(container, 'text-field');
+      fireEvent.change(textField, {target: {name: props.field.name, value: '999999999999999999'}});
+    });
+
+    it('should fire `props.field.onChange without thousand separator`', () => {
+      expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
+      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '999999999999999999');
     });
   });
 
@@ -36,7 +49,7 @@ describe('<Currency>', () => {
 
     it('should fire `props.field.onChange without thousand and decimal separator`', () => {
       expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
-      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, 1000.21);
+      expect(props.form.setFieldValue).toHaveBeenCalledWith(props.field.name, '1000.21');
     });
   });
 });
