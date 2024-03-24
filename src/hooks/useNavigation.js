@@ -19,9 +19,7 @@ const useNavigation = ({sections, initialValues, handleFinish}) => {
   );
 
   const handleNextPage = () => {
-    if (page < sections.length - 1) {
-      setNextPage(page + 1);
-    }
+    setNextPage(page + 1);
   };
 
   const handlePreviousPage = () => {
@@ -33,14 +31,14 @@ const useNavigation = ({sections, initialValues, handleFinish}) => {
       if (navigation.valid || navigation.action === 'disable') {
         setPage(nextPage);
       }
-      const calcPage = nextPage < page ? nextPage : nextPage - 1;
-      const isLastPage = calcPage <= sections.length || page === sections.length;
-      if (navigation.action === 'hide') {
-        setNextPage(isLastPage ? undefined : calcPage);
+      const calcPage = nextPage < page ? nextPage - 1 : nextPage + 1;
+      const isLastPage = calcPage === sections.length;
+      if (navigation.action === 'hide' && !isLastPage) {
+        setNextPage(calcPage);
       }
-      handleFinish(isLastPage);
+      handleFinish({isLastPage});
     }
-  }, [nextPage, page]);
+  }, [nextPage]);
 
   return {
     handleNextPage,
