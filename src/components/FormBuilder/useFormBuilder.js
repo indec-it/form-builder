@@ -3,14 +3,13 @@ import {useState, useMemo} from 'react';
 import questionTypes from '@/constants/questionTypes';
 import modals from '@/constants/modals';
 import validationTypes from '@/constants/validationTypes';
-import useSectionInitialValues from '@/hooks/useSectionInitialValues';
+import {useSectionInitialValues} from '@/hooks';
 import buildQuestions from '@/utils/buildQuestions';
 import getSchemas from '@/utils/getSchemas';
 import getLastId from '@/utils/getLastId';
 
-const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
-  const section = sections[page];
-  const [readOnlyMode, setReadOnlyMode] = useState(isReadOnly);
+const useFormBuilder = ({sections, initialValues, section}) => {
+  const [readOnlyMode, setReadOnlyMode] = useState();
   const [showSurvey, setShowSurvey] = useState();
   const [selectedSectionId, setSelectedSelectionId] = useState();
   const [openModal, setOpenModal] = useState();
@@ -130,8 +129,7 @@ const useFormBuilder = ({isReadOnly, sections, initialValues, page}) => {
     handleOpenModal,
     handleShowSurvey,
     setOpenModal,
-    transformedSection,
-    setReadOnlyMode
+    transformedSection
   };
 };
 

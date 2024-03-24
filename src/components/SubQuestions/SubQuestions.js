@@ -3,7 +3,7 @@ import {Field} from 'formik';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import useSubQuestions from '@/hooks/useSubQuestions';
+import {useSubQuestions} from '@/hooks';
 import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
 import valuesPropTypes from '@/utils/propTypes/values';
 import getQuestionComponent from '@/utils/getQuestionComponent';

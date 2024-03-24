@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
 import breakpoints from '@/constants/breakpoints';
-import useBreakpoint from '@/hooks/useBreakpoint';
+import {useBreakpoint} from '@/hooks';
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 import MobileRadio from './MobileRadio';

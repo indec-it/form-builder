@@ -16,7 +16,8 @@ function ActionButtons({
   isReadOnly,
   onMoveUp,
   onMoveDown,
-  position
+  position,
+  showEditButton
 }) {
   return (
     <Stack direction="row" spacing={1}>
@@ -39,9 +40,11 @@ function ActionButtons({
               )}
             </>
           )}
-          <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
-            <EditIcon />
-          </IconButton>
+          {showEditButton && (
+            <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
+              <EditIcon />
+            </IconButton>
+          )}
           {isSectionMultiple && sectionsLength > 1 && (
             <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
               <DeleteIcon />
@@ -62,7 +65,8 @@ ActionButtons.propTypes = {
   sectionsLength: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  isSectionMultiple: PropTypes.bool.isRequired
+  isSectionMultiple: PropTypes.bool.isRequired,
+  showEditButton: PropTypes.bool.isRequired
 };
 
 export default ActionButtons;

@@ -1,4 +1,3 @@
-import {useState, useEffect, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
@@ -7,7 +6,7 @@ import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
 import QuestionBuilder from '@/components/QuestionBuilder';
 import FormProvider from '@/context/form';
-import getNavigation from '@/utils/getNavigation';
+import {useNavigation} from '@/hooks';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 
@@ -15,12 +14,14 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({sections, onSubmit, onPrevious, components, initialValues, isReadOnly}) {
-  const [page, setPage] = useState(0);
-  const [nextPage, setNextPage] = useState();
+function FormBuilder({sections, onSubmit, onFinish, onPrevious, components, initialValues, isReadOnly}) {
+  const {handleNextPage, handlePreviousPage, navigation, page, section} = useNavigation({
+    sections,
+    initialValues,
+    handleFinish: onFinish
+  });
   const {
     readOnlyMode,
-    setReadOnlyMode,
     showSurvey,
     formInitialValues,
     validateSchema,
@@ -33,42 +34,17 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
     handleShowSurvey,
     setOpenModal,
     transformedSection
-  } = useFormBuilder({isReadOnly, sections, initialValues, page});
-  const section = sections[page];
-  const isLastSection = sections.length === page + 1;
-
-  const navigation = useMemo(
-    () =>
-      getNavigation({
-        navigation: sections?.[nextPage]?.navigation,
-        initialValues,
-        sections,
-        section
-      }),
-    [nextPage]
-  );
+  } = useFormBuilder({sections, initialValues, section});
 
   const handleSubmit = values => {
-    setNextPage(page + 1);
-    onSubmit(values, isLastSection);
+    handleNextPage();
+    onSubmit(values);
   };
 
   const handlePrevious = values => {
-    setNextPage(page - 1);
+    handlePreviousPage();
     onPrevious(values);
   };
-
-  useEffect(() => {
-    if (nextPage >= 0) {
-      if (navigation.valid || navigation.action === 'disable') {
-        setPage(nextPage);
-      }
-      if (navigation.action === 'hide') {
-        setNextPage(nextPage < page ? nextPage - 1 : nextPage + 1);
-      }
-      setReadOnlyMode(navigation.action === 'disable' || isReadOnly);
-    }
-  }, [nextPage, isLastSection]);
 
   return (
     <FormProvider section={transformedSection} sections={sections} initialValues={initialValues}>
@@ -97,7 +73,7 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
                           sectionsLength={values[section.name].length}
                           section={section}
                           values={currentSection}
-                          isReadOnly={readOnlyMode}
+                          isReadOnly={isReadOnly}
                           isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                         />
                       ) : (
@@ -108,15 +84,21 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
                           sectionsLength={values[section.name].length}
                           section={transformedSection}
                           values={currentSection}
-                          isReadOnly={readOnlyMode}
+                          isReadOnly={isReadOnly}
                           isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
                           onMoveDown={() => sectionHelpers.swap(index, index + 1)}
                           onMoveUp={() => sectionHelpers.swap(index, index - 1)}
                           position={index}
+                          showEditButton={!isReadOnly && navigation.action !== 'disable'}
                         />
                       )}
                       {showSurvey === currentSection.id && (
-                        <QuestionBuilder values={currentSection} index={index} disabled={readOnlyMode} warnings={warnings} />
+                        <QuestionBuilder
+                          values={currentSection}
+                          index={index}
+                          disabled={readOnlyMode || isReadOnly || navigation.action === 'disable'}
+                          warnings={warnings}
+                        />
                       )}
                       <Modals
                         open={selectedSectionId}
@@ -150,7 +132,6 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
                 <NavigationButtons
                   onPrevious={() => handlePrevious(values)}
                   disablePreviousButton={page === 0}
-                  isLastSection={isLastSection}
                   onAddNew={section.multiple ? () => addNewSection(setValues, values) : undefined}
                   onInterrupt={
                     section.interruption.interruptible
@@ -171,6 +152,7 @@ function FormBuilder({sections, onSubmit, onPrevious, components, initialValues,
 FormBuilder.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onPrevious: PropTypes.func.isRequired,
+  onFinish: PropTypes.func.isRequired,
   sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
   isReadOnly: PropTypes.bool,
   components: PropTypes.shape({
