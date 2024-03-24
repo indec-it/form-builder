@@ -41,20 +41,37 @@ describe('<ActionButtons>', () => {
       props.isReadOnly = false;
     });
 
-    it('should render a button to edit survey', () => {
-      const {container} = getComponent();
-      expect(getByTestId(container, 'edit-button')).toBeInTheDocument();
-    });
-
-    describe('when the button to edit survey is clicked', () => {
+    describe('and `props.showEditButton` is `true`', () => {
       beforeEach(() => {
-        const {container} = getComponent();
-        const button = getByTestId(container, 'edit-button');
-        fireEvent.click(button);
+        props.showEditButton = true;
       });
 
-      it('should fire `props.onEdit`', () => {
-        expect(props.onEdit).toHaveBeenCalledTimes(1);
+      it('should render a button to edit survey', () => {
+        const {container} = getComponent();
+        expect(getByTestId(container, 'edit-button')).toBeInTheDocument();
+      });
+
+      describe('when the button to edit survey is clicked', () => {
+        beforeEach(() => {
+          const {container} = getComponent();
+          const button = getByTestId(container, 'edit-button');
+          fireEvent.click(button);
+        });
+
+        it('should fire `props.onEdit`', () => {
+          expect(props.onEdit).toHaveBeenCalledTimes(1);
+        });
+      });
+    });
+
+    describe('and `props.showEditButton` is `false`', () => {
+      beforeEach(() => {
+        props.showEditButton = false;
+      });
+
+      it('should not render a button to edit survey', () => {
+        const {container} = getComponent();
+        expect(queryByTestId(container, 'edit-button')).toBeNull();
       });
     });
 

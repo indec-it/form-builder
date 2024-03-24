@@ -41,7 +41,8 @@ function SectionHeader({
   isValid,
   onMoveUp,
   onMoveDown,
-  position
+  position,
+  showEditButton
 }) {
   return (
     <Stack direction="row" boxShadow={2} p={2} justifyContent="space-between" flexWrap="wrap">
@@ -60,6 +61,7 @@ function SectionHeader({
         onMoveUp={onMoveUp}
         isReadOnly={isReadOnly}
         position={position}
+        showEditButton={showEditButton}
       />
     </Stack>
   );
@@ -76,11 +78,13 @@ SectionHeader.propTypes = {
   section: sectionPropTypes.isRequired,
   values: PropTypes.shape({}).isRequired,
   isValid: PropTypes.bool.isRequired,
+  showEditButton: PropTypes.bool,
   isReadOnly: PropTypes.bool
 };
 
 SectionHeader.defaultProps = {
-  isReadOnly: false
+  isReadOnly: false,
+  showEditButton: true
 };
 
 export default SectionHeader;

@@ -5,9 +5,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowRightIcon from '@mui/icons-material/ArrowForward';
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
-import DoneIcon from '@mui/icons-material/Done';
 
-function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, isLastSection, onInterrupt, readOnlyMode}) {
+function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, onInterrupt, readOnlyMode}) {
   return (
     <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
       <Button
@@ -39,14 +38,8 @@ function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, isLastS
           )}
         </Stack>
       )}
-      <Button
-        type="submit"
-        startIcon={isLastSection ? <DoneIcon /> : undefined}
-        endIcon={isLastSection ? undefined : <ArrowRightIcon />}
-        variant="contained"
-        color={isLastSection ? 'success' : 'primary'}
-      >
-        {isLastSection ? 'Finalizar' : 'Siguiente'}
+      <Button type="submit" endIcon={<ArrowRightIcon />} variant="contained" color="primary">
+        Siguiente
       </Button>
     </Stack>
   );
@@ -57,13 +50,11 @@ NavigationButtons.propTypes = {
   onInterrupt: PropTypes.func,
   onAddNew: PropTypes.func,
   readOnlyMode: PropTypes.bool,
-  disablePreviousButton: PropTypes.bool,
-  isLastSection: PropTypes.bool
+  disablePreviousButton: PropTypes.bool
 };
 
 NavigationButtons.defaultProps = {
   disablePreviousButton: false,
-  isLastSection: false,
   readOnlyMode: false,
   onAddNew: null,
   onInterrupt: null

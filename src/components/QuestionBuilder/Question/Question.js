@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
-import useForm from '@/hooks/useForm';
+import {useForm} from '@/hooks';
 import buildQuestions from '@/utils/buildQuestions';
 import getQuestionProps from '@/utils/getQuestionProps';
 import getQuestionComponent from '@/utils/getQuestionComponent';
