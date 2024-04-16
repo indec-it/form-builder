@@ -24,10 +24,13 @@ const useFormBuilder = ({sections, initialValues, section}) => {
     setOpenModal(modal);
   };
 
-  const handleAcceptModal = (allSections, sectionHelpers) => {
+  const handleAcceptModal = (allSections, sectionHelpers, onInterrupt, values) => {
     if (openModal === modals.CONFIRM_DELETE_SECTION_MODAL) {
       const index = allSections.findIndex(currentSection => currentSection.id === selectedSectionId);
       sectionHelpers.remove(index);
+    }
+    if (openModal === modals.INTERRUPTION_MODAL && onInterrupt) {
+      onInterrupt(values);
     }
     setOpenModal(undefined);
   };

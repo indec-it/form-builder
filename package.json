@@ -1,6 +1,6 @@
 {
   "name": "@indec/form-builder",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "Form builder",
   "main": "index.js",
   "private": false,
