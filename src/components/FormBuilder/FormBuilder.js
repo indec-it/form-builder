@@ -14,7 +14,7 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({sections, onSubmit, onFinish, onPrevious, components, initialValues, isReadOnly}) {
+function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, components, initialValues, isReadOnly}) {
   const {handleNextPage, handlePreviousPage, navigation, page, section} = useNavigation({
     sections,
     initialValues,
@@ -36,9 +36,9 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, components, init
     transformedSection
   } = useFormBuilder({sections, initialValues, section});
 
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
+    await onSubmit(values);
     handleNextPage();
-    onSubmit(values);
   };
 
   const handlePrevious = values => {
@@ -107,7 +107,7 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, components, init
                         name={`${section.name}.${index}.${section.interruption.name}`}
                         onAccept={
                           [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)
-                            ? () => handleAcceptModal(values[section.name], sectionHelpers)
+                            ? () => handleAcceptModal(values[section.name], sectionHelpers, onInterrupt, values)
                             : undefined
                         }
                         onClose={() => setOpenModal(undefined)}
@@ -153,6 +153,7 @@ FormBuilder.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onPrevious: PropTypes.func.isRequired,
   onFinish: PropTypes.func.isRequired,
+  onInterrupt: PropTypes.func,
   sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
   isReadOnly: PropTypes.bool,
   components: PropTypes.shape({
@@ -165,7 +166,8 @@ FormBuilder.propTypes = {
 FormBuilder.defaultProps = {
   isReadOnly: false,
   components: {},
-  initialValues: undefined
+  initialValues: undefined,
+  onInterrupt: undefined
 };
 
 export default FormBuilder;
