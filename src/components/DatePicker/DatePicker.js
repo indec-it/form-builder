@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import {es} from 'date-fns/locale';
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {es} from 'date-fns/locale/es';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFnsV3';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 
