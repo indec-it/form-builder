@@ -14,15 +14,7 @@ const getResult = (condition, answer, type) => {
   return operations[condition.type](parsedValue, condition.value, type);
 };
 
-const evaluateConditions = ({
-  conditions,
-  sectionAnswers,
-  initialValues,
-  currentSection,
-  sections,
-  questionName,
-  isSubQuestion
-}) =>
+const evaluateConditions = ({conditions, sectionAnswers, initialValues, currentSection, sections, questionName}) =>
   conditions.map(condition => {
     if (!sections) {
       return false;
@@ -34,17 +26,29 @@ const evaluateConditions = ({
       return false;
     }
 
-    const question = isSubQuestion
-      ? section.questions
-          .find(({name}) => name === questionName)
-          ?.subQuestions.find(subQuestion => subQuestion.name === condition.question)
-      : section.questions.find(({name}) => name === condition.question);
+    let question = section.questions.find(({name}) => name === questionName);
+
+    if (condition.subQuestion) {
+      question = question.subQuestions.find(({name}) => name === condition.subQuestion);
+    }
+
     const type = question?.type;
 
-    const answers =
-      condition.section === currentSection.name && sectionAnswers
-        ? sectionAnswers[condition.question]
-        : (initialValues?.[condition.section] || []).map(initialValue => initialValue?.[condition.question]);
+    const isMatchingSection = condition.section === currentSection.name && sectionAnswers;
+
+    let answers;
+
+    if (isMatchingSection) {
+      answers = condition.subQuestion
+        ? sectionAnswers[condition.question]?.answer.specifications[condition.subQuestion]
+        : sectionAnswers[condition.question];
+    } else {
+      answers = (initialValues?.[condition.section] || []).map(initialValue =>
+        condition.subQuestion
+          ? initialValue?.[condition.question]?.answer?.specifications[condition.subQuestion]
+          : initialValue?.[condition.question]
+      );
+    }
 
     if (Array.isArray(answers) || Array.isArray(answers?.answer)) {
       const parsedAnswers = Array.isArray(answers)
@@ -60,7 +64,7 @@ const evaluateConditions = ({
     return getResult(condition, answers.answer, type);
   });
 
-const getValidationRules = ({validation, answers, initialValues, section, sections, questionName, isSubQuestion = false}) =>
+const getValidationRules = ({validation, answers, initialValues, section, sections, questionName}) =>
   validation.rules.map(rule => {
     const conditions = evaluateConditions({
       conditions: rule.conditions,
@@ -68,8 +72,7 @@ const getValidationRules = ({validation, answers, initialValues, section, sectio
       initialValues,
       currentSection: section,
       sections,
-      questionName,
-      isSubQuestion
+      questionName
     });
     return conditions.every(condition => condition);
   });

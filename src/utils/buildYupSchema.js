@@ -44,7 +44,7 @@ class ValidatorSchema {
     Object.assign(this, props);
   }
 
-  handleValidations({validator, validations, answers, questionName, isSubQuestion = false}) {
+  handleValidations({validator, validations, answers, questionName}) {
     const {multiple, name} = this.question;
     const {initialValues, section, sections} = this;
     let newValidator = validator;
@@ -69,7 +69,6 @@ class ValidatorSchema {
             initialValues,
             section,
             sections,
-            isSubQuestion,
             questionName: name
           });
           if (rules.some(value => value === true)) {
@@ -92,11 +91,18 @@ class ValidatorSchema {
               validator: subQuestionValidator,
               validations: currentValue.validations,
               answers: {
-                ...answers,
-                [currentValue.name]: {answer: {value}}
+                ...this.answers,
+                [this.question.name]: {
+                  answer: {
+                    ...answers[this.question.name].answer,
+                    specifications: {
+                      ...answers[this.question.name].answer.specifications,
+                      [currentValue.name]: {answer: {value}}
+                    }
+                  }
+                }
               },
-              questionName: currentValue.name,
-              isSubQuestion: true
+              questionName: currentValue.name
             })
           )
         })
