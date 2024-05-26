@@ -80,7 +80,8 @@ const options = [
       {
         id: 3,
         value: '3',
-        label: 'DKN'
+        label: 'DKN',
+        exclusive: true
       }
     ],
     userVarName: 'S1P1O3',

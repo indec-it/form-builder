@@ -72,7 +72,8 @@ describe('<RadioTable>', () => {
             {
               id: 3,
               value: '3',
-              label: 'DKN'
+              label: 'DKN',
+              exclusive: true
             }
           ],
           userVarName: 'S1P1O3',
@@ -150,6 +151,34 @@ describe('<RadioTable>', () => {
       });
     });
 
+    describe('when an exclusive subOption is clicked', () => {
+      beforeEach(() => {
+        props.field.value = {S1P1O1: '1', S1P1O2: '2', S1P1O3: undefined};
+        const {container} = getComponent();
+        const subOption = getByTestId(container, 'subOption-3-3');
+        fireEvent.click(subOption);
+      });
+
+      it('should fire `props.form.setFieldValue`', () => {
+        expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
+        expect(props.form.setFieldValue).toHaveBeenCalledWith('test', {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: '3'});
+      });
+    });
+
+    describe('when there is an exclusive option selected and a subOption is clicked', () => {
+      beforeEach(() => {
+        props.field.value = {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: '3'};
+        const {container} = getComponent();
+        const subOption = getByTestId(container, 'subOption-1-1');
+        fireEvent.click(subOption);
+      });
+
+      it('should fire `props.form.setFieldValue`', () => {
+        expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
+        expect(props.form.setFieldValue).toHaveBeenCalledWith('test', {S1P1O1: '1', S1P1O2: undefined, S1P1O3: undefined});
+      });
+    });
+
     describe('when a subOption is clicked', () => {
       beforeEach(() => {
         const {container} = getComponent();
@@ -159,7 +188,7 @@ describe('<RadioTable>', () => {
 
       it('should fire `props.form.setFieldValue`', () => {
         expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
-        expect(props.form.setFieldValue).toHaveBeenCalledWith('test.S1P1O1', '1');
+        expect(props.form.setFieldValue).toHaveBeenCalledWith('test', {S1P1O1: '1', S1P1O2: undefined, S1P1O3: undefined});
       });
     });
   });

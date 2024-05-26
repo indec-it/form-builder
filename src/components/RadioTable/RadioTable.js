@@ -11,6 +11,34 @@ import {formikField, formikForm, label as labelPropTypes} from '@/utils/propType
 import optionPropTypes from '@/utils/propTypes/option';
 
 function RadioTable({options, label, form, field, disabled, warnings}) {
+  const handleChange = (e, option, subOption) => {
+    let value;
+    if (subOption.exclusive) {
+      value = options.reduce(
+        (accumulator, currentValue) => ({
+          ...accumulator,
+          [currentValue.name]: option.id === currentValue.id ? e.target.value : undefined
+        }),
+        {}
+      );
+    } else {
+      const exclusiveOptions = options.reduce((acc, currentValue) => {
+        if (currentValue.subOptions.some(currentSubOption => currentSubOption.exclusive)) {
+          acc[currentValue.name] = currentValue.subOptions.filter(currentSubOption => currentSubOption.exclusive);
+        }
+        return acc;
+      }, {});
+      value = {...field.value, [option.name]: e.target.value};
+      Object.keys(value).forEach(key => {
+        if (exclusiveOptions[key] && exclusiveOptions[key].some(currentSubOption => currentSubOption.value === value[key])) {
+          value[key] = undefined;
+        }
+      });
+    }
+    form.setFieldValue(field.name, value);
+    form.setFieldTouched(field.name, false);
+  };
+
   return (
     <Stack direction="column">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
@@ -31,10 +59,7 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
                   control={
                     <MuiRadio
                       checked={subOption.value === field.value[option.name]}
-                      onChange={e => {
-                        form.setFieldValue(`${field.name}.${option.name}`, e.target.value);
-                        form.setFieldTouched(field.name, false);
-                      }}
+                      onChange={e => handleChange(e, option, subOption)}
                     />
                   }
                   label={subOption.label}
