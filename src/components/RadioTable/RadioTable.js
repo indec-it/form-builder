@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import IconButton from '@mui/material/IconButton';
 import MuiRadio from '@mui/material/Radio';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
@@ -66,6 +68,15 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
                   disabled={disabled}
                 />
               ))}
+              {field.value[option.name] && !disabled && (
+                <IconButton
+                  onClick={() => form.setFieldValue(`${field.name}.${option.name}`, undefined)}
+                  color="error"
+                  data-testid={`clean-option-${option.id}`}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
             </Stack>
           </Stack>
         </Box>

@@ -127,6 +127,11 @@ describe('<RadioTable>', () => {
         expect(radioNoSelectedForSecondOption.querySelector('input').checked).toBe(false);
         expect(radioNoSelectedForThirdOption.querySelector('input').checked).toBe(false);
       });
+
+      it('should not render a button to clean option', () => {
+        const {container} = getComponent();
+        expect(queryByTestId(container, 'clean-option-1')).toBeNull();
+      });
     });
   });
 
@@ -189,6 +194,19 @@ describe('<RadioTable>', () => {
       it('should fire `props.form.setFieldValue`', () => {
         expect(props.form.setFieldValue).toHaveBeenCalledTimes(1);
         expect(props.form.setFieldValue).toHaveBeenCalledWith('test', {S1P1O1: '1', S1P1O2: undefined, S1P1O3: undefined});
+      });
+    });
+
+    describe('and there are selected options', () => {
+      beforeEach(() => {
+        props.field.value = {S1P1O1: '1', S1P1O2: '2', S1P1O3: '3'};
+      });
+
+      it('should render a button to clean option', () => {
+        const {container} = getComponent();
+        expect(getByTestId(container, 'clean-option-1')).toBeInTheDocument();
+        expect(getByTestId(container, 'clean-option-2')).toBeInTheDocument();
+        expect(getByTestId(container, 'clean-option-3')).toBeInTheDocument();
       });
     });
   });
