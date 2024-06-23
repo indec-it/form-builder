@@ -56,7 +56,7 @@ const section = {
                   question: 'S1P1',
                   value: 3000,
                   type: 'lt',
-                  section: 'S2'
+                  section: 'S1'
                 }
               ]
             }
@@ -72,7 +72,7 @@ const section = {
 
 function Template(args) {
   const {withErrors, withWarnings, initialValues, ...props} = args;
-  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section]});
+  const {errorSchema: validateSchema, warningSchema} = getSchemas({section, sections: [section], initialValues});
   return (
     <Formik
       initialValues={{S1: [{S1P1: {id: 1, answer: {value: initialValues || ''}}}]}}
