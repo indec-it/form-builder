@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
@@ -14,7 +15,17 @@ import Modals from './Modals';
 import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
-function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, components, initialValues, isReadOnly}) {
+function FormBuilder({
+  sections,
+  onSubmit,
+  onFinish,
+  onPrevious,
+  onInterrupt,
+  components,
+  initialValues,
+  isReadOnly,
+  onChange
+}) {
   const {handleNextPage, handlePreviousPage, navigation, page, section} = useNavigation({
     sections,
     initialValues,
@@ -33,7 +44,8 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, com
     handleOpenModal,
     handleShowSurvey,
     setOpenModal,
-    transformedSection
+    transformedSection,
+    position
   } = useFormBuilder({sections, initialValues, section});
 
   const handleSubmit = async values => {
@@ -58,6 +70,13 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, com
       >
         {({values, setValues}) => {
           const warnings = getWarnings(warningSchema, values) || {};
+
+          useEffect(() => {
+            if (onChange) {
+              onChange({values, position});
+            }
+          }, [values, onChange, position]);
+
           return (
             <Form>
               <FieldArray
@@ -68,7 +87,7 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, com
                       {components.SectionHeader ? (
                         <components.SectionHeader
                           onView={() => handleShowSurvey(currentSection.id, true)}
-                          onEdit={() => handleShowSurvey(currentSection.id, false)}
+                          onEdit={() => handleShowSurvey(currentSection.id, false, index)}
                           onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
                           sectionsLength={values[section.name].length}
                           section={section}
@@ -79,7 +98,7 @@ function FormBuilder({sections, onSubmit, onFinish, onPrevious, onInterrupt, com
                       ) : (
                         <SectionHeader
                           onView={() => handleShowSurvey(currentSection.id, true)}
-                          onEdit={() => handleShowSurvey(currentSection.id, false)}
+                          onEdit={() => handleShowSurvey(currentSection.id, false, index)}
                           onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
                           sectionsLength={values[section.name].length}
                           section={transformedSection}
@@ -154,6 +173,7 @@ FormBuilder.propTypes = {
   onPrevious: PropTypes.func.isRequired,
   onFinish: PropTypes.func.isRequired,
   onInterrupt: PropTypes.func,
+  onChange: PropTypes.func,
   sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
   isReadOnly: PropTypes.bool,
   components: PropTypes.shape({
@@ -167,7 +187,8 @@ FormBuilder.defaultProps = {
   isReadOnly: false,
   components: {},
   initialValues: undefined,
-  onInterrupt: undefined
+  onInterrupt: undefined,
+  onChange: undefined
 };
 
 export default FormBuilder;
