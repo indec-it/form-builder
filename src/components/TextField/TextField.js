@@ -43,9 +43,9 @@ function TextField({form, field, placeholder, label, disabled, tooltip, warnings
           field.onChange(e);
           form.setFieldTouched(field.name, false);
         }}
+        onBlur={handleBlur}
         {...props}
         disabled={disabled}
-        onBlur={handleBlur}
         multiline={multiline}
         rows={multiline ? 2 : 1}
       />

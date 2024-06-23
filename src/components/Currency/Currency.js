@@ -24,6 +24,7 @@ function Currency({form, field, label, ...props}) {
       form={form}
       field={field}
       label={label}
+      onBlur={() => {}}
     />
   );
 }
