@@ -12,11 +12,13 @@ const useFormBuilder = ({sections, initialValues, section}) => {
   const [readOnlyMode, setReadOnlyMode] = useState();
   const [showSurvey, setShowSurvey] = useState();
   const [selectedSectionId, setSelectedSelectionId] = useState();
+  const [position, setPosition] = useState();
   const [openModal, setOpenModal] = useState();
 
-  const handleShowSurvey = (sectionId, readOnly) => {
+  const handleShowSurvey = (sectionId, readOnly, index) => {
     setShowSurvey(sectionId);
     setReadOnlyMode(readOnly);
+    setPosition(index);
   };
 
   const handleOpenModal = (modal, sectionId) => {
@@ -132,7 +134,8 @@ const useFormBuilder = ({sections, initialValues, section}) => {
     handleOpenModal,
     handleShowSurvey,
     setOpenModal,
-    transformedSection
+    transformedSection,
+    position
   };
 };
 
