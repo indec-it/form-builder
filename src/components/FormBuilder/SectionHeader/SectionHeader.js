@@ -71,8 +71,8 @@ SectionHeader.propTypes = {
   onView: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onMoveUp: PropTypes.func.isRequired,
-  onMoveDown: PropTypes.func.isRequired,
+  onMoveUp: PropTypes.func,
+  onMoveDown: PropTypes.func,
   sectionsLength: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired,
   section: sectionPropTypes.isRequired,
@@ -83,6 +83,8 @@ SectionHeader.propTypes = {
 };
 
 SectionHeader.defaultProps = {
+  onMoveUp: undefined,
+  onMoveDown: undefined,
   isReadOnly: false,
   showEditButton: true
 };

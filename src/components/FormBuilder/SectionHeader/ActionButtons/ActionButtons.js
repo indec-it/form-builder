@@ -28,12 +28,12 @@ function ActionButtons({
         <>
           {sectionsLength > 1 && (
             <>
-              {position > 0 && (
+              {onMoveUp && position > 0 && (
                 <IconButton data-testid="move-up-button" color="primary" onClick={onMoveUp}>
                   <ArrowUpwardIcon />
                 </IconButton>
               )}
-              {position < sectionsLength - 1 && (
+              {onMoveDown && position < sectionsLength - 1 && (
                 <IconButton data-testid="move-down-button" color="primary" onClick={onMoveDown}>
                   <ArrowDownwardIcon />
                 </IconButton>
@@ -60,13 +60,18 @@ ActionButtons.propTypes = {
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onView: PropTypes.func.isRequired,
-  onMoveDown: PropTypes.func.isRequired,
-  onMoveUp: PropTypes.func.isRequired,
+  onMoveDown: PropTypes.func,
+  onMoveUp: PropTypes.func,
   sectionsLength: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isSectionMultiple: PropTypes.bool.isRequired,
   showEditButton: PropTypes.bool.isRequired
+};
+
+ActionButtons.defaultProps = {
+  onMoveDown: undefined,
+  onMoveUp: undefined
 };
 
 export default ActionButtons;
