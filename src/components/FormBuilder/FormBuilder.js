@@ -11,8 +11,8 @@ import {useNavigation} from '@/hooks';
 import getWarnings from '@/utils/getWarnings';
 import sectionPropTypes from '@/utils/propTypes/section';
 
+import Header from './Header';
 import Modals from './Modals';
-import SectionHeader from './SectionHeader';
 import useFormBuilder from './useFormBuilder';
 
 function FormBuilder({
@@ -84,33 +84,21 @@ function FormBuilder({
                 render={sectionHelpers =>
                   values?.[section.name]?.map((currentSection, index) => (
                     <Box key={currentSection.id} mb={2}>
-                      {components.SectionHeader ? (
-                        <components.SectionHeader
-                          onView={() => handleShowSurvey(currentSection.id, true)}
-                          onEdit={() => handleShowSurvey(currentSection.id, false, index)}
-                          onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                          sectionsLength={values[section.name].length}
-                          section={section}
-                          values={currentSection}
-                          isReadOnly={isReadOnly}
-                          isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
-                        />
-                      ) : (
-                        <SectionHeader
-                          onView={() => handleShowSurvey(currentSection.id, true)}
-                          onEdit={() => handleShowSurvey(currentSection.id, false, index)}
-                          onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
-                          sectionsLength={values[section.name].length}
-                          section={transformedSection}
-                          values={currentSection}
-                          isReadOnly={isReadOnly}
-                          isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
-                          onMoveDown={() => sectionHelpers.swap(index, index + 1)}
-                          onMoveUp={() => sectionHelpers.swap(index, index - 1)}
-                          position={index}
-                          showEditButton={!isReadOnly && navigation.action !== 'disable'}
-                        />
-                      )}
+                      <Header
+                        components={components}
+                        onView={() => handleShowSurvey(currentSection.id, true)}
+                        onEdit={() => handleShowSurvey(currentSection.id, false, index)}
+                        onDelete={() => handleOpenModal(modals.CONFIRM_DELETE_SECTION_MODAL, currentSection.id)}
+                        sectionsLength={values[section.name].length}
+                        section={transformedSection}
+                        values={currentSection}
+                        isReadOnly={isReadOnly}
+                        isValid={validateSchema.isValidSync({[section.name]: [currentSection]})}
+                        onMoveDown={() => sectionHelpers.swap(index, index + 1)}
+                        onMoveUp={() => sectionHelpers.swap(index, index - 1)}
+                        position={index}
+                        showEditButton={!isReadOnly && navigation.action !== 'disable'}
+                      />
                       {showSurvey === currentSection.id && (
                         <QuestionBuilder
                           values={currentSection}
@@ -146,6 +134,7 @@ function FormBuilder({
                       ? () => handleOpenModal(modals.INTERRUPTION_MODAL, section.id)
                       : undefined
                   }
+                  readOnlyMode={isReadOnly}
                 />
               ) : (
                 <NavigationButtons
