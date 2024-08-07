@@ -49,8 +49,10 @@ function FormBuilder({
   } = useFormBuilder({sections, initialValues, section});
 
   const handleSubmit = async values => {
-    await onSubmit(values);
-    handleNextPage();
+    const canContinue = await onSubmit(values);
+    if (canContinue === undefined || canContinue) {
+      handleNextPage();
+    }
   };
 
   const handlePrevious = values => {
