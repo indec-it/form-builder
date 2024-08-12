@@ -15,14 +15,17 @@ const handleChecked = (e, options, selectedOption, {name, value}, setFieldValue)
   const {value: selectedValue, exclusive} = selectedOption;
   const isChecked = e.target.checked;
   let values;
-  const exclusiveOption = options.find(option => option.exclusive);
+  const exclusiveOptions = options.filter(option => option.exclusive);
   if (isChecked) {
     if (exclusive) {
       values = [selectedValue];
     } else {
-      const nonExclusiveOptions = exclusiveOption
-        ? value.filter(currentValue => currentValue !== exclusiveOption.value)
-        : value;
+      const nonExclusiveOptions =
+        exclusiveOptions.length > 0
+          ? value.filter(
+              currentValue => !exclusiveOptions.map(exclusiveOption => exclusiveOption.value).includes(currentValue)
+            )
+          : value;
       values = [...nonExclusiveOptions, selectedValue];
     }
   } else {

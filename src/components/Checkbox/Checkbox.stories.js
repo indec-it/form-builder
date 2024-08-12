@@ -164,6 +164,18 @@ WithExclusiveOptions.args = {
         }
       ],
       exclusive: true
+    },
+    {
+      id: 5,
+      name: 'S1P1O1',
+      value: '6',
+      label: 'DN (exclusive)',
+      subOptions: [
+        {
+          id: 1
+        }
+      ],
+      exclusive: true
     }
   ]
 };
