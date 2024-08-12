@@ -46,11 +46,9 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map(option => (
         <Box key={option.id}>
-          <Stack direction={{xs: 'column', sm: 'row'}}>
-            <Box sx={{minWidth: '400px', maxWidth: '400px'}}>
-              <Typography noWrap sx={{opacity: disabled ? 0.5 : 1}}>
-                {option.title}
-              </Typography>
+          <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+            <Box sx={{minWidth: '400px', maxWidth: '400px', overflow: 'hidden'}}>
+              <Typography sx={{opacity: disabled ? 0.5 : 1, whiteSpace: 'normal'}}>{option.title}</Typography>
             </Box>
             <Stack direction="row" flexWrap="wrap">
               {option.subOptions.map(subOption => (
