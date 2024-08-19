@@ -60,6 +60,12 @@ function FormBuilder({
     onPrevious(values);
   };
 
+  const handleKeyDown = keyEvent => {
+    if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
+      keyEvent.preventDefault();
+    }
+  };
+
   return (
     <FormProvider section={transformedSection} sections={sections} initialValues={initialValues}>
       <Formik
@@ -80,7 +86,7 @@ function FormBuilder({
           }, [values, onChange, position]);
 
           return (
-            <Form>
+            <Form onKeyDown={handleKeyDown}>
               <FieldArray
                 name={section.name}
                 render={sectionHelpers =>
