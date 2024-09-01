@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
-import Box from '@mui/material/Box';
 
 import modals from '@/constants/modals';
 import NavigationButtons from '@/components/NavigationButtons';
@@ -91,7 +90,7 @@ function FormBuilder({
                 name={section.name}
                 render={sectionHelpers =>
                   values?.[section.name]?.map((currentSection, index) => (
-                    <Box key={currentSection.id} mb={2}>
+                    <div key={currentSection.id} className="mb-2">
                       <Header
                         components={components}
                         onView={() => handleShowSurvey(currentSection.id, true)}
@@ -128,7 +127,7 @@ function FormBuilder({
                         onClose={() => setOpenModal(undefined)}
                         modal={openModal}
                       />
-                    </Box>
+                    </div>
                   ))
                 }
               />

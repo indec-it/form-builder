@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
@@ -45,12 +43,12 @@ function SectionHeader({
   showEditButton
 }) {
   return (
-    <Stack direction="row" boxShadow={2} p={2} justifyContent="space-between" flexWrap="wrap">
-      <Stack>
+    <div className="flex gap-2 justify-between flex-wrap shadow border rounded-md p-3">
+      <div>
         <TitleWithIcon title={section.label} isValid={isValid} />
         <Introduction introduction={section.introduction} />
-        <Typography>{getHeaders(section.questions, values, section.headers)}</Typography>
-      </Stack>
+        <p>{getHeaders(section.questions, values, section.headers)}</p>
+      </div>
       <ActionButtons
         isSectionMultiple={section.multiple}
         sectionsLength={sectionsLength}
@@ -63,7 +61,7 @@ function SectionHeader({
         position={position}
         showEditButton={showEditButton}
       />
-    </Stack>
+    </div>
   );
 }
 

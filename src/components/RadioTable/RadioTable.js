@@ -1,11 +1,6 @@
+import '../output.css';
+
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import IconButton from '@mui/material/IconButton';
-import MuiRadio from '@mui/material/Radio';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
@@ -42,45 +37,50 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
   };
 
   return (
-    <Stack direction="column">
+    <>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      {options.map(option => (
-        <Box key={option.id}>
-          <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
-            <Box sx={{minWidth: '400px', maxWidth: '400px', overflow: 'hidden'}}>
-              <Typography sx={{opacity: disabled ? 0.5 : 1, whiteSpace: 'normal'}}>{option.title}</Typography>
-            </Box>
-            <Stack direction="row" flexWrap="wrap">
-              {option.subOptions.map(subOption => (
-                <FormControlLabel
-                  key={subOption.value}
-                  data-testid={`subOption-${option.id}-${subOption.id}`}
-                  value={subOption.value}
-                  control={
-                    <MuiRadio
-                      checked={subOption.value === field.value[option.name]}
-                      onChange={e => handleChange(e, option, subOption)}
-                    />
-                  }
-                  label={subOption.label}
-                  disabled={disabled}
-                />
+      {options.map((option, optionIndex) => (
+        <div key={option.id}>
+          <div className="flex flex-col sm:flex-row">
+            <p className={`${disabled ? 'opacity-5' : 'opacity-100'} whitespace-normal max-w-[400px] min-w-[400px]`}>
+              {option.title}
+            </p>
+            <div className="flex flex-wrap gap-3 py-2">
+              {option.subOptions.map((subOption, index) => (
+                <div key={subOption.value}>
+                  <input
+                    id={`radio-${optionIndex}-${index}`}
+                    type="radio"
+                    value={subOption.value}
+                    name={`${field.name}-${option.name}`}
+                    checked={subOption.value === field.value[option.name]}
+                    className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                    onChange={e => handleChange(e, option, subOption)}
+                    disabled={disabled}
+                  />
+                  <label
+                    htmlFor={`radio-${optionIndex}-${index}`}
+                    className={`ms-2 text-base ${disabled ? 'opacity-40' : 'opacity-100'}`}
+                  >
+                    {subOption.label}
+                  </label>
+                </div>
               ))}
               {field.value[option.name] && !disabled && (
-                <IconButton
-                  onClick={() => form.setFieldValue(`${field.name}.${option.name}`, undefined)}
-                  color="error"
-                  data-testid={`clean-option-${option.id}`}
+                <button
+                  type="button"
+                  onClick={() => form.setFieldValue(field.name, '')}
+                  className="text-white bg-red-700 font-medium rounded-lg text-sm px-3 py-1 ml-2"
                 >
-                  <DeleteIcon />
-                </IconButton>
+                  X
+                </button>
               )}
-            </Stack>
-          </Stack>
-        </Box>
+            </div>
+          </div>
+        </div>
       ))}
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
-    </Stack>
+    </>
   );
 }
 

@@ -1,28 +1,26 @@
 import PropTypes from 'prop-types';
-import Grid from '@mui/material/Grid';
 
 import Question from './Question';
 
 function QuestionBuilder({values, index, disabled, warnings}) {
   return (
-    <Grid data-testid="question-builder" sx={{boxShadow: 2, p: 2}}>
+    <div className="flex flex-col gap-3 shadow-md p-3 rounded-md" data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => {
         if (value.id) {
           return (
-            <Grid item key={value.id} mb={2}>
-              <Question
-                sectionIndex={index}
-                questionIndex={valueIndex - 1}
-                disabled={disabled}
-                warnings={warnings}
-                values={values}
-              />
-            </Grid>
+            <Question
+              key={value.id}
+              sectionIndex={index}
+              questionIndex={valueIndex - 1}
+              disabled={disabled}
+              warnings={warnings}
+              values={values}
+            />
           );
         }
         return null;
       })}
-    </Grid>
+    </div>
   );
 }
 

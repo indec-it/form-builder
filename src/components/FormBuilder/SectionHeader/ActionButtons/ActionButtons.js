@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+
+import {DeleteButton, EditButton, MoveButton, ViewButton} from '@/components/Buttons';
 
 function ActionButtons({
   isSectionMultiple,
@@ -20,39 +15,21 @@ function ActionButtons({
   showEditButton
 }) {
   return (
-    <Stack direction="row" spacing={1}>
-      <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
-        <VisibilityIcon />
-      </IconButton>
+    <div className="flex gap-2">
+      <ViewButton onClick={onView} />
       {!isReadOnly && (
         <>
           {sectionsLength > 1 && (
             <>
-              {onMoveUp && position > 0 && (
-                <IconButton data-testid="move-up-button" color="primary" onClick={onMoveUp}>
-                  <ArrowUpwardIcon />
-                </IconButton>
-              )}
-              {onMoveDown && position < sectionsLength - 1 && (
-                <IconButton data-testid="move-down-button" color="primary" onClick={onMoveDown}>
-                  <ArrowDownwardIcon />
-                </IconButton>
-              )}
+              {onMoveUp && position > 0 && <MoveButton position="up" onClick={onMoveUp} />}
+              {onMoveDown && position < sectionsLength - 1 && <MoveButton position="down" onClick={onMoveDown} />}
             </>
           )}
-          {showEditButton && (
-            <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-          )}
-          {isSectionMultiple && sectionsLength > 1 && (
-            <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
-              <DeleteIcon />
-            </IconButton>
-          )}
+          {showEditButton && <EditButton onClick={onEdit} />}
+          {isSectionMultiple && sectionsLength > 1 && <DeleteButton onClick={onDelete} />}
         </>
       )}
-    </Stack>
+    </div>
   );
 }
 

@@ -1,11 +1,8 @@
+import '../output.css';
+
 import PropTypes from 'prop-types';
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import ErrorIcon from '@mui/icons-material/Error';
-import WarningIcon from '@mui/icons-material/Warning';
-
+import {Exclamation, Warning} from '@/components/Icons';
 import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 import formikFormPropTypes from '@/utils/propTypes/formikForm';
 import formikFieldPropTypes from '@/utils/propTypes/formikField';
@@ -14,31 +11,18 @@ import labelPropTypes from '@/utils/propTypes/label';
 function InputLabel({label, form, field, disabled, warnings}) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
   const labelNumber = label.number ? `${label.number} - ` : '';
-
   return (
     <>
-      <Stack direction="row" spacing={2} data-testid="input-label">
-        <Stack direction="row" mb={0.5} alignItems="center" sx={{opacity: !disabled ? 1 : 0.3}}>
-          <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
+      <div className="flex gap-2" data-testid="input-label">
+        <div className={`flex ${disabled ? 'opacity-40' : 'opacity-100'}`}>
+          <p className="font-bold text-[17px] p-0">
             {`${labelNumber}${label.text}`} {hasError && '*'}
-          </Typography>
-        </Stack>
-        {hasError && !disabled && (
-          <Box>
-            <ErrorIcon color="error" data-testid="error-icon" />
-          </Box>
-        )}
-        {hasWarning && !disabled && !hasError && (
-          <Box>
-            <WarningIcon color="warning" data-testid="warning-icon" />
-          </Box>
-        )}
-      </Stack>
-      {label.introduction && (
-        <Typography fontWeight="bold" color="gray">
-          {label.introduction}
-        </Typography>
-      )}
+          </p>
+        </div>
+        {hasError && !disabled && <Exclamation data-testid="error-icon" />}
+        {hasWarning && !disabled && !hasError && <Warning data-testid="warning-icon" />}
+      </div>
+      {label.introduction && <p className="font-bold text-gray-500">{label.introduction}</p>}
     </>
   );
 }

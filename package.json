@@ -15,7 +15,9 @@
     "prettier": "prettier src/ --write",
     "validate": "npm run prettier && npm run lint && npm run test",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o docs-build"
+    "build-storybook": "storybook build -o docs-build",
+    "build:css": "npx tailwindcss -i ./src/components/input.css -o ./src/components/output.css",
+    "watch:css": "npx tailwindcss -i ./src/components/input.css -o ./src/components/output.css --watch"
   },
   "keywords": [
     "INDEC",
@@ -72,7 +74,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-watch-typeahead": "^2.2.2",
     "prettier": "^3.2.5",
-    "storybook": "^8.0.9"
+    "storybook": "^8.0.9",
+    "tailwindcss": "^3.4.10"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",

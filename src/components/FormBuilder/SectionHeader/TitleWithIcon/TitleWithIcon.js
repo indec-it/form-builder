@@ -1,21 +1,13 @@
 import PropTypes from 'prop-types';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+
+import {Check, Exclamation} from '@/components/Icons';
 
 function TitleWithIcon({title, isValid}) {
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
-      <Typography variant="h6" fontWeight="bold">
-        {title}
-      </Typography>
-      {isValid ? (
-        <CheckCircleIcon color="success" data-testid="success-icon" />
-      ) : (
-        <ErrorIcon color="error" data-testid="error-icon" />
-      )}
-    </Stack>
+    <div className="flex gap-2 items-center">
+      <h6 className="font-bold">{title}</h6>
+      {isValid ? <Check /> : <Exclamation />}
+    </div>
   );
 }
 

@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
-import Typography from '@mui/material/Typography';
 
 function Introduction({introduction}) {
   if (!introduction) {
     return null;
   }
   return (
-    <Typography data-testid="introduction" fontWeight="bold" color="gray" whiteSpace="pre-line">
+    <p data-testid="introduction" className="font-bold text-gray-600 whitespace-pre-line">
       {introduction}
-    </Typography>
+    </p>
   );
 }
 

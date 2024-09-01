@@ -14,6 +14,7 @@ function Select({options, field, label, form, loading, onClean, placeholder, dis
   };
   const selectedValue = useMemo(() => options.find(option => option[keyValue] === field.value) || {}, [field?.value]);
 
+  /*
   return (
     <Autocomplete
       disableClearable={false}
@@ -43,6 +44,20 @@ function Select({options, field, label, form, loading, onClean, placeholder, dis
       disabled={disabled}
       onBlur={form.handleBlur}
     />
+  );
+  */
+
+  return (
+    <select
+      {...field}
+      onChange={e => handleChange(e.target.value)}
+      disabled={disabled}
+      className="bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 disabled:opacity-40"
+    >
+      {options.map(option => (
+        <option key={option.value}>{option.label}</option>
+      ))}
+    </select>
   );
 }
 

@@ -1,14 +1,14 @@
-/* eslint-disable react/jsx-no-duplicate-props */
+import '../output.css';
+
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
-import MuiTextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
-import HelpIcon from '@mui/icons-material/Help';
 
 import InputLabel from '@/components/InputLabel';
 import FieldMessage from '@/components/FieldMessage';
 import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
+
+function Text({multiline, ...props}) {
+  return multiline ? <textarea {...props} /> : <input {...props} />;
+}
 
 function TextField({form, field, placeholder, label, disabled, tooltip, warnings, multiline, ...props}) {
   const handleBlur = e => {
@@ -19,39 +19,27 @@ function TextField({form, field, placeholder, label, disabled, tooltip, warnings
     }
   };
 
+  console.log({field, props});
+
   return (
-    <Box sx={{width: '100%'}}>
+    <div>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      <MuiTextField
-        fullWidth
+      <Text
+        type="text"
+        className="border border-gray-300 rounded-md disabled:hover:border-gray-300 hover:border-gray-500 focus:border-2 focus:border-blue-700 focus:outline-none w-full py-4 px-2"
         id={`field-${field.name}`}
         placeholder={placeholder}
-        inputProps={{'data-testid': 'text-field'}}
-        InputProps={{
-          endAdornment: tooltip && (
-            <InputAdornment position="end">
-              <Tooltip arrow placement="top" title={tooltip}>
-                <Box display="flex" alignItems="center" flexWrap="wrap" px={2}>
-                  <HelpIcon fontSize="small" />
-                </Box>
-              </Tooltip>
-            </InputAdornment>
-          )
-        }}
         {...field}
         onChange={e => {
           field.onChange(e);
-          form.setFieldTouched(field.name, false);
+          form.setFieldTouched(field.name, true);
         }}
         onBlur={handleBlur}
-        {...props}
         disabled={disabled}
         multiline={multiline}
-        rows={multiline ? 2 : 1}
-        onWheel={e => e.target.blur()}
       />
       <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
-    </Box>
+    </div>
   );
 }
 

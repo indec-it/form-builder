@@ -1,50 +1,60 @@
 import PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MuiModal from '@mui/material/Modal';
-import Stack from '@mui/material/Stack';
-import CancelIcon from '@mui/icons-material/Cancel';
 
 import modals from '@/constants/modals';
 
 function Modal({modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open}) {
   return (
-    <MuiModal open={modal > 0 && open} onClose={onClose}>
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          bgcolor: 'background.paper',
-          p: 4,
-          borderRadius: '20px'
-        }}
-      >
-        <Container>
-          <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
-            <IconButton data-testid="close-button-icon" onClick={onClose}>
-              <CancelIcon color="info" />
-            </IconButton>
-          </Box>
-          <Divider />
-          {children}
-          <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
-            <Button data-testid="close-button" onClick={onClose}>
-              {cancelButtonLabel}
-            </Button>
-            {onAccept && (
-              <Button variant="contained" data-testid="accept-button" onClick={() => onAccept(modal)}>
+    modal > 0 &&
+    open && (
+      <div id="default-modal" tabIndex="-1" aria-hidden="true">
+        <div className="relative p-4 w-full max-w-2xl max-h-full">
+          <div className="relative rounded-lg shadow-lg bg-gray-300">
+            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+              <h3 className="text-lg font-semibold text-gray-900">Atencion</h3>
+              <button
+                type="button"
+                onClick={onClose}
+                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+              >
+                <svg
+                  className="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span className="sr-only">Close modal</span>
+              </button>
+            </div>
+            <div className="p-4 md:p-5 space-y-4">{children}</div>
+            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+              <button
+                type="button"
+                onClick={() => onAccept(modal)}
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+              >
                 {acceptButtonLabel}
-              </Button>
-            )}
-          </Stack>
-        </Container>
-      </Box>
-    </MuiModal>
+              </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100"
+              >
+                {cancelButtonLabel}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   );
 }
 

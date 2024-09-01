@@ -1,6 +1,4 @@
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
@@ -9,27 +7,27 @@ import {formikField, formikForm, label as labelPropTypes} from '@/utils/propType
 
 function MobileRadio({options, field, disabled, label, form, warnings}) {
   return (
-    <Stack direction="column" sx={{width: '100%'}} data-testid="radio">
+    <div data-testid="radio">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      <Stack direction="column" spacing={2}>
+      <div className="flex flex-col gap-4">
         {options.map((option, index) => (
-          <Button
+          <button
+            type="button"
+            className={`text-sm uppercase text-blue-600 border border-blue-300 rounded-md py-1.5 hover:bg-blue-50 ${option.value === field.value ? 'text-white bg-blue-700 hover:bg-blue-700' : ''}`}
             data-testid={`radio-${index}`}
             key={option.value}
             disabled={disabled}
-            variant={option.value === field.value ? 'contained' : 'outlined'}
             onClick={() => {
               form.setFieldValue(field.name, option.value === field.value ? '' : option.value);
               form.setFieldTouched(field.name, false);
             }}
-            size="small"
           >
             {option.label}
-          </Button>
+          </button>
         ))}
-      </Stack>
+      </div>
       <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
-    </Stack>
+    </div>
   );
 }
 

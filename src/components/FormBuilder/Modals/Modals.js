@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
 import {FastField} from 'formik';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import Modal from '@/components/Modal';
 import Radio from '@/components/Radio';
@@ -10,14 +8,7 @@ import modals from '@/constants/modals';
 const getChildren = (modal, {options, label, name}) => {
   switch (modal) {
     case modals.CONFIRM_DELETE_SECTION_MODAL:
-      return (
-        <>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <Typography fontWeight="bold">Atención</Typography>
-          </Box>
-          <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
-        </>
-      );
+      return <p>¿Esta seguro que desea borrar esta sección?</p>;
     case modals.INTERRUPTION_MODAL:
       return <FastField component={Radio} options={options} label={label} name={name} />;
     default:
