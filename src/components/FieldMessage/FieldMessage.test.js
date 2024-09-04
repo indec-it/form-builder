@@ -1,5 +1,6 @@
 import {getByText} from '@testing-library/react';
-import FieldMessage from './FieldMessage';
+
+import FieldMessage from './FieldMessage.tsx';
 
 describe('<FieldMessage>', () => {
   let props;

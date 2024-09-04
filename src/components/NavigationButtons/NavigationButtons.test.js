@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
-import NavigationButtons from './NavigationButtons';
+import NavigationButtons from './NavigationButtons.tsx';
 
 describe('<NavigationButtons>', () => {
   let props;

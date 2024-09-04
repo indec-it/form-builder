@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import Radio from './Radio';
+import Radio from './Radio.tsx';
 
 export default {
   title: 'Radio',

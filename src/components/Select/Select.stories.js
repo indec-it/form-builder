@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import Select from './Select';
+import Select from './Select.tsx';
 
 export default {
   title: 'Select',

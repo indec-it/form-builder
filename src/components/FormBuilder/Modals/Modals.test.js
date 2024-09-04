@@ -1,6 +1,6 @@
 import {getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
-import Modals from './Modals';
+import Modals from './Modals.tsx';
 
 describe('<Modals>', () => {
   let props;

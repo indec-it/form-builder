@@ -1,6 +1,6 @@
 import {getByTestId, getByText} from '@testing-library/react';
 
-import TitleWithIcon from './TitleWithIcon';
+import TitleWithIcon from './TitleWithIcon.tsx';
 
 describe('<TitleWithIcon>', () => {
   let props;

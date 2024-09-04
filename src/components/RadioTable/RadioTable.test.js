@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId, getByText, queryByTestId} from '@testing-library/react';
 
-import RadioTable from './RadioTable';
+import RadioTable from './RadioTable.tsx';
 
 describe('<RadioTable>', () => {
   let props;

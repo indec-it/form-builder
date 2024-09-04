@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId, getByText} from '@testing-library/react';
 
-import MobileRadio from './MobileRadio';
+import MobileRadio from './MobileRadio.tsx';
 
 describe('<MobileRadio>', () => {
   let props;

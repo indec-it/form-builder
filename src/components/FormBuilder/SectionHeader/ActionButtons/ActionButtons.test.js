@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId, queryByTestId} from '@testing-library/react';
 
-import ActionButtons from './ActionButtons';
+import ActionButtons from '.';
 
 describe('<ActionButtons>', () => {
   let props;

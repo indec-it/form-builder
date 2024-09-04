@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import Checkbox from './Checkbox';
+import Checkbox from './Checkbox.tsx';
 
 export default {
   title: 'Checkbox',

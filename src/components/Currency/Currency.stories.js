@@ -4,7 +4,7 @@ import {Formik, Field} from 'formik';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import Currency from './Currency';
+import Currency from './Currency.tsx';
 
 export default {
   title: 'Currency',

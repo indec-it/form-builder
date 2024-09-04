@@ -16,7 +16,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       alias: {
-        extensions: ['.js'],
+        extensions: ['.js', '.tsx', '.ts'],
         map: [['@', './src']]
       }
     }
@@ -44,9 +44,12 @@ module.exports = {
     'object-curly-spacing': ['error', 'never'],
     'eol-last': ['error'],
     'comma-dangle': ['error', 'never'],
-    'react/jsx-filename-extension': [1, {
-      extensions: ['.js', '.jsx']
-    }],
+    'react/jsx-filename-extension': [
+      1,
+      {
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    ],
     'arrow-parens': 'off',
     'no-underscore-dangle': 'off',
     'object-curly-newline': 'off'

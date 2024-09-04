@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId, queryByText} from '@testing-library/react';
 
-import TextField from './TextField';
+import TextField from './TextField.tsx';
 
 describe('<TextField>', () => {
   let props;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Formik} from 'formik';
 
-import NavigationButtons from './NavigationButtons';
+import NavigationButtons from './NavigationButtons.tsx';
 
 export default {
   title: 'NavigationButtons',

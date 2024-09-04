@@ -1,7 +1,7 @@
 import React from 'react';
 import {Formik} from 'formik';
 
-import Modals from './Modals';
+import Modals from './Modals.tsx';
 
 export default {
   title: 'Modals',

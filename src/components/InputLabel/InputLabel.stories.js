@@ -4,7 +4,7 @@ import {Formik, Field} from 'formik';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import InputLabel from './InputLabel';
+import InputLabel from './InputLabel.tsx';
 
 export default {
   title: 'InputLabel',

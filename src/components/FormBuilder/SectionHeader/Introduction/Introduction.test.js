@@ -1,6 +1,6 @@
 import {getByText, queryByTestId} from '@testing-library/react';
 
-import Introduction from './Introduction';
+import Introduction from './Introduction.tsx';
 
 describe('<Introduction>', () => {
   let props;

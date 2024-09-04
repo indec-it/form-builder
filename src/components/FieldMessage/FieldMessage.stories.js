@@ -4,7 +4,7 @@ import {Formik, Field} from 'formik';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import FieldMessage from './FieldMessage';
+import FieldMessage from './FieldMessage.tsx';
 
 export default {
   title: 'FieldMessage',

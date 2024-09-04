@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import DatePicker from './DatePicker';
+import DatePicker from './DatePicker.tsx';
 
 export default {
   title: 'Date',

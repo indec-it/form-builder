@@ -1,5 +1,6 @@
 import {getByTestId, getByText} from '@testing-library/react';
-import InputLabel from './InputLabel';
+
+import InputLabel from './InputLabel.tsx';
 
 describe('<InputLabel>', () => {
   let props;

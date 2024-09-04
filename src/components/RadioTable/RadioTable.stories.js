@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
 
-import RadioTable from './RadioTable';
+import RadioTable from './RadioTable.tsx';
 
 export default {
   title: 'RadioTable',

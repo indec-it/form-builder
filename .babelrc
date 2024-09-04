@@ -1,29 +1,36 @@
 {
-    "presets": [
-        [
-          "@babel/preset-react",
-          {
-            "runtime": "automatic"
-          }
-        ],
-        ["@babel/preset-env"]
+  "presets": [
+    [
+      "@babel/preset-react",
+      {
+        "runtime": "automatic"
+      }
     ],
-    "plugins": [
-      ["module-resolver", {
+    ["@babel/preset-env"],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
         "root": ["./"],
         "alias": {
           "@": "./src"
         }
-      }]
-    ],
-    "env": {
-      "production": {
-        "plugins": [
-          ["transform-react-remove-prop-types", {
+      }
+    ]
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        [
+          "transform-react-remove-prop-types",
+          {
             "mode": "wrap",
             "ignoreFilenames": ["node_modules"]
-          }]
+          }
         ]
-      }
+      ]
     }
+  }
 }

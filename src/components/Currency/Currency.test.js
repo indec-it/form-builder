@@ -1,6 +1,6 @@
 import {fireEvent, getByTestId} from '@testing-library/react';
 
-import Currency from './Currency';
+import Currency from './Currency.tsx';
 
 describe('<Currency>', () => {
   let props;
