@@ -45,7 +45,7 @@ class ValidatorSchema {
   }
 
   handleValidations({validator, validations, answers, questionName}) {
-    const {multiple, name} = this.question;
+    const {name} = this.question;
     const {initialValues, section, sections} = this;
     let newValidator = validator;
     validations.forEach(validation => {
@@ -62,7 +62,7 @@ class ValidatorSchema {
         // eslint-disable-next-line func-names
         function (currentValue) {
           let formatAnswer = answers;
-          formatAnswer = multiple ? {...formatAnswer, [questionName]: {answer: {value: currentValue}}} : formatAnswer;
+          formatAnswer = {...formatAnswer, [questionName]: {answer: {value: currentValue}}};
           const rules = getValidationRules({
             validation,
             answers: formatAnswer,
