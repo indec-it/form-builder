@@ -119,7 +119,7 @@ function FormBuilder({
                         open={selectedSectionId}
                         options={section.interruption.options}
                         label={{text: section.interruption.reason}}
-                        name={`${section.name}.${index}.${section.interruption.name}`}
+                        name={`${section.name}.${index}.${section.interruption.name}.answer.value`}
                         onAccept={
                           [modals.CONFIRM_DELETE_SECTION_MODAL, modals.INTERRUPTION_MODAL].includes(openModal)
                             ? () => handleAcceptModal(values[section.name], sectionHelpers, onInterrupt, values)
