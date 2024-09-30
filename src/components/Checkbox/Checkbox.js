@@ -58,7 +58,7 @@ function Checkbox({options, label, field, form, disabled, warnings}) {
           />
         ))}
       </FormGroup>
-      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
+      <FieldMessage warnings={warnings} form={form} field={field} />
     </Stack>
   );
 }

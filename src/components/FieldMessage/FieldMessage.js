@@ -6,16 +6,16 @@ import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 
 const alertStyles = {justifyContent: 'center', mt: 2};
 
-function FieldMessage({form, field, disabled, warnings}) {
+function FieldMessage({form, field, warnings}) {
   const {hasWarning, warning, hasError, error} = hasFormikErrorsAndWarnings({form, field, warnings});
-  if (hasError && !disabled) {
+  if (hasError) {
     return (
       <Alert severity="error" sx={alertStyles}>
         {error}
       </Alert>
     );
   }
-  if (hasWarning && !disabled) {
+  if (hasWarning) {
     return (
       <Alert severity="warning" sx={alertStyles}>
         {warning}
@@ -28,7 +28,6 @@ function FieldMessage({form, field, disabled, warnings}) {
 FieldMessage.propTypes = {
   field: formikField.isRequired,
   form: formikForm.isRequired,
-  disabled: PropTypes.bool.isRequired,
   warnings: PropTypes.shape({}).isRequired
 };
 
