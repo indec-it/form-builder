@@ -70,7 +70,7 @@ function DatePicker({metadata: {dateType}, field, label, form, warnings, disable
             />
           )}
         </Stack>
-        <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
+        <FieldMessage warnings={warnings} form={form} field={field} />
       </Stack>
     </LocalizationProvider>
   );

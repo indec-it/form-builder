@@ -79,7 +79,7 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
           </Stack>
         </Box>
       ))}
-      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
+      <FieldMessage warnings={warnings} form={form} field={field} />
     </Stack>
   );
 }

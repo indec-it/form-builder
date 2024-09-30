@@ -28,7 +28,7 @@ function MobileRadio({options, field, disabled, label, form, warnings}) {
           </Button>
         ))}
       </Stack>
-      <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
+      <FieldMessage form={form} field={field} warnings={warnings} />
     </Stack>
   );
 }

@@ -50,7 +50,7 @@ function TextField({form, field, placeholder, label, disabled, tooltip, warnings
         rows={multiline ? 2 : 1}
         onWheel={e => e.target.blur()}
       />
-      <FieldMessage warnings={warnings} form={form} field={field} disabled={disabled} />
+      <FieldMessage warnings={warnings} form={form} field={field} />
     </Box>
   );
 }

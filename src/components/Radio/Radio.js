@@ -51,7 +51,7 @@ function Radio({options, field, disabled, label, form, warnings}) {
           </Stack>
         ))}
       </RadioGroup>
-      <FieldMessage form={form} field={field} warnings={warnings} disabled={disabled} />
+      <FieldMessage form={form} field={field} warnings={warnings} />
     </Stack>
   );
 }
