@@ -13,7 +13,9 @@ export default PropTypes.shape({
       introduction: PropTypes.string,
       type: PropTypes.number.isRequired,
       placeholder: PropTypes.string,
-      subQuestions: PropTypes.arrayOf(subQuestion)
+      subQuestions: PropTypes.arrayOf(subQuestion),
+      disabled: PropTypes.bool,
+      hide: PropTypes.bool
     })
   ),
   multiple: PropTypes.bool.isRequired,
