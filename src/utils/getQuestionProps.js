@@ -18,12 +18,13 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     metadata,
     navigation = [],
     introduction,
-    multiline = false
+    multiline = false,
+    disabled: disabledByDefault
   } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
   const jump = section ? getNavigation({navigation, answers: values, section, initialValues, sections}) : '';
-  const show = jump?.action !== questionActions.HIDE;
+  const show = Object.prototype.hasOwnProperty.call(question, 'hide') ? false : jump?.action !== questionActions.HIDE;
   const isDisabled = jump?.action === questionActions.DISABLE || disabled;
   let props;
   switch (type) {
@@ -35,7 +36,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         placeholder: !placeholder && isNumericOrCurrency(type) ? 'Ingrese Valor' : placeholder,
         name: questionName,
         type: [questionTypes.TEXT_FIELD, questionTypes.CURRENCY].includes(type) ? 'text' : 'number',
-        disabled: isDisabled,
+        disabled: disabledByDefault || isDisabled,
         warnings,
         isMultiple: multiple,
         values: values[name],
@@ -50,7 +51,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         placeholder,
         name: questionName,
         options,
-        disabled: isDisabled,
+        disabled: disabledByDefault || isDisabled,
         isMultiple: multiple,
         warnings,
         values: values[name],
@@ -65,7 +66,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         label: {text: label, number, introduction},
         name: questionName,
         options,
-        disabled: isDisabled,
+        disabled: disabledByDefault || isDisabled,
         isMultiple: multiple,
         warnings,
         values: values[name],
@@ -78,7 +79,7 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
         label: {text: label, number, introduction},
         placeholder,
         name: questionName,
-        disabled: isDisabled,
+        disabled: disabledByDefault || isDisabled,
         isMultiple: multiple,
         metadata,
         warnings,
