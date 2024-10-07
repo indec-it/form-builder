@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 
 function Message({message}) {
-  return <Typography fontWeight="bold">{message}</Typography>;
+  return <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>{message}</Typography>;
 }
 
 Message.propTypes = {
