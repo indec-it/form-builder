@@ -5,6 +5,20 @@ function Introduction({introduction}) {
   if (!introduction) {
     return null;
   }
+  const isHTML = /<[^>]+>/g.test(introduction);
+
+  if (isHTML) {
+    return (
+      <Typography
+        data-testid="introduction"
+        fontWeight="bold"
+        color="gray"
+        whiteSpace="pre-line"
+        dangerouslySetInnerHTML={{__html: introduction}}
+      />
+    );
+  }
+
   return (
     <Typography data-testid="introduction" fontWeight="bold" color="gray" whiteSpace="pre-line">
       {introduction}
