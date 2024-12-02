@@ -1,34 +1,12 @@
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
-import questionTypes from '@/constants/questionTypes';
 import sectionPropTypes from '@/utils/propTypes/section';
-import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
 import ActionButtons from './ActionButtons';
+import Headers from './Headers';
 import Introduction from './Introduction';
 import TitleWithIcon from './TitleWithIcon';
-
-const getHeaders = (questions, values, headers) => {
-  if (headers.some(header => header.question)) {
-    const headerQuestions = headers.map(header => header.question);
-    return questions
-      .reduce((acc, question) => {
-        if (headerQuestions.includes(question.id) && !question.multiple && values[question.name].answer?.value) {
-          const {value} = values[question.name].answer;
-          if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
-            acc.push(value);
-          } else {
-            acc.push(getSelectedOptionLabel(question.options, value));
-          }
-        }
-        return acc;
-      }, [])
-      .join(' | ');
-  }
-  return '';
-};
 
 function SectionHeader({
   section,
@@ -49,7 +27,7 @@ function SectionHeader({
       <Stack>
         <TitleWithIcon title={section.label} isValid={isValid} />
         <Introduction introduction={section.introduction} />
-        <Typography>{getHeaders(section.questions, values, section.headers)}</Typography>
+        <Headers section={section} values={values} />
       </Stack>
       <ActionButtons
         isSectionMultiple={section.multiple}
