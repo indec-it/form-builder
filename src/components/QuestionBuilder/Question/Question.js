@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
@@ -10,7 +9,7 @@ import getQuestionComponent from '@/utils/getQuestionComponent';
 
 import Wrapper from '../Wrapper';
 
-function Question({sectionIndex, questionIndex, disabled, warnings, values}) {
+function Question({sectionIndex, questionIndex, disabled = false, warnings = {}, values}) {
   const {sections, initialValues, section} = useForm();
   const question = section.questions[questionIndex];
   if (!question) {
@@ -47,18 +46,5 @@ function Question({sectionIndex, questionIndex, disabled, warnings, values}) {
     <Typography>Invalid component.</Typography>
   );
 }
-
-Question.propTypes = {
-  disabled: PropTypes.bool,
-  values: PropTypes.shape({}).isRequired,
-  sectionIndex: PropTypes.number.isRequired,
-  questionIndex: PropTypes.number.isRequired,
-  warnings: PropTypes.shape({})
-};
-
-Question.defaultProps = {
-  disabled: false,
-  warnings: {}
-};
 
 export default Question;

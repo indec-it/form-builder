@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -55,23 +54,5 @@ function ActionButtons({
     </Stack>
   );
 }
-
-ActionButtons.propTypes = {
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onView: PropTypes.func.isRequired,
-  onMoveDown: PropTypes.func,
-  onMoveUp: PropTypes.func,
-  sectionsLength: PropTypes.number.isRequired,
-  position: PropTypes.number.isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  isSectionMultiple: PropTypes.bool.isRequired,
-  showEditButton: PropTypes.bool.isRequired
-};
-
-ActionButtons.defaultProps = {
-  onMoveDown: undefined,
-  onMoveUp: undefined
-};
 
 export default ActionButtons;

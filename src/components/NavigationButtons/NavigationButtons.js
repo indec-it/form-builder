@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -6,9 +5,16 @@ import ArrowRightIcon from '@mui/icons-material/ArrowForward';
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, onInterrupt, readOnlyMode}) {
+function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew, onInterrupt, readOnlyMode = false}) {
   return (
-    <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
+    <Stack
+      direction={{xs: 'column', sm: 'row'}}
+      spacing={{xs: 1, sm: 2, md: 4}}
+      sx={{
+        justifyContent: 'space-between',
+        p: 2
+      }}
+    >
       <Button
         data-testid="back-button"
         startIcon={<ArrowBackIcon />}
@@ -44,20 +50,5 @@ function NavigationButtons({onPrevious, disablePreviousButton, onAddNew, onInter
     </Stack>
   );
 }
-
-NavigationButtons.propTypes = {
-  onPrevious: PropTypes.func.isRequired,
-  onInterrupt: PropTypes.func,
-  onAddNew: PropTypes.func,
-  readOnlyMode: PropTypes.bool,
-  disablePreviousButton: PropTypes.bool
-};
-
-NavigationButtons.defaultProps = {
-  disablePreviousButton: false,
-  readOnlyMode: false,
-  onAddNew: null,
-  onInterrupt: null
-};
 
 export default NavigationButtons;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import IconButton from '@mui/material/IconButton';
@@ -9,10 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
-import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
-import optionPropTypes from '@/utils/propTypes/option';
 
-function RadioTable({options, label, form, field, disabled, warnings}) {
+function RadioTable({options, label, form, field, disabled = false, warnings = {}}) {
   const handleChange = (e, option, subOption) => {
     let value;
     if (subOption.exclusive) {
@@ -50,7 +47,12 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
             <Box sx={{minWidth: '400px', maxWidth: '400px', overflow: 'hidden'}}>
               <Typography sx={{opacity: disabled ? 0.5 : 1, whiteSpace: 'normal'}}>{option.title}</Typography>
             </Box>
-            <Stack direction="row" flexWrap="wrap">
+            <Stack
+              direction="row"
+              sx={{
+                flexWrap: 'wrap'
+              }}
+            >
               {option.subOptions.map(subOption => (
                 <FormControlLabel
                   key={subOption.value}
@@ -83,24 +85,5 @@ function RadioTable({options, label, form, field, disabled, warnings}) {
     </Stack>
   );
 }
-
-RadioTable.propTypes = {
-  field: formikField.isRequired,
-  form: formikForm.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      subOptions: PropTypes.arrayOf(optionPropTypes)
-    })
-  ).isRequired,
-  label: labelPropTypes.isRequired,
-  disabled: PropTypes.bool,
-  warnings: PropTypes.shape({})
-};
-
-RadioTable.defaultProps = {
-  warnings: {},
-  disabled: false
-};
 
 export default RadioTable;

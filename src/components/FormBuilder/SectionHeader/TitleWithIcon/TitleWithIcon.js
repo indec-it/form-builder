@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -6,8 +5,19 @@ import ErrorIcon from '@mui/icons-material/Error';
 
 function TitleWithIcon({title, isValid}) {
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
-      <Typography variant="h6" fontWeight="bold">
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{
+        alignItems: 'center'
+      }}
+    >
+      <Typography
+        variant="h6"
+        sx={{
+          fontWeight: 'bold'
+        }}
+      >
         {title}
       </Typography>
       {isValid ? (
@@ -18,10 +28,5 @@ function TitleWithIcon({title, isValid}) {
     </Stack>
   );
 }
-
-TitleWithIcon.propTypes = {
-  title: PropTypes.string.isRequired,
-  isValid: PropTypes.bool.isRequired
-};
 
 export default TitleWithIcon;

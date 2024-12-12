@@ -1,4 +1,4 @@
-import {fireEvent, getByTestId, queryByText} from '@testing-library/react';
+import {fireEvent, getByPlaceholderText, getByTestId, queryByText} from '@testing-library/react';
 
 import TextField from './TextField';
 
@@ -27,19 +27,19 @@ describe('<TextField>', () => {
 
     it('should render an input', () => {
       const {container} = getComponent();
-      expect(getByTestId(container, 'text-field')).toBeInTheDocument();
+      expect(getByPlaceholderText(container, '[Ingrese texto]')).toBeInTheDocument();
     });
 
     it('should not be disabled', () => {
       const {container} = getComponent();
-      const input = getByTestId(container, 'text-field');
+      const input = getByPlaceholderText(container, '[Ingrese texto]');
       expect(input).not.toBeDisabled();
     });
 
     describe('and a text is written', () => {
       beforeEach(() => {
         const {container} = getComponent();
-        const textField = getByTestId(container, 'text-field');
+        const textField = getByPlaceholderText(container, '[Ingrese texto]');
         fireEvent.change(textField, {target: {name: props.field.name, value: 'test'}});
       });
 
@@ -56,12 +56,12 @@ describe('<TextField>', () => {
 
     it('should render an input', () => {
       const {container} = getComponent();
-      expect(getByTestId(container, 'text-field')).toBeInTheDocument();
+      expect(getByPlaceholderText(container, '[Ingrese texto]')).toBeInTheDocument();
     });
 
     it('should be disabled', () => {
       const {container} = getComponent();
-      const input = getByTestId(container, 'text-field');
+      const input = getByPlaceholderText(container, '[Ingrese texto]');
       expect(input).toBeDisabled();
     });
 
@@ -72,7 +72,7 @@ describe('<TextField>', () => {
 
       it('should display `props.field.value`', () => {
         const {container} = getComponent();
-        const input = getByTestId(container, 'text-field');
+        const input = getByPlaceholderText(container, '[Ingrese texto]');
         expect(input.value).toBe(props.field.value);
       });
     });

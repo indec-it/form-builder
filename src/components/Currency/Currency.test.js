@@ -1,4 +1,4 @@
-import {fireEvent, getByTestId} from '@testing-library/react';
+import {fireEvent, getByPlaceholderText} from '@testing-library/react';
 
 import Currency from './Currency';
 
@@ -17,7 +17,7 @@ describe('<Currency>', () => {
   describe('when a value without decimal and greater than 999 is written', () => {
     beforeEach(() => {
       const {container} = getComponent();
-      const textField = getByTestId(container, 'text-field');
+      const textField = getByPlaceholderText(container, 'Ingrese Valor');
       fireEvent.change(textField, {target: {name: props.field.name, value: '1000'}});
     });
 
@@ -30,7 +30,7 @@ describe('<Currency>', () => {
   describe('when a value with decimal and greater than 999 is written', () => {
     beforeEach(() => {
       const {container} = getComponent();
-      const textField = getByTestId(container, 'text-field');
+      const textField = getByPlaceholderText(container, 'Ingrese Valor');
       fireEvent.change(textField, {target: {name: props.field.name, value: '1000,21'}});
     });
 

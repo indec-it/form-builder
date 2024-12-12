@@ -1,7 +1,5 @@
 import {NumericFormat} from 'react-number-format';
 
-import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
-
 import TextField from '../TextField';
 
 function Currency({form, field, label, ...props}) {
@@ -28,11 +26,5 @@ function Currency({form, field, label, ...props}) {
     />
   );
 }
-
-Currency.propTypes = {
-  form: formikForm.isRequired,
-  field: formikField.isRequired,
-  label: labelPropTypes.isRequired
-};
 
 export default Currency;

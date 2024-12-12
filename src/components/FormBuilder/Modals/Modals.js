@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import {FastField} from 'formik';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,7 +12,13 @@ const getChildren = (modal, {options, label, name}) => {
       return (
         <>
           <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <Typography fontWeight="bold">Atención</Typography>
+            <Typography
+              sx={{
+                fontWeight: 'bold'
+              }}
+            >
+              Atención
+            </Typography>
           </Box>
           <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
         </>
@@ -25,27 +30,12 @@ const getChildren = (modal, {options, label, name}) => {
   }
 };
 
-function Modals({modal, onAccept, open, onClose, ...props}) {
+function Modals({modal, onAccept, open = false, onClose, ...props}) {
   return (
     <Modal open={open} modal={modal} cancelButtonLabel="Cerrar" onAccept={onAccept} onClose={onClose}>
       {getChildren(modal, props)}
     </Modal>
   );
 }
-
-Modals.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onAccept: PropTypes.func,
-  modal: PropTypes.oneOf(Object.values(modals)),
-  selectedSection: PropTypes.number,
-  open: PropTypes.bool
-};
-
-Modals.defaultProps = {
-  onAccept: undefined,
-  selectedSection: undefined,
-  modal: undefined,
-  open: false
-};
 
 export default Modals;
