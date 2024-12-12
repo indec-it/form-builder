@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import IconButton from '@mui/material/IconButton';
 import MuiRadio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -10,11 +9,10 @@ import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
 import breakpoints from '@/constants/breakpoints';
 import {useBreakpoint} from '@/hooks';
-import {formikField, formikForm, label as labelPropTypes} from '@/utils/propTypes';
 
 import MobileRadio from './MobileRadio';
 
-function Radio({options, field, disabled, label, form, warnings}) {
+function Radio({options, field, disabled = false, label, form, warnings = {}}) {
   const {breakpoint} = useBreakpoint();
   return breakpoint === breakpoints.EXTRA_SMALL ? (
     <MobileRadio options={options} field={field} disabled={disabled} label={label} form={form} warnings={warnings} />
@@ -55,24 +53,5 @@ function Radio({options, field, disabled, label, form, warnings}) {
     </Stack>
   );
 }
-
-Radio.propTypes = {
-  disabled: PropTypes.bool,
-  label: labelPropTypes.isRequired,
-  field: formikField.isRequired,
-  form: formikForm.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      label: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  warnings: PropTypes.shape({})
-};
-
-Radio.defaultProps = {
-  warnings: {},
-  disabled: false
-};
 
 export default Radio;

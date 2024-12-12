@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -8,9 +7,15 @@ import MuiModal from '@mui/material/Modal';
 import Stack from '@mui/material/Stack';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-import modals from '@/constants/modals';
-
-function Modal({modal, onClose, onAccept, children, acceptButtonLabel, cancelButtonLabel, open}) {
+function Modal({
+  modal,
+  onClose,
+  onAccept,
+  children,
+  acceptButtonLabel = 'Aceptar',
+  cancelButtonLabel = 'Cancelar',
+  open = true
+}) {
   return (
     <MuiModal open={modal > 0 && open} onClose={onClose}>
       <Box
@@ -32,7 +37,14 @@ function Modal({modal, onClose, onAccept, children, acceptButtonLabel, cancelBut
           </Box>
           <Divider />
           {children}
-          <Stack direction={{xs: 'column', sm: 'row'}} justifyContent="space-between" p={2} spacing={{xs: 1, sm: 2, md: 4}}>
+          <Stack
+            direction={{xs: 'column', sm: 'row'}}
+            spacing={{xs: 1, sm: 2, md: 4}}
+            sx={{
+              justifyContent: 'space-between',
+              p: 2
+            }}
+          >
             <Button data-testid="close-button" onClick={onClose}>
               {cancelButtonLabel}
             </Button>
@@ -47,24 +59,5 @@ function Modal({modal, onClose, onAccept, children, acceptButtonLabel, cancelBut
     </MuiModal>
   );
 }
-
-Modal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onAccept: PropTypes.func,
-  acceptButtonLabel: PropTypes.string,
-  cancelButtonLabel: PropTypes.string,
-  modal: PropTypes.oneOf(Object.values(modals)),
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
-  open: PropTypes.bool
-};
-
-Modal.defaultProps = {
-  onAccept: null,
-  acceptButtonLabel: 'Aceptar',
-  cancelButtonLabel: 'Cancelar',
-  modal: undefined,
-  children: undefined,
-  open: true
-};
 
 export default Modal;

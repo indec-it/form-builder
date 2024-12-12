@@ -1,4 +1,3 @@
-/* eslint-disable function-paren-newline */
 import * as Yup from 'yup';
 
 import dateTypes from '@/constants/dateTypes';
@@ -56,27 +55,22 @@ class ValidatorSchema {
       ) {
         return;
       }
-      newValidator = newValidator.test(
-        'custom-validation',
-        validation.message.text,
-        // eslint-disable-next-line func-names
-        function (currentValue) {
-          let formatAnswer = answers;
-          formatAnswer = {...formatAnswer, [questionName]: {answer: {value: currentValue}}};
-          const rules = getValidationRules({
-            validation,
-            answers: formatAnswer,
-            initialValues,
-            section,
-            sections,
-            questionName: name
-          });
-          if (rules.some(value => value === true)) {
-            return this.createError({path: this.path, message: validation.message.text});
-          }
-          return true;
+      newValidator = newValidator.test('custom-validation', validation.message.text, function (currentValue) {
+        let formatAnswer = answers;
+        formatAnswer = {...formatAnswer, [questionName]: {answer: {value: currentValue}}};
+        const rules = getValidationRules({
+          validation,
+          answers: formatAnswer,
+          initialValues,
+          section,
+          sections,
+          questionName: name
+        });
+        if (rules.some(value => value === true)) {
+          return this.createError({path: this.path, message: validation.message.text});
         }
-      );
+        return true;
+      });
     });
     return newValidator;
   }

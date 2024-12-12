@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {Formik, FieldArray, Form} from 'formik';
 import Box from '@mui/material/Box';
 
@@ -9,7 +8,6 @@ import QuestionBuilder from '@/components/QuestionBuilder';
 import FormProvider from '@/context/form';
 import {useNavigation} from '@/hooks';
 import getWarnings from '@/utils/getWarnings';
-import sectionPropTypes from '@/utils/propTypes/section';
 
 import Header from './Header';
 import Modals from './Modals';
@@ -21,9 +19,9 @@ function FormBuilder({
   onFinish,
   onPrevious,
   onInterrupt,
-  components,
+  components = {},
   initialValues,
-  isReadOnly,
+  isReadOnly = false,
   onChange
 }) {
   const {handleNextPage, handlePreviousPage, navigation, page, section} = useNavigation({
@@ -91,7 +89,12 @@ function FormBuilder({
                 name={section.name}
                 render={sectionHelpers =>
                   values?.[section.name]?.map((currentSection, index) => (
-                    <Box key={currentSection.id} mb={2}>
+                    <Box
+                      key={currentSection.id}
+                      sx={{
+                        mb: 2
+                      }}
+                    >
                       <Header
                         components={components}
                         onView={() => handleShowSurvey(currentSection.id, true)}
@@ -164,28 +167,5 @@ function FormBuilder({
     </FormProvider>
   );
 }
-
-FormBuilder.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  onPrevious: PropTypes.func.isRequired,
-  onFinish: PropTypes.func.isRequired,
-  onInterrupt: PropTypes.func,
-  onChange: PropTypes.func,
-  sections: PropTypes.arrayOf(sectionPropTypes).isRequired,
-  isReadOnly: PropTypes.bool,
-  components: PropTypes.shape({
-    SectionHeader: PropTypes.node,
-    NavigationButtons: PropTypes.node
-  }),
-  initialValues: PropTypes.shape({})
-};
-
-FormBuilder.defaultProps = {
-  isReadOnly: false,
-  components: {},
-  initialValues: undefined,
-  onInterrupt: undefined,
-  onChange: undefined
-};
 
 export default FormBuilder;

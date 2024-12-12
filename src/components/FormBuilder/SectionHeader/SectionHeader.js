@@ -1,7 +1,4 @@
-import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
-
-import sectionPropTypes from '@/utils/propTypes/section';
 
 import ActionButtons from './ActionButtons';
 import Headers from './Headers';
@@ -15,15 +12,23 @@ function SectionHeader({
   onEdit,
   onDelete,
   values,
-  isReadOnly,
+  isReadOnly = false,
   isValid,
   onMoveUp,
   onMoveDown,
   position,
-  showEditButton
+  showEditButton = true
 }) {
   return (
-    <Stack direction="row" boxShadow={2} p={2} justifyContent="space-between" flexWrap="wrap">
+    <Stack
+      direction="row"
+      sx={{
+        boxShadow: 2,
+        p: 2,
+        justifyContent: 'space-between',
+        flexWrap: 'wrap'
+      }}
+    >
       <Stack>
         <TitleWithIcon title={section.label} isValid={isValid} />
         <Introduction introduction={section.introduction} />
@@ -44,27 +49,5 @@ function SectionHeader({
     </Stack>
   );
 }
-
-SectionHeader.propTypes = {
-  onView: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onMoveUp: PropTypes.func,
-  onMoveDown: PropTypes.func,
-  sectionsLength: PropTypes.number.isRequired,
-  position: PropTypes.number.isRequired,
-  section: sectionPropTypes.isRequired,
-  values: PropTypes.shape({}).isRequired,
-  isValid: PropTypes.bool.isRequired,
-  showEditButton: PropTypes.bool,
-  isReadOnly: PropTypes.bool
-};
-
-SectionHeader.defaultProps = {
-  onMoveUp: undefined,
-  onMoveDown: undefined,
-  isReadOnly: false,
-  showEditButton: true
-};
 
 export default SectionHeader;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import MuiCheckbox from '@mui/material/Checkbox';
@@ -6,10 +5,6 @@ import Stack from '@mui/material/Stack';
 
 import FieldMessage from '@/components/FieldMessage';
 import InputLabel from '@/components/InputLabel';
-import formikField from '@/utils/propTypes/formikField';
-import formikForm from '@/utils/propTypes/formikForm';
-import labelPropTypes from '@/utils/propTypes/label';
-import optionPropTypes from '@/utils/propTypes/option';
 
 const handleChecked = (e, options, selectedOption, {name, value}, setFieldValue) => {
   const {value: selectedValue, exclusive} = selectedOption;
@@ -34,7 +29,7 @@ const handleChecked = (e, options, selectedOption, {name, value}, setFieldValue)
   setFieldValue(name, values);
 };
 
-function Checkbox({options, label, field, form, disabled, warnings}) {
+function Checkbox({options, label, field, form, disabled = false, warnings}) {
   return (
     <Stack direction="column" sx={{width: '100%'}}>
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
@@ -62,18 +57,5 @@ function Checkbox({options, label, field, form, disabled, warnings}) {
     </Stack>
   );
 }
-
-Checkbox.propTypes = {
-  label: labelPropTypes.isRequired,
-  options: PropTypes.arrayOf(optionPropTypes).isRequired,
-  field: formikField.isRequired,
-  form: formikForm.isRequired,
-  disabled: PropTypes.bool,
-  warnings: PropTypes.shape({}).isRequired
-};
-
-Checkbox.defaultProps = {
-  disabled: false
-};
 
 export default Checkbox;

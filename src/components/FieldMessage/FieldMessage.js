@@ -1,7 +1,5 @@
-import PropTypes from 'prop-types';
 import Alert from '@mui/material/Alert';
 
-import {formikField, formikForm} from '@/utils/propTypes';
 import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
 
 const alertStyles = {justifyContent: 'center', mt: 2};
@@ -24,11 +22,5 @@ function FieldMessage({form, field, warnings}) {
   }
   return null;
 }
-
-FieldMessage.propTypes = {
-  field: formikField.isRequired,
-  form: formikForm.isRequired,
-  warnings: PropTypes.shape({}).isRequired
-};
 
 export default FieldMessage;

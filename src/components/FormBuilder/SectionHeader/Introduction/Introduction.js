@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 
 function Introduction({introduction}) {
@@ -11,27 +10,28 @@ function Introduction({introduction}) {
     return (
       <Typography
         data-testid="introduction"
-        fontWeight="bold"
         color="gray"
-        whiteSpace="pre-line"
         dangerouslySetInnerHTML={{__html: introduction}}
+        sx={{
+          fontWeight: 'bold',
+          whiteSpace: 'pre-line'
+        }}
       />
     );
   }
 
   return (
-    <Typography data-testid="introduction" fontWeight="bold" color="gray" whiteSpace="pre-line">
+    <Typography
+      data-testid="introduction"
+      color="gray"
+      sx={{
+        fontWeight: 'bold',
+        whiteSpace: 'pre-line'
+      }}
+    >
       {introduction}
     </Typography>
   );
 }
-
-Introduction.propTypes = {
-  introduction: PropTypes.string
-};
-
-Introduction.defaultProps = {
-  introduction: undefined
-};
 
 export default Introduction;

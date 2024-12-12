@@ -1,9 +1,7 @@
-import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 
 import questionTypes from '@/constants/questionTypes';
 import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
-import sectionPropTypes from '@/utils/propTypes/section';
 
 const getHeaders = (questions, values, headers) => {
   if (headers.some(header => header.question)) {
@@ -30,14 +28,16 @@ function Headers({section, values}) {
   const isHTML = /<[^>]+>/g.test(headers);
 
   if (isHTML) {
-    return <Typography whiteSpace="pre-line" dangerouslySetInnerHTML={{__html: headers}} />;
+    return (
+      <Typography
+        dangerouslySetInnerHTML={{__html: headers}}
+        sx={{
+          whiteSpace: 'pre-line'
+        }}
+      />
+    );
   }
   return <Typography>{headers}</Typography>;
 }
-
-Headers.propTypes = {
-  section: sectionPropTypes.isRequired,
-  values: PropTypes.shape({}).isRequired
-};
 
 export default Headers;

@@ -1,11 +1,8 @@
-import PropTypes from 'prop-types';
 import {Field} from 'formik';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
 import {useSubQuestions} from '@/hooks';
-import subQuestionPropTypes from '@/utils/propTypes/subQuestion';
-import valuesPropTypes from '@/utils/propTypes/values';
 import getQuestionComponent from '@/utils/getQuestionComponent';
 import getQuestionProps from '@/utils/getQuestionProps';
 
@@ -19,7 +16,13 @@ function SubQuestions({values, subQuestions, name, ...props}) {
   });
 
   return selectedQuestions.length > 0 ? (
-    <Stack spacing={2} sx={{width: '100%'}} justifyContent="flex-end">
+    <Stack
+      spacing={2}
+      sx={{
+        justifyContent: 'flex-end',
+        width: '100%'
+      }}
+    >
       {selectedQuestions.map(subQuestion => (
         <Box key={subQuestion.id}>
           <Field
@@ -35,11 +38,5 @@ function SubQuestions({values, subQuestions, name, ...props}) {
     </Stack>
   ) : null;
 }
-
-SubQuestions.propTypes = {
-  name: PropTypes.string.isRequired,
-  values: valuesPropTypes.isRequired,
-  subQuestions: PropTypes.arrayOf(subQuestionPropTypes).isRequired
-};
 
 export default SubQuestions;
