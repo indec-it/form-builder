@@ -2,6 +2,7 @@ node_modules/
 lib/
 coverage/
 build/
+src/styles/output.css
 
 # misc
 .DS_Store

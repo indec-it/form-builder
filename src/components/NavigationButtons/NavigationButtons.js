@@ -1,53 +1,52 @@
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowRightIcon from '@mui/icons-material/ArrowForward';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
+import {ArrowLeftIcon, PlusIcon, XIcon, ArrowRightIcon} from '@/components/Icons';
 
 function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew, onInterrupt, readOnlyMode = false}) {
   return (
-    <Stack
-      direction={{xs: 'column', sm: 'row'}}
-      spacing={{xs: 1, sm: 2, md: 4}}
-      sx={{
-        justifyContent: 'space-between',
-        p: 2
-      }}
-    >
-      <Button
+    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 md:gap-8 justify-between p-4">
+      <button
+        type="button"
         data-testid="back-button"
-        startIcon={<ArrowBackIcon />}
         onClick={onPrevious}
-        variant="outlined"
         disabled={disablePreviousButton}
+        className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
+        <ArrowLeftIcon className="w-5 h-5 mr-2" />
         Anterior
-      </Button>
+      </button>
       {!readOnlyMode && (
-        <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+        <div className="flex flex-col sm:flex-row gap-2">
           {onAddNew && (
-            <Button data-testid="add-new" startIcon={<AddIcon />} onClick={onAddNew} variant="outlined">
+            <button
+              type="button"
+              data-testid="add-new"
+              onClick={onAddNew}
+              className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <PlusIcon className="w-5 h-5 mr-2" />
               Agregar nuevo
-            </Button>
+            </button>
           )}
           {onInterrupt && (
-            <Button
+            <button
+              type="button"
               data-testid="interrupt-survey"
-              startIcon={<CancelIcon />}
               onClick={onInterrupt}
-              variant="outlined"
-              color="error"
+              className="flex items-center justify-center px-4 py-2 border border-red-300 rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             >
+              <XIcon className="w-5 h-5 mr-2" />
               Interrumpir encuesta
-            </Button>
+            </button>
           )}
-        </Stack>
+        </div>
       )}
-      <Button type="submit" endIcon={<ArrowRightIcon />} variant="contained" color="primary">
+      <button
+        type="submit"
+        className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
         Siguiente
-      </Button>
-    </Stack>
+        <ArrowRightIcon className="w-5 h-5 ml-2" />
+      </button>
+    </div>
   );
 }
 

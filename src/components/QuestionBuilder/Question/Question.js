@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-import Typography from '@mui/material/Typography';
 import {useFormikContext} from 'formik';
 
 import {useForm} from '@/hooks';
@@ -43,7 +42,7 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
   return Component ? (
     <Wrapper component={Component} section={section} {...props} />
   ) : (
-    <Typography>Invalid component.</Typography>
+    <p className="text-red-600 font-medium">Invalid component.</p>
   );
 }
 

@@ -40,14 +40,6 @@ WithButtonToInterruptSurvey.args = {
   onAddNew: null
 };
 
-export const WithButtonToFinishSurvey = Template.bind({});
-WithButtonToFinishSurvey.args = {
-  onPrevious: () => {},
-  onInterrupt: null,
-  onAddNew: null,
-  isLastSection: true
-};
-
 export const WithPreviousButtonDisabled = Template.bind({});
 WithPreviousButtonDisabled.args = {
   onPrevious: () => {},

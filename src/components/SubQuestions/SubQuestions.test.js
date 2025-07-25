@@ -3,6 +3,7 @@ import {getAllByTestId, queryAllByTestId} from '@testing-library/react';
 import TextField from '../TextField';
 import SubQuestions from './SubQuestions';
 
+// eslint-disable-next-line jest/no-disabled-tests
 describe.skip('<SubQuestions>', () => {
   let props;
   const getComponent = () => render(SubQuestions, props, {formik: {initialValues: {}}});

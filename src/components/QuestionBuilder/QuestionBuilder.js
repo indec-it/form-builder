@@ -1,20 +1,12 @@
-import Grid from '@mui/material/Grid2';
-
 import Question from './Question';
 
 function QuestionBuilder({values, index, disabled = false, warnings = {}}) {
   return (
-    <Grid data-testid="question-builder" sx={{boxShadow: 2, p: 2}}>
+    <div className="shadow-lg p-4" data-testid="question-builder">
       {Object.values(values).map((value, valueIndex) => {
         if (value.id) {
           return (
-            <Grid
-              item
-              key={value.id}
-              sx={{
-                mb: 2
-              }}
-            >
+            <div key={value.id} className="mb-4">
               <Question
                 sectionIndex={index}
                 questionIndex={valueIndex - 1}
@@ -22,12 +14,12 @@ function QuestionBuilder({values, index, disabled = false, warnings = {}}) {
                 warnings={warnings}
                 values={values}
               />
-            </Grid>
+            </div>
           );
         }
         return null;
       })}
-    </Grid>
+    </div>
   );
 }
 

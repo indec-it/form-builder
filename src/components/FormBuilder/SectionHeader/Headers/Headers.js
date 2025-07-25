@@ -1,5 +1,3 @@
-import Typography from '@mui/material/Typography';
-
 import questionTypes from '@/constants/questionTypes';
 import getSelectedOptionLabel from '@/utils/getSelectedOptionLabel';
 
@@ -28,16 +26,10 @@ function Headers({section, values}) {
   const isHTML = /<[^>]+>/g.test(headers);
 
   if (isHTML) {
-    return (
-      <Typography
-        dangerouslySetInnerHTML={{__html: headers}}
-        sx={{
-          whiteSpace: 'pre-line'
-        }}
-      />
-    );
+    // eslint-disable-next-line react/no-danger
+    return <p dangerouslySetInnerHTML={{__html: headers}} className="whitespace-pre-line" />;
   }
-  return <Typography>{headers}</Typography>;
+  return <p>{headers}</p>;
 }
 
 export default Headers;

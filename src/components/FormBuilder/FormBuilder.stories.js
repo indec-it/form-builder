@@ -1,8 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 
 import FormBuilder from './FormBuilder';
 
@@ -603,14 +599,14 @@ function Template(args) {
   }, [args]);
 
   return (
-    <Container>
+    <div className="container mx-auto px-4">
       <FormBuilder
         {...args}
         sections={sections}
         onSubmit={sectionValues => setValues(values ? {...values, ...sectionValues} : sectionValues)}
         initialValues={values}
       />
-    </Container>
+    </div>
   );
 }
 
@@ -756,16 +752,9 @@ WithInitialValues.args = {
 
 function SectionHeader() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: '#98b9ed',
-        height: '100px'
-      }}
-    >
-      <Typography>My custom header</Typography>
-    </Box>
+    <div className="flex justify-center bg-blue-300 h-24 items-center">
+      <p>My custom header</p>
+    </div>
   );
 }
 
@@ -778,12 +767,20 @@ WithCustomSectionHeader.args = {
 
 function NavigationButtons() {
   return (
-    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-      <Button variant="outlined">Go back</Button>
-      <Button variant="outlined" color="error">
+    <div className="flex justify-between">
+      <button
+        type="button"
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Go back
+      </button>
+      <button
+        type="button"
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
         Next
-      </Button>
-    </Box>
+      </button>
+    </div>
   );
 }
 

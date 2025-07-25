@@ -1,39 +1,33 @@
-/* eslint-disable camelcase */
-import {useTheme} from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import {useState, useEffect} from 'react';
 
 import breakpoints from '@/constants/breakpoints';
 
+const getBreakpoint = () => {
+  if (typeof window === 'undefined') return breakpoints.MEDIUM;
+
+  const width = window.innerWidth;
+
+  if (width < 640) return breakpoints.EXTRA_SMALL;
+  if (width < 768) return breakpoints.SMALL;
+  if (width < 1024) return breakpoints.MEDIUM;
+  if (width < 1280) return breakpoints.LARGE;
+  return breakpoints.EXTRA_LARGE;
+};
+
 const useBreakpoint = () => {
-  const theme = useTheme();
+  const [breakpoint, setBreakpoint] = useState(getBreakpoint());
 
-  const mq_xs = useMediaQuery(theme.breakpoints.only(breakpoints.EXTRA_SMALL));
-  const mq_sm = useMediaQuery(theme.breakpoints.only(breakpoints.SMALL));
-  const mq_md = useMediaQuery(theme.breakpoints.only(breakpoints.MEDIUM));
-  const mq_lg = useMediaQuery(theme.breakpoints.only(breakpoints.LARGE));
-  const mq_xl = useMediaQuery(theme.breakpoints.only(breakpoints.EXTRA_LARGE));
+  useEffect(() => {
+    const handleResize = () => {
+      setBreakpoint(getBreakpoint());
+    };
 
-  const getBreakPointName = () => {
-    if (mq_xs) {
-      return breakpoints.EXTRA_SMALL;
-    }
-    if (mq_sm) {
-      return breakpoints.SMALL;
-    }
-    if (mq_md) {
-      return breakpoints.MEDIUM;
-    }
-    if (mq_lg) {
-      return breakpoints.LARGE;
-    }
-    if (mq_xl) {
-      return breakpoints.EXTRA_LARGE;
-    }
-    return null;
-  };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return {
-    breakpoint: getBreakPointName()
+    breakpoint
   };
 };
 

@@ -1,10 +1,5 @@
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import ErrorIcon from '@mui/icons-material/Error';
-import WarningIcon from '@mui/icons-material/Warning';
-
 import hasFormikErrorsAndWarnings from '@/utils/hasFormikErrorsAndWarnings';
+import {ErrorIcon, ExclamationIcon} from '@/components/Icons';
 
 function InputLabel({label, form, field, disabled, warnings = {}}) {
   const {hasWarning, hasError} = hasFormikErrorsAndWarnings({form, field, warnings});
@@ -12,40 +7,24 @@ function InputLabel({label, form, field, disabled, warnings = {}}) {
 
   return (
     <>
-      <Stack direction="row" spacing={2} data-testid="input-label">
-        <Stack
-          direction="row"
-          sx={{
-            mb: 0.5,
-            alignItems: 'center',
-            opacity: !disabled ? 1 : 0.3
-          }}
-        >
-          <Typography sx={{fontWeight: 'bold', fontSize: '17px'}}>
+      <div className="flex flex-row gap-4" data-testid="input-label">
+        <div className={`flex flex-row mb-2 items-center ${!disabled ? 'opacity-100' : 'opacity-30'}`}>
+          <span className="font-bold text-[17px]">
             {`${labelNumber}${label.text}`} {hasError && '*'}
-          </Typography>
-        </Stack>
+          </span>
+        </div>
         {hasError && !disabled && (
-          <Box>
-            <ErrorIcon color="error" data-testid="error-icon" />
-          </Box>
+          <div>
+            <ErrorIcon className="w-6 h-6 text-red-600" data-testid="error-icon" />
+          </div>
         )}
         {hasWarning && !disabled && !hasError && (
-          <Box>
-            <WarningIcon color="warning" data-testid="warning-icon" />
-          </Box>
+          <div>
+            <ExclamationIcon className="w-6 h-6 text-yellow-600" data-testid="warning-icon" />
+          </div>
         )}
-      </Stack>
-      {label.introduction && (
-        <Typography
-          color="gray"
-          sx={{
-            fontWeight: 'bold'
-          }}
-        >
-          {label.introduction}
-        </Typography>
-      )}
+      </div>
+      {label.introduction && <p className="text-gray-500 font-bold">{label.introduction}</p>}
     </>
   );
 }

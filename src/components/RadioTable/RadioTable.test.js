@@ -1,4 +1,4 @@
-import {fireEvent, getByTestId, getByText, queryByTestId} from '@testing-library/react';
+import {fireEvent, getByTestId, getByText, queryByTestId, cleanup} from '@testing-library/react';
 
 import RadioTable from './RadioTable';
 
@@ -86,6 +86,9 @@ describe('<RadioTable>', () => {
       field: {value: {S1P1O1: undefined, S1P1O2: undefined, S1P1O3: undefined}, name: 'test'},
       form: {setFieldValue: jest.fn(), setFieldTouched: jest.fn(), errors: {}, submitCount: 0}
     };
+  });
+  afterEach(() => {
+    cleanup();
   });
 
   it('should render InputLabel component', () => {
