@@ -1,5 +1,3 @@
-import Typography from '@mui/material/Typography';
-
 function Introduction({introduction}) {
   if (!introduction) {
     return null;
@@ -8,29 +6,19 @@ function Introduction({introduction}) {
 
   if (isHTML) {
     return (
-      <Typography
+      <p
         data-testid="introduction"
-        color="gray"
+        className="text-gray-600 font-bold whitespace-pre-line"
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{__html: introduction}}
-        sx={{
-          fontWeight: 'bold',
-          whiteSpace: 'pre-line'
-        }}
       />
     );
   }
 
   return (
-    <Typography
-      data-testid="introduction"
-      color="gray"
-      sx={{
-        fontWeight: 'bold',
-        whiteSpace: 'pre-line'
-      }}
-    >
+    <p data-testid="introduction" className="text-gray-600 font-bold whitespace-pre-line">
       {introduction}
-    </Typography>
+    </p>
   );
 }
 

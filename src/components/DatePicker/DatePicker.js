@@ -1,7 +1,4 @@
 import {es} from 'date-fns/locale/es';
-import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFnsV3';
-import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
-import Stack from '@mui/material/Stack';
 
 import dateTypes from '@/constants/dateTypes';
 
@@ -20,39 +17,39 @@ function DatePicker({
 }) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
-      <Stack>
-        <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
-        <Stack direction={{xs: 'column', sm: 'row'}} spacing={{xs: 1, sm: 2, md: 4}}>
+    <div className="flex flex-col">
+      <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <DateTimePickerSelector
+          type={dateType}
+          label={isRange ? 'Fecha de inicio' : ''}
+          value={isRange ? field.value.start : field.value}
+          onChange={newValue => {
+            form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue);
+            form.setFieldTouched(isRange ? `${field.name}.start` : field.name, false);
+          }}
+          disabled={disabled}
+          placeholder={placeholder}
+          locale={es}
+        />
+        {isRange && (
           <DateTimePickerSelector
             type={dateType}
-            label={isRange ? 'Fecha de inicio' : ''}
-            value={isRange ? field.value.start : field.value}
+            minutesStep={1}
+            label="Fecha de fin"
+            value={field.value.end}
             onChange={newValue => {
-              form.setFieldValue(isRange ? `${field.name}.start` : field.name, newValue);
-              form.setFieldTouched(isRange ? `${field.name}.start` : field.name, false);
+              form.setFieldValue(`${field.name}.end`, newValue);
+              form.setFieldTouched(`${field.name}.end`, false);
             }}
-            disabled={disabled}
+            disabled={!field.value.start}
             placeholder={placeholder}
+            locale={es}
           />
-          {isRange && (
-            <DateTimePickerSelector
-              type={dateType}
-              minutesStep={1}
-              label="Fecha de fin"
-              value={field.value.end}
-              onChange={newValue => {
-                form.setFieldValue(`${field.name}.end`, newValue);
-                form.setFieldTouched(`${field.name}.end`, false);
-              }}
-              disabled={!field.value.start}
-              placeholder={placeholder}
-            />
-          )}
-        </Stack>
-        <FieldMessage warnings={warnings} form={form} field={field} />
-      </Stack>
-    </LocalizationProvider>
+        )}
+      </div>
+      <FieldMessage warnings={warnings} form={form} field={field} />
+    </div>
   );
 }
 

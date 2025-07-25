@@ -1,13 +1,10 @@
 import {Field, FieldArray} from 'formik';
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import SubQuestions from '@/components/SubQuestions';
 import TextField from '@/components/TextField';
 import {getSubQuestions} from '@/utils/buildQuestions';
 import getLastId from '@/utils/getLastId';
+import {PlusCircleIcon, DeleteIcon} from '@/components/Icons';
 
 function Wrapper({
   isMultiple,
@@ -31,14 +28,7 @@ function Wrapper({
         name={name}
         render={helpers =>
           values.answer.map((answer, index) => (
-            <Stack
-              key={answer.id}
-              direction={{xs: 'column', sm: 'row'}}
-              spacing={2}
-              sx={{
-                mb: 2
-              }}
-            >
+            <div key={answer.id} className="flex flex-col sm:flex-row gap-4 mb-4">
               <Field {...props} options={options} name={`${name}.${index}.value`} disabled={disabled} warnings={warnings} />
               <SubQuestions
                 values={{answer, id: answer.id}}
@@ -48,16 +38,10 @@ function Wrapper({
                 name={`${name}.${index}.specifications`}
                 section={section}
               />
-              <Stack
-                direction={{xs: 'column', sm: 'row'}}
-                spacing={2}
-                sx={{
-                  justifyContent: 'center',
-                  width: '90px'
-                }}
-              >
+              <div className="flex flex-col sm:flex-row gap-2 justify-center w-20">
                 {values.answer.length === index + 1 && !disabled && (
-                  <IconButton
+                  <button
+                    type="button"
                     onClick={() =>
                       helpers.push({
                         id: getLastId(values.answer) + 1,
@@ -65,18 +49,24 @@ function Wrapper({
                         specifications: getSubQuestions(subQuestions)
                       })
                     }
-                    color="primary"
+                    className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    aria-label="Add item"
                   >
-                    <AddCircleIcon />
-                  </IconButton>
+                    <PlusCircleIcon />
+                  </button>
                 )}
                 {index > 0 && !disabled && (
-                  <IconButton onClick={() => helpers.remove(index)} color="error">
+                  <button
+                    type="button"
+                    onClick={() => helpers.remove(index)}
+                    className="p-2 rounded-full text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    aria-label="Delete item"
+                  >
                     <DeleteIcon />
-                  </IconButton>
+                  </button>
                 )}
-              </Stack>
-            </Stack>
+              </div>
+            </div>
           ))
         }
       />
@@ -86,7 +76,7 @@ function Wrapper({
   }
   if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (
-      <Stack direction={{xs: 'column', sm: 'row'}} spacing={2}>
+      <div className="flex flex-col sm:flex-row gap-4">
         {Component}
         <SubQuestions
           values={values}
@@ -97,7 +87,7 @@ function Wrapper({
           name={`${name}.specifications`}
           section={section}
         />
-      </Stack>
+      </div>
     );
   }
   return Component;

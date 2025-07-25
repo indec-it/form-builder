@@ -1,31 +1,15 @@
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+import {CheckCircleIcon, ErrorIcon} from '@/components/Icons';
 
 function TitleWithIcon({title, isValid}) {
   return (
-    <Stack
-      direction="row"
-      spacing={2}
-      sx={{
-        alignItems: 'center'
-      }}
-    >
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: 'bold'
-        }}
-      >
-        {title}
-      </Typography>
+    <div className="flex flex-row gap-4 items-center">
+      <h6 className="text-xl font-bold">{title}</h6>
       {isValid ? (
-        <CheckCircleIcon color="success" data-testid="success-icon" />
+        <CheckCircleIcon className="w-6 h-6 text-green-600" data-testid="success-icon" />
       ) : (
-        <ErrorIcon color="error" data-testid="error-icon" />
+        <ErrorIcon className="w-6 h-6 text-red-600" data-testid="error-icon" />
       )}
-    </Stack>
+    </div>
   );
 }
 

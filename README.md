@@ -19,6 +19,14 @@ $ npm install @indec/form-builder
 
 Usage
 
+First, import the CSS styles in your application:
+
+```js
+import '@indec/form-builder/lib/styles/output.css';
+```
+
+Then import and use the components:
+
 ```js
 import {FormBuilder} from '@indec/form-builder/components';
 
@@ -84,27 +92,28 @@ If you want to change the default navigation button or change the header, pass t
 ```js
 function SectionHeader() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: '#98b9ed',
-        height: '100px'
-      }}
-    >
-      <Typography>My custom header</Typography>
-    </Box>
+    <div className="flex justify-center bg-blue-300 h-24 items-center">
+      <p>My custom header</p>
+    </div>
   );
 }
 
 function NavigationButtons() {
   return (
-    <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-      <Button variant="outlined">Go back</Button>
-      <Button variant="outlined" color="error">
+    <div className="flex justify-between">
+      <button
+        type="button"
+        className="px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Go back
+      </button>
+      <button
+        type="button"
+        className="px-4 py-2 bg-red-600 text-white border border-red-600 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+      >
         Next
-      </Button>
-    </Box>
+      </button>
+    </div>
   );
 }
 
@@ -140,9 +149,11 @@ $ npm run storybook
 These are the core dependencies you'll need to get acquainted yourself with:
 
 - [React](https://reactjs.org)
-- [Material ui](https://mui.com) (component library our UI is built upon)
+- [Tailwind CSS](https://tailwindcss.com) (utility-first CSS framework for styling)
 - [Formik](https://jaredpalmer.com/formik/docs/api/formik#validationschema-schema-gt-schema) (to make it easier to write forms with React)
 - [Yup](https://github.com/jquense/yup) (handles form validation)
+- [React Datepicker](https://reactdatepicker.com) (date/time picker component)
+- [React Number Format](https://s-yadav.github.io/react-number-format) (number formatting for currency fields)
 - [Storybook](https://storybook.js.org) (component library)
 - [Jest](https://jestjs.io) (testing framework)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) (DOM interface for testing)

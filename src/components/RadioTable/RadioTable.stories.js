@@ -1,6 +1,5 @@
 import React from 'react';
 import {Formik, Field} from 'formik';
-import Button from '@mui/material/Button';
 
 import getWarnings from '@/utils/getWarnings';
 import getSchemas from '@/utils/getSchemas';
@@ -156,9 +155,13 @@ function Template(args) {
           <>
             <Field component={RadioTable} {...props} warnings={warnings} />
             {withErrors ? (
-              <Button onClick={submitForm} variant="contained">
+              <button
+                type="button"
+                onClick={submitForm}
+                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 Click to validate form
-              </Button>
+              </button>
             ) : null}
           </>
         );

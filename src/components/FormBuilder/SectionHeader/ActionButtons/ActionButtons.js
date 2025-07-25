@@ -1,10 +1,4 @@
-import IconButton from '@mui/material/IconButton';
-import Stack from '@mui/material/Stack';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import {EyeIcon, ArrowUpIcon, ArrowDownIcon, EditIcon, TrashIcon} from '@/components/Icons';
 
 function ActionButtons({
   isSectionMultiple,
@@ -19,39 +13,69 @@ function ActionButtons({
   showEditButton
 }) {
   return (
-    <Stack direction="row" spacing={1}>
-      <IconButton data-testid="read-only-button" color="warning" onClick={onView}>
-        <VisibilityIcon />
-      </IconButton>
+    <div className="flex flex-row gap-2">
+      <button
+        type="button"
+        data-testid="read-only-button"
+        onClick={onView}
+        className="p-2 rounded-full text-yellow-600 hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+        aria-label="View"
+      >
+        <EyeIcon />
+      </button>
       {!isReadOnly && (
         <>
           {sectionsLength > 1 && (
             <>
               {onMoveUp && position > 0 && (
-                <IconButton data-testid="move-up-button" color="primary" onClick={onMoveUp}>
-                  <ArrowUpwardIcon />
-                </IconButton>
+                <button
+                  type="button"
+                  data-testid="move-up-button"
+                  onClick={onMoveUp}
+                  className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label="Move up"
+                >
+                  <ArrowUpIcon />
+                </button>
               )}
               {onMoveDown && position < sectionsLength - 1 && (
-                <IconButton data-testid="move-down-button" color="primary" onClick={onMoveDown}>
-                  <ArrowDownwardIcon />
-                </IconButton>
+                <button
+                  type="button"
+                  data-testid="move-down-button"
+                  onClick={onMoveDown}
+                  className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label="Move down"
+                >
+                  <ArrowDownIcon />
+                </button>
               )}
             </>
           )}
           {showEditButton && (
-            <IconButton data-testid="edit-button" color="primary" onClick={onEdit}>
+            <button
+              type="button"
+              data-testid="edit-button"
+              onClick={onEdit}
+              className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              aria-label="Edit"
+            >
               <EditIcon />
-            </IconButton>
+            </button>
           )}
           {isSectionMultiple && sectionsLength > 1 && (
-            <IconButton data-testid="delete-button" color="error" onClick={onDelete}>
-              <DeleteIcon />
-            </IconButton>
+            <button
+              type="button"
+              data-testid="delete-button"
+              onClick={onDelete}
+              className="p-2 rounded-full text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              aria-label="Delete"
+            >
+              <TrashIcon />
+            </button>
           )}
         </>
       )}
-    </Stack>
+    </div>
   );
 }
 

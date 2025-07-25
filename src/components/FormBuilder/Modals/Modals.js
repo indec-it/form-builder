@@ -1,6 +1,4 @@
 import {FastField} from 'formik';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import Modal from '@/components/Modal';
 import Radio from '@/components/Radio';
@@ -11,16 +9,10 @@ const getChildren = (modal, {options, label, name}) => {
     case modals.CONFIRM_DELETE_SECTION_MODAL:
       return (
         <>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <Typography
-              sx={{
-                fontWeight: 'bold'
-              }}
-            >
-              Atención
-            </Typography>
-          </Box>
-          <Typography>¿Esta seguro que desea borrar esta sección?</Typography>
+          <div className="flex justify-center">
+            <p className="font-bold">Atención</p>
+          </div>
+          <p>¿Esta seguro que desea borrar esta sección?</p>
         </>
       );
     case modals.INTERRUPTION_MODAL:

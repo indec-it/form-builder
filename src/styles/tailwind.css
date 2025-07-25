@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+@import 'react-datepicker/dist/react-datepicker.css';
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
