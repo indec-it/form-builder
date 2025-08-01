@@ -9,8 +9,8 @@ const getChildren = (modal, {options, label, name}) => {
     case modals.CONFIRM_DELETE_SECTION_MODAL:
       return (
         <>
-          <div className="flex justify-center">
-            <p className="font-bold">Atención</p>
+          <div className="fb:flex fb:justify-center">
+            <p className="fb:font-bold">Atención</p>
           </div>
           <p>¿Esta seguro que desea borrar esta sección?</p>
         </>

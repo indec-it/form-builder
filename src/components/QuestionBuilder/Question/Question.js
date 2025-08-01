@@ -42,7 +42,7 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
   return Component ? (
     <Wrapper component={Component} section={section} {...props} />
   ) : (
-    <p className="text-red-600 font-medium">Invalid component.</p>
+    <p className="fb:text-red-600 fb:font-medium">Invalid component.</p>
   );
 }
 

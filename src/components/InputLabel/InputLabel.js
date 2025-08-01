@@ -7,24 +7,24 @@ function InputLabel({label, form, field, disabled, warnings = {}}) {
 
   return (
     <>
-      <div className="flex flex-row gap-4" data-testid="input-label">
-        <div className={`flex flex-row mb-2 items-center ${!disabled ? 'opacity-100' : 'opacity-30'}`}>
-          <span className="font-bold text-[17px]">
+      <div className="fb:flex fb:flex-row fb:gap-4" data-testid="input-label">
+        <div className={`fb:flex fb:flex-row fb:mb-2 fb:items-center ${!disabled ? 'fb:opacity-100' : 'fb:opacity-30'}`}>
+          <span className="fb:font-bold fb:text-[17px]">
             {`${labelNumber}${label.text}`} {hasError && '*'}
           </span>
         </div>
         {hasError && !disabled && (
           <div>
-            <ErrorIcon className="w-6 h-6 text-red-600" data-testid="error-icon" />
+            <ErrorIcon className="fb:w-6 fb:h-6 fb:text-red-600" data-testid="error-icon" />
           </div>
         )}
         {hasWarning && !disabled && !hasError && (
           <div>
-            <ExclamationIcon className="w-6 h-6 text-yellow-600" data-testid="warning-icon" />
+            <ExclamationIcon className="fb:w-6 fb:h-6 fb:text-yellow-600" data-testid="warning-icon" />
           </div>
         )}
       </div>
-      {label.introduction && <p className="text-gray-500 font-bold">{label.introduction}</p>}
+      {label.introduction && <p className="fb:text-gray-500 fb:font-bold">{label.introduction}</p>}
     </>
   );
 }

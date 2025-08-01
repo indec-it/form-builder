@@ -41,13 +41,13 @@ function Select({
   );
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="fb:flex fb:flex-col fb:w-full">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      <div className="relative mt-2">
+      <div className="fb:relative fb:mt-2">
         <button
           type="button"
-          className={`w-full px-3 py-2 text-left bg-white border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 ${
-            disabled ? 'opacity-50 cursor-not-allowed bg-gray-50' : 'cursor-pointer hover:border-gray-500'
+          className={`fb:w-full fb:px-3 fb:py-2 fb:text-left fb:bg-white fb:border-2 fb:border-gray-400 fb:rounded-lg focus:fb:outline-none focus:fb:ring-blue-500 focus:fb:border-blue-500 fb:transition-colors fb:duration-200 ${
+            disabled ? 'fb:opacity-50 fb:cursor-not-allowed fb:bg-gray-50' : 'fb:cursor-pointer hover:fb:border-gray-500'
           }`}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           onBlur={() => {
@@ -56,10 +56,10 @@ function Select({
           }}
           disabled={disabled}
         >
-          <span className={selectedValue ? 'text-gray-900' : 'text-gray-500'}>
+          <span className={selectedValue ? 'fb:text-gray-900' : 'fb:text-gray-500'}>
             {selectedValue ? selectedValue.label : placeholder}
           </span>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-1">
+          <div className="fb:absolute fb:inset-y-0 fb:right-0 fb:flex fb:items-center fb:pr-2 fb:space-x-1">
             {selectedValue && !disabled && (
               <button
                 type="button"
@@ -67,31 +67,31 @@ function Select({
                   e.stopPropagation();
                   handleClear();
                 }}
-                className="p-1 text-gray-400 hover:text-gray-600 rounded transition-colors duration-200"
+                className="fb:p-1 fb:text-gray-400 hover:fb:text-gray-600 fb:rounded fb:transition-colors fb:duration-200"
                 aria-label="Clear selection"
               >
-                <XIcon className="w-4 h-4" />
+                <XIcon className="fb:w-4 fb:h-4" />
               </button>
             )}
             <ChevronDownIcon
-              className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+              className={`fb:w-5 fb:h-5 fb:text-gray-400 fb:transition-transform fb:duration-200 ${isOpen ? 'fb:rotate-180' : ''}`}
             />
           </div>
         </button>
 
         {isOpen && !disabled && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-            {loading && <div className="px-3 py-2 text-gray-500">Cargando...</div>}
-            {!loading && options.length === 0 && <div className="px-3 py-2 text-gray-500">No hay opciones.</div>}
+          <div className="fb:absolute fb:z-10 fb:w-full fb:mt-1 fb:bg-white fb:border fb:border-gray-300 fb:rounded-md fb:shadow-lg fb:max-h-60 fb:overflow-auto">
+            {loading && <div className="fb:px-3 fb:py-2 fb:text-gray-500">Cargando...</div>}
+            {!loading && options.length === 0 && <div className="fb:px-3 fb:py-2 fb:text-gray-500">No hay opciones.</div>}
             {options.length > 0 &&
               options.map(option => (
                 <button
                   key={option[keyValue]}
                   type="button"
-                  className={`w-full px-3 py-2 text-left hover:bg-blue-50 focus:outline-none focus:bg-blue-50 transition-colors duration-200 ${
+                  className={`fb:w-full fb:px-3 fb:py-2 fb:text-left hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:bg-blue-50 fb:transition-colors fb:duration-200 ${
                     selectedValue && selectedValue[keyValue] === option[keyValue]
-                      ? 'bg-blue-100 text-blue-900'
-                      : 'text-gray-900'
+                      ? 'fb:bg-blue-100 fb:text-blue-900'
+                      : 'fb:text-gray-900'
                   }`}
                   onClick={() => handleChange(option)}
                 >

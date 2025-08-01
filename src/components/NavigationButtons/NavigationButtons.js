@@ -2,27 +2,27 @@ import {ArrowLeftIcon, PlusIcon, XIcon, ArrowRightIcon} from '@/components/Icons
 
 function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew, onInterrupt, readOnlyMode = false}) {
   return (
-    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 md:gap-8 justify-between p-4">
+    <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2 sm:fb:gap-4 md:fb:gap-8 fb:justify-between fb:p-4">
       <button
         type="button"
         data-testid="back-button"
         onClick={onPrevious}
         disabled={disablePreviousButton}
-        className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white hover:fb:bg-gray-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500 disabled:fb:opacity-50 disabled:fb:cursor-not-allowed"
       >
-        <ArrowLeftIcon className="w-5 h-5 mr-2" />
+        <ArrowLeftIcon className="fb:w-5 fb:h-5 fb:mr-2" />
         Anterior
       </button>
       {!readOnlyMode && (
-        <div className="flex flex-col sm:flex-row gap-2">
+        <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2">
           {onAddNew && (
             <button
               type="button"
               data-testid="add-new"
               onClick={onAddNew}
-              className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white hover:fb:bg-gray-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500"
             >
-              <PlusIcon className="w-5 h-5 mr-2" />
+              <PlusIcon className="fb:w-5 fb:h-5 fb:mr-2" />
               Agregar nuevo
             </button>
           )}
@@ -31,9 +31,9 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
               type="button"
               data-testid="interrupt-survey"
               onClick={onInterrupt}
-              className="flex items-center justify-center px-4 py-2 border border-red-300 rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-red-300 fb:rounded-md fb:text-red-700 fb:bg-white hover:fb:bg-red-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-red-500"
             >
-              <XIcon className="w-5 h-5 mr-2" />
+              <XIcon className="fb:w-5 fb:h-5 fb:mr-2" />
               Interrumpir encuesta
             </button>
           )}
@@ -41,10 +41,10 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
       )}
       <button
         type="submit"
-        className="flex items-center justify-center px-4 py-2 border border-transparent rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-transparent fb:rounded-md fb:text-white fb:bg-blue-600 hover:fb:bg-blue-700 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500"
       >
         Siguiente
-        <ArrowRightIcon className="w-5 h-5 ml-2" />
+        <ArrowRightIcon className="fb:w-5 fb:h-5 fb:ml-2" />
       </button>
     </div>
   );

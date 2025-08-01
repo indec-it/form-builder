@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import 'tailwindcss' prefix(fb);
 @import 'react-datepicker/dist/react-datepicker.css';
 
 @layer base {

@@ -27,19 +27,19 @@ const handleChecked = (e, options, selectedOption, {name, value}, setFieldValue)
 
 function Checkbox({options, label, field, form, disabled = false, warnings}) {
   return (
-    <div className="flex flex-col w-full">
+    <div className="fb:flex fb:flex-col fb:w-full">
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
-      <div className="space-y-3 mt-2">
+      <div className="fb:space-y-3 fb:mt-2">
         {options.map((option, index) => (
           <label
             key={option.value}
             data-testid={`checkbox-${index}`}
-            className={`group flex items-center space-x-4 p-2 rounded-lg transition-all duration-200 ${
-              disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer '
+            className={`fb:group fb:flex fb:items-center fb:space-x-4 fb:p-2 fb:rounded-lg fb:transition-all fb:duration-200 ${
+              disabled ? 'fb:opacity-50 fb:cursor-not-allowed' : 'fb:cursor-pointer '
             }`}
             htmlFor={`checkbox-${field.name}-${index}`}
           >
-            <div className="relative flex-shrink-0">
+            <div className="fb:relative fb:flex-shrink-0">
               <input
                 id={`checkbox-${field.name}-${index}`}
                 type="checkbox"
@@ -50,23 +50,23 @@ function Checkbox({options, label, field, form, disabled = false, warnings}) {
                   form.setFieldTouched(field.name, false);
                 }}
                 disabled={disabled}
-                className="sr-only"
+                className="fb:sr-only"
               />
               <div
-                className={`w-6 h-6 border-2 rounded-md flex items-center justify-center transition-all duration-200 transform ${
+                className={`fb:w-6 fb:h-6 fb:border-2 fb:rounded-md fb:flex fb:items-center fb:justify-center fb:transition-all fb:duration-200 fb:transform ${
                   field.value.includes(option.value)
-                    ? 'bg-blue-600 border-blue-600 scale-100 shadow-md'
-                    : 'bg-white border-gray-300 scale-100'
-                } ${disabled ? 'opacity-50' : ''} focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2`}
+                    ? 'fb:bg-blue-600 fb:border-blue-600 fb:scale-100 fb:shadow-md'
+                    : 'fb:bg-white fb:border-gray-300 fb:scale-100'
+                } ${disabled ? 'fb:opacity-50' : ''} fb:focus-within:ring-2 fb:focus-within:ring-blue-500 fb:focus-within:ring-offset-2`}
               >
                 {field.value.includes(option.value) && (
-                  <CheckIcon className="w-4 h-4 text-white transform transition-transform duration-150 scale-110" />
+                  <CheckIcon className="fb:w-4 fb:h-4 fb:text-white fb:transform fb:transition-transform fb:duration-150 fb:scale-110" />
                 )}
               </div>
             </div>
             <span
-              className={`select-none font-medium transition-colors duration-200 ${
-                disabled ? 'text-gray-400' : 'text-gray-900'
+              className={`fb:select-none fb:font-medium fb:transition-colors fb:duration-200 ${
+                disabled ? 'fb:text-gray-400' : 'fb:text-gray-900'
               }`}
             >
               {option.label}

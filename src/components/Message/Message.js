@@ -1,5 +1,5 @@
 function Message({message}) {
-  return <p className="font-bold text-[17px]">{message}</p>;
+  return <p className="fb:font-bold fb:text-[17px]">{message}</p>;
 }
 
 export default Message;

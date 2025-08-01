@@ -17,9 +17,9 @@ function DatePicker({
 }) {
   const isRange = [dateTypes.RANGE_WITHOUT_HOUR, dateTypes.RANGE_WITH_HOUR].includes(dateType);
   return (
-    <div className="flex flex-col">
+    <div className="fb:flex fb:flex-col">
       <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+      <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2 sm:fb:gap-4">
         <DateTimePickerSelector
           type={dateType}
           label={isRange ? 'Fecha de inicio' : ''}

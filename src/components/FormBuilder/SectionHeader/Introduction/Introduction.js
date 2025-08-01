@@ -8,7 +8,7 @@ function Introduction({introduction}) {
     return (
       <p
         data-testid="introduction"
-        className="text-gray-600 font-bold whitespace-pre-line"
+        className="fb:text-gray-600 fb:font-bold fb:whitespace-pre-line"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{__html: introduction}}
       />
@@ -16,7 +16,7 @@ function Introduction({introduction}) {
   }
 
   return (
-    <p data-testid="introduction" className="text-gray-600 font-bold whitespace-pre-line">
+    <p data-testid="introduction" className="fb:text-gray-600 fb:font-bold fb:whitespace-pre-line">
       {introduction}
     </p>
   );

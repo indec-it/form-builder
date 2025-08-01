@@ -599,7 +599,7 @@ function Template(args) {
   }, [args]);
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="fb:container fb:mx-auto fb:px-4">
       <FormBuilder
         {...args}
         sections={sections}
@@ -752,7 +752,7 @@ WithInitialValues.args = {
 
 function SectionHeader() {
   return (
-    <div className="flex justify-center bg-blue-300 h-24 items-center">
+    <div className="fb:flex fb:justify-center fb:bg-blue-300 fb:h-24 fb:items-center">
       <p>My custom header</p>
     </div>
   );
@@ -767,16 +767,16 @@ WithCustomSectionHeader.args = {
 
 function NavigationButtons() {
   return (
-    <div className="flex justify-between">
+    <div className="fb:flex fb:justify-between">
       <button
         type="button"
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="fb:px-4 fb:py-2 fb:bg-blue-600 fb:text-white fb:rounded hover:fb:bg-blue-700 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500"
       >
         Go back
       </button>
       <button
         type="button"
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="fb:px-4 fb:py-2 fb:bg-blue-600 fb:text-white fb:rounded hover:fb:bg-blue-700 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500"
       >
         Next
       </button>
