@@ -18,8 +18,8 @@ function SectionHeader({
   showEditButton = true
 }) {
   return (
-    <div className="flex flex-wrap justify-between shadow-md p-4">
-      <div className="flex flex-col">
+    <div className="fb:flex fb:flex-wrap fb:justify-between fb:shadow-md fb:p-4">
+      <div className="fb:flex fb:flex-col">
         <TitleWithIcon title={section.label} isValid={isValid} />
         <Introduction introduction={section.introduction} />
         <Headers section={section} values={values} />

@@ -28,7 +28,7 @@ function Wrapper({
         name={name}
         render={helpers =>
           values.answer.map((answer, index) => (
-            <div key={answer.id} className="flex flex-col sm:flex-row gap-4 mb-4">
+            <div key={answer.id} className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-4 fb:mb-4">
               <Field {...props} options={options} name={`${name}.${index}.value`} disabled={disabled} warnings={warnings} />
               <SubQuestions
                 values={{answer, id: answer.id}}
@@ -38,7 +38,7 @@ function Wrapper({
                 name={`${name}.${index}.specifications`}
                 section={section}
               />
-              <div className="flex flex-col sm:flex-row gap-2 justify-center w-20">
+              <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2 fb:justify-center fb:w-20">
                 {values.answer.length === index + 1 && !disabled && (
                   <button
                     type="button"
@@ -49,7 +49,7 @@ function Wrapper({
                         specifications: getSubQuestions(subQuestions)
                       })
                     }
-                    className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
                     aria-label="Add item"
                   >
                     <PlusCircleIcon />
@@ -59,7 +59,7 @@ function Wrapper({
                   <button
                     type="button"
                     onClick={() => helpers.remove(index)}
-                    className="p-2 rounded-full text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                    className="fb:p-2 fb:rounded-full fb:text-red-600 hover:fb:bg-red-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-red-500 focus:fb:ring-offset-2"
                     aria-label="Delete item"
                   >
                     <DeleteIcon />
@@ -76,7 +76,7 @@ function Wrapper({
   }
   if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-4">
         {Component}
         <SubQuestions
           values={values}

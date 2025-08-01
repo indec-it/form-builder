@@ -14,7 +14,7 @@ function SubQuestions({values, subQuestions, name, ...props}) {
   });
 
   return selectedQuestions.length > 0 ? (
-    <div className="flex flex-col space-y-2 justify-end w-full">
+    <div className="fb:flex fb:flex-col fb:space-y-2 fb:justify-end fb:w-full">
       {selectedQuestions.map(subQuestion => (
         <div key={subQuestion.id}>
           <Field

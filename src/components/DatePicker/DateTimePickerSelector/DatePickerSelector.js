@@ -18,16 +18,16 @@ function DateTimePickerSelector({type, onChange, value, label, disabled, placeho
     locale,
     dateFormat: [dateTypes.DATE_WITH_HOUR, dateTypes.RANGE_WITH_HOUR].includes(type) ? 'dd/MM/yyyy HH:mm' : 'dd/MM/yyyy',
     className:
-      'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed',
-    wrapperClassName: 'w-full',
+      'fb:w-full fb:px-3 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:border-transparent disabled:fb:bg-gray-100 disabled:fb:cursor-not-allowed',
+    wrapperClassName: 'fb:w-full',
     ...props
   };
 
   if ([dateTypes.DATE_WITH_HOUR, dateTypes.RANGE_WITH_HOUR].includes(type)) {
     return (
-      <div className="flex flex-col">
+      <div className="fb:flex fb:flex-col">
         {label && (
-          <label htmlFor={id} className="text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor={id} className="fb:text-sm fb:font-medium fb:text-gray-700 fb:mb-1">
             {label}
           </label>
         )}

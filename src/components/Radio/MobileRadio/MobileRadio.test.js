@@ -109,13 +109,13 @@ describe('<MobileRadio>', () => {
     it('should have a `contained` variant the option selected', () => {
       const {container} = getComponent();
       const optionSelected = getByTestId(container, 'radio-2');
-      expect(optionSelected).toHaveClass('bg-blue-600');
+      expect(optionSelected).toHaveClass('fb:bg-blue-600');
     });
 
     it('should have a `outlined` variant an option not selected', () => {
       const {container} = getComponent();
       const optionSelected = getByTestId(container, 'radio-1');
-      expect(optionSelected).toHaveClass('bg-white');
+      expect(optionSelected).toHaveClass('fb:bg-white');
     });
 
     describe('and the selected option is clicked again', () => {

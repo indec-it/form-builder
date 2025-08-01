@@ -2,12 +2,12 @@ import {CheckCircleIcon, ErrorIcon} from '@/components/Icons';
 
 function TitleWithIcon({title, isValid}) {
   return (
-    <div className="flex flex-row gap-4 items-center">
-      <h6 className="text-xl font-bold">{title}</h6>
+    <div className="fb:flex fb:flex-row fb:gap-4 fb:items-center">
+      <h6 className="fb:text-xl fb:font-bold">{title}</h6>
       {isValid ? (
-        <CheckCircleIcon className="w-6 h-6 text-green-600" data-testid="success-icon" />
+        <CheckCircleIcon className="fb:w-6 fb:h-6 fb:text-green-600" data-testid="success-icon" />
       ) : (
-        <ErrorIcon className="w-6 h-6 text-red-600" data-testid="error-icon" />
+        <ErrorIcon className="fb:w-6 fb:h-6 fb:text-red-600" data-testid="error-icon" />
       )}
     </div>
   );
