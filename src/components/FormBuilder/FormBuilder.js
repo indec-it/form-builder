@@ -83,7 +83,7 @@ function FormBuilder({
           }, [values, onChange, position]);
 
           return (
-            <Form onKeyDown={handleKeyDown}>
+            <Form onKeyDown={handleKeyDown} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false}>
               <FieldArray
                 name={section.name}
                 render={sectionHelpers =>
