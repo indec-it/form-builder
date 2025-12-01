@@ -19,13 +19,14 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     navigation = [],
     introduction,
     multiline = false,
-    disabled: disabledByDefault
+    disabled: disabledByDefault,
+    readOnly
   } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
   const jump = section ? getNavigation({navigation, answers: values, section, initialValues, sections}) : '';
   const show = Object.prototype.hasOwnProperty.call(question, 'hide') ? false : jump?.action !== questionActions.HIDE;
-  const isDisabled = jump?.action === questionActions.DISABLE || disabled;
+  const isDisabled = jump?.action === questionActions.DISABLE || disabled || readOnly;
   let props;
   switch (type) {
     case questionTypes.NUMERIC_FIELD:
