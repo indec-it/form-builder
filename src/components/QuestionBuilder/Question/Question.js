@@ -31,7 +31,7 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
   }
 
   useEffect(() => {
-    if (shouldClean) {
+    if (shouldClean && !question.readOnly) {
       const defaultAnswerValue = buildQuestions(section)[section.name][0][question.name].answer;
       setFieldValue(questionName, defaultAnswerValue);
       shouldClean = false;
