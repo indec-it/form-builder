@@ -1,4 +1,4 @@
-function TrashIcon({className = 'w-5 h-5', ...props}) {
+function TrashIcon({className = 'fb:w-5 fb:h-5', ...props}) {
   return (
     <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" {...props}>
       <path

@@ -6,7 +6,7 @@ const getHeaders = (questions, values, headers) => {
     const headerQuestions = headers.map(header => header.question);
     return questions
       .reduce((acc, question) => {
-        if (headerQuestions.includes(question.id) && !question.multiple && values[question.name].answer?.value) {
+        if (headerQuestions.includes(question.id) && !question.multiple && values[question.name]?.answer?.value) {
           const {value} = values[question.name].answer;
           if ([questionTypes.TEXT_FIELD, questionTypes.NUMERIC_FIELD].includes(question.type)) {
             acc.push(value);

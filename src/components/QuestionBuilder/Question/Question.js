@@ -25,18 +25,20 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
     sections,
     initialValues
   });
+
+  const isInHeader = section.headers?.some(header => header.question === question.id);
   let shouldClean = false;
   if (!!jump?.action && !shouldClean) {
     shouldClean = true;
   }
 
   useEffect(() => {
-    if (shouldClean && !question.readOnly) {
+    if (shouldClean && !question.readOnly && !isInHeader) {
       const defaultAnswerValue = buildQuestions(section)[section.name][0][question.name].answer;
       setFieldValue(questionName, defaultAnswerValue);
       shouldClean = false;
     }
-  }, [shouldClean, questionName]);
+  }, [shouldClean, questionName, isInHeader]);
 
   const Component = getQuestionComponent(questionType);
   return Component ? (

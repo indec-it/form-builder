@@ -75,7 +75,26 @@ const sections = [
             message: {text: 'Debe seleccionar un tipo de transaccion', type: 'error'}
           }
         ],
-        navigation: [],
+        navigation: [
+          {
+            id: 1,
+            rules: [
+              {
+                id: 1,
+                conditions: [
+                  {
+                    id: 1,
+                    question: 'S2P1',
+                    value: 'asdsadsad',
+                    type: 'ne',
+                    section: 'S2'
+                  }
+                ]
+              }
+            ],
+            action: 'hide'
+          }
+        ],
         subQuestions: [],
         metadata: {},
         userVarName: 'Transaccion'
@@ -182,7 +201,26 @@ const sections = [
             message: {text: 'Debe ingresar un monto', type: 'error'}
           }
         ],
-        navigation: [],
+        navigation: [
+          {
+            id: 1,
+            rules: [
+              {
+                id: 1,
+                conditions: [
+                  {
+                    id: 1,
+                    type: 'eq',
+                    question: 'S2P1',
+                    value: '1',
+                    section: 'S2'
+                  }
+                ]
+              }
+            ],
+            action: 'hide'
+          }
+        ],
         subQuestions: [],
         metadata: {},
         userVarName: 'Monto'
@@ -292,7 +330,12 @@ const sections = [
     },
     headers: [
       {
-        id: 1
+        id: 1,
+        question: 1
+      },
+      {
+        id: 2,
+        question: 3
       }
     ],
     id: 2,
@@ -822,4 +865,51 @@ WithReadOnlyMode.args = {
     ]
   },
   isReadOnly: true
+};
+
+export const WithHeadersFromHiddenQuestions = Template.bind({});
+WithHeadersFromHiddenQuestions.args = {
+  initialValues: {
+    S2: [
+      {
+        id: 1,
+        S2P1: {
+          id: 1,
+          answer: {
+            value: '2'
+          }
+        },
+        S2P2: {
+          id: 2,
+          answer: {
+            value: '1'
+          }
+        },
+        S2P3: {
+          id: 3,
+          answer: {
+            value: 10000
+          }
+        },
+        S2P4: {
+          id: 4,
+          answer: [
+            {
+              id: 1,
+              value: '1'
+            }
+          ]
+        },
+        S2P5: {
+          id: 5,
+          answer: {
+            value: {
+              S1P1O1: '1',
+              S1P5O2: '2'
+            }
+          }
+        }
+      }
+    ]
+  }
 };

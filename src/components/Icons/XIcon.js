@@ -1,4 +1,4 @@
-function XIcon({className = 'w-4 h-4', ...props}) {
+function XIcon({className = 'fb:w-4 fb:h-4', ...props}) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 20 20" {...props}>
       <path

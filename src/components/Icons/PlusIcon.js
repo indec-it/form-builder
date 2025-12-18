@@ -1,4 +1,4 @@
-function PlusIcon({className = 'w-5 h-5', ...props}) {
+function PlusIcon({className = 'fb:w-5 fb:h-5', ...props}) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 20 20" {...props}>
       <path

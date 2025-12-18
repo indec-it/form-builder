@@ -1,4 +1,4 @@
-function EyeIcon({className = 'w-4 h-4', ...props}) {
+function EyeIcon({className = 'fb:w-4 fb:h-4', ...props}) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 20 20" {...props}>
       <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />

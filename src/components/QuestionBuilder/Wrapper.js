@@ -28,7 +28,7 @@ function Wrapper({
         name={name}
         render={helpers =>
           values.answer.map((answer, index) => (
-            <div key={answer.id} className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-4 fb:mb-4">
+            <div key={answer.id} className="fb:flex fb:flex-row fb:gap-4 fb:mb-4 fb:items-start">
               <Field {...props} options={options} name={`${name}.${index}.value`} disabled={disabled} warnings={warnings} />
               <SubQuestions
                 values={{answer, id: answer.id}}
@@ -38,7 +38,7 @@ function Wrapper({
                 name={`${name}.${index}.specifications`}
                 section={section}
               />
-              <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2 fb:justify-center fb:w-20">
+              <div className="fb:flex fb:flex-row fb:gap-2 fb:items-center fb:pt-8">
                 {values.answer.length === index + 1 && !disabled && (
                   <button
                     type="button"
