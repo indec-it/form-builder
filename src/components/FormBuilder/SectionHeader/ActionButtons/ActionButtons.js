@@ -56,7 +56,7 @@ function ActionButtons({
               type="button"
               data-testid="edit-button"
               onClick={onEdit}
-              className="p-2 rounded-full text-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
               aria-label="Edit"
             >
               <EditIcon />
