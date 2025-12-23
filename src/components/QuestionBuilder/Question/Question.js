@@ -33,7 +33,7 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
   }
 
   useEffect(() => {
-    if (shouldClean && !question.readOnly && !isInHeader) {
+    if (shouldClean && !question.readOnly && !isInHeader && !question.hide) {
       const defaultAnswerValue = buildQuestions(section)[section.name][0][question.name].answer;
       setFieldValue(questionName, defaultAnswerValue);
       shouldClean = false;
@@ -41,11 +41,13 @@ function Question({sectionIndex, questionIndex, disabled = false, warnings = {},
   }, [shouldClean, questionName, isInHeader]);
 
   const Component = getQuestionComponent(questionType);
-  return Component ? (
-    <Wrapper component={Component} section={section} {...props} />
-  ) : (
-    <p className="fb:text-red-600 fb:font-medium">Invalid component.</p>
-  );
+  if (Component && !question.hide) {
+    return <Wrapper component={Component} section={section} {...props} />;
+  }
+  if (!Component) {
+    return <p className="fb:text-red-600 fb:font-medium">Invalid component.</p>;
+  }
+  return null;
 }
 
 export default Question;
