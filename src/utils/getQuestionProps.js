@@ -20,12 +20,13 @@ const getQuestionProps = ({sectionIndex, section, question, values, disabled, wa
     introduction,
     multiline = false,
     disabled: disabledByDefault,
-    readOnly
+    readOnly,
+    hide
   } = question;
 
   const questionName = section ? `${section.name}.${sectionIndex}.${name}.answer` : '';
   const jump = section ? getNavigation({navigation, answers: values, section, initialValues, sections}) : '';
-  const show = Object.prototype.hasOwnProperty.call(question, 'hide') ? false : jump?.action !== questionActions.HIDE;
+  const show = hide ? false : jump?.action !== questionActions.HIDE;
   const isDisabled = jump?.action === questionActions.DISABLE || disabled || readOnly;
   let props;
   switch (type) {
