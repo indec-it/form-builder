@@ -61,7 +61,7 @@ function Radio({options, field, disabled = false, label, form, warnings = {}}) {
               <button
                 type="button"
                 onClick={() => form.setFieldValue(field.name, '')}
-                className="fb:p-1 fb:text-red-600 hover:fb:text-red-800 hover:fb:bg-red-50 fb:rounded fb:transition-colors fb:duration-200"
+                className="fb:p-1 fb:text-red-600 fb:hover:text-red-800 fb:hover:bg-red-50 fb:rounded fb:transition-colors fb:duration-200"
                 data-testid={`clean-option-${index}`}
                 aria-label="Clear selection"
               >

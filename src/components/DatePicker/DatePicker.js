@@ -19,7 +19,7 @@ function DatePicker({
   return (
     <div className="fb:flex fb:flex-col">
       <InputLabel label={label} form={form} field={field} warnings={warnings} disabled={disabled} />
-      <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-2 sm:fb:gap-4">
+      <div className="fb:flex fb:flex-col fb:sm:flex-row fb:gap-2 fb:sm:gap-4">
         <DateTimePickerSelector
           type={dateType}
           label={isRange ? 'Fecha de inicio' : ''}

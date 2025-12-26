@@ -88,7 +88,7 @@ function FormBuilder({
                 name={section.name}
                 render={sectionHelpers =>
                   values?.[section.name]?.map((currentSection, index) => (
-                    <div key={currentSection.id} className="fb:mb-8">
+                    <div key={currentSection.id} id={`section-${currentSection.id}`} className="fb:mb-8">
                       <Header
                         components={components}
                         onView={() => handleShowSurvey(currentSection.id, true)}

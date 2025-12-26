@@ -49,7 +49,7 @@ function Wrapper({
                         specifications: getSubQuestions(subQuestions)
                       })
                     }
-                    className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
+                    className="fb:p-2 fb:rounded-full fb:text-blue-600 fb:hover:bg-blue-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:ring-offset-2"
                     aria-label="Add item"
                   >
                     <PlusCircleIcon />
@@ -59,7 +59,7 @@ function Wrapper({
                   <button
                     type="button"
                     onClick={() => helpers.remove(index)}
-                    className="fb:p-2 fb:rounded-full fb:text-red-600 hover:fb:bg-red-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-red-500 focus:fb:ring-offset-2"
+                    className="fb:p-2 fb:rounded-full fb:text-red-600 fb:hover:bg-red-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-red-500 fb:focus:ring-offset-2"
                     aria-label="Delete item"
                   >
                     <DeleteIcon />
@@ -76,7 +76,7 @@ function Wrapper({
   }
   if (subQuestions.length > 0 && options.length > 0 && !isMultiple) {
     Component = (
-      <div className="fb:flex fb:flex-col sm:fb:flex-row fb:gap-4">
+      <div className="fb:flex fb:flex-col fb:sm:flex-row fb:gap-4">
         {Component}
         <SubQuestions
           values={values}

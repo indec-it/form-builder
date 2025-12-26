@@ -19,6 +19,15 @@ const useFormBuilder = ({sections, initialValues, section}) => {
     setShowSurvey(sectionId);
     setReadOnlyMode(readOnly);
     setPosition(index);
+
+    if (!readOnly) {
+      setTimeout(() => {
+        const element = document.getElementById(`section-${sectionId}`);
+        if (element) {
+          element.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+      }, 100);
+    }
   };
 
   const handleOpenModal = (modal, sectionId) => {
@@ -41,8 +50,16 @@ const useFormBuilder = ({sections, initialValues, section}) => {
     const newValues = values;
     const lastSection = getLastId(values[section.name]);
     const emptySection = buildQuestions(section)[section.name][0];
-    newValues[section.name].push({...emptySection, id: lastSection + 1});
+    const newId = lastSection + 1;
+    newValues[section.name].push({...emptySection, id: newId});
     setValues(newValues);
+
+    setTimeout(() => {
+      const element = document.getElementById(`section-${newId}`);
+      if (element) {
+        element.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    }, 100);
   };
 
   const transformedSection = useMemo(() => {

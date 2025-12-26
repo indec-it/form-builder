@@ -18,7 +18,7 @@ function ActionButtons({
         type="button"
         data-testid="read-only-button"
         onClick={onView}
-        className="fb:p-2 fb:rounded-full fb:text-yellow-600 hover:fb:bg-yellow-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-yellow-500 focus:fb:ring-offset-2"
+        className="fb:p-2 fb:rounded-full fb:text-yellow-600 fb:hover:bg-yellow-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-yellow-500 fb:focus:ring-offset-2"
         aria-label="View"
       >
         <EyeIcon />
@@ -32,7 +32,7 @@ function ActionButtons({
                   type="button"
                   data-testid="move-up-button"
                   onClick={onMoveUp}
-                  className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
+                  className="fb:p-2 fb:rounded-full fb:text-blue-600 fb:hover:bg-blue-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:ring-offset-2"
                   aria-label="Move up"
                 >
                   <ArrowUpIcon />
@@ -43,7 +43,7 @@ function ActionButtons({
                   type="button"
                   data-testid="move-down-button"
                   onClick={onMoveDown}
-                  className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
+                  className="fb:p-2 fb:rounded-full fb:text-blue-600 fb:hover:bg-blue-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:ring-offset-2"
                   aria-label="Move down"
                 >
                   <ArrowDownIcon />
@@ -56,7 +56,7 @@ function ActionButtons({
               type="button"
               data-testid="edit-button"
               onClick={onEdit}
-              className="fb:p-2 fb:rounded-full fb:text-blue-600 hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2"
+              className="fb:p-2 fb:rounded-full fb:text-blue-600 fb:hover:bg-blue-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:ring-offset-2"
               aria-label="Edit"
             >
               <EditIcon />
@@ -67,7 +67,7 @@ function ActionButtons({
               type="button"
               data-testid="delete-button"
               onClick={onDelete}
-              className="fb:p-2 fb:rounded-full fb:text-red-600 hover:fb:bg-red-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-red-500 focus:fb:ring-offset-2"
+              className="fb:p-2 fb:rounded-full fb:text-red-600 fb:hover:bg-red-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-red-500 fb:focus:ring-offset-2"
               aria-label="Delete"
             >
               <TrashIcon />
