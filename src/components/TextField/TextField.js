@@ -27,7 +27,7 @@ function TextField({
   };
 
   const baseClassName =
-    'fb:w-full fb:px-4 fb:py-2 fb:border-2 fb:border-gray-400 fb:rounded-lg fb:bg-white focus:fb:outline-none focus:fb:ring-blue-500 focus:fb:border-blue-500 disabled:fb:bg-gray-50 disabled:fb:opacity-50 disabled:fb:cursor-not-allowed fb:transition-colors fb:duration-200';
+    'fb:w-full fb:px-4 fb:py-2 fb:border-2 fb:border-gray-400 fb:rounded-lg fb:bg-white fb:focus:outline-none fb:focus:ring-blue-500 fb:focus:border-blue-500 fb:disabled:bg-gray-50 fb:disabled:opacity-50 fb:disabled:cursor-not-allowed fb:transition-colors fb:duration-200';
   const textareaClassName = `${baseClassName} fb:resize-vertical`;
   const finalClassName = propClassName ? `${baseClassName} ${propClassName}` : baseClassName;
   const finalTextareaClassName = propClassName ? `${textareaClassName} ${propClassName}` : textareaClassName;
@@ -74,7 +74,7 @@ function TextField({
             <div className="fb:relative">
               <button
                 type="button"
-                className="fb:p-1 fb:text-gray-400 hover:fb:text-gray-600 focus:fb:outline-none"
+                className="fb:p-1 fb:text-gray-400 fb:hover:text-gray-600 fb:focus:outline-none"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
                 onFocus={() => setShowTooltip(true)}

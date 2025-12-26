@@ -14,12 +14,12 @@ function MobileRadio({options, field, disabled = false, label, form, warnings = 
             disabled={disabled}
             className={`fb:px-4 fb:py-2 fb:text-sm fb:font-medium fb:rounded-md fb:border fb:transition-colors fb:duration-200 ${
               option.value === field.value
-                ? 'fb:bg-blue-600 fb:text-white fb:border-blue-600 hover:fb:bg-blue-700'
-                : 'fb:bg-white fb:text-gray-700 fb:border-gray-300 hover:fb:bg-gray-50'
+                ? 'fb:bg-blue-600 fb:text-white fb:border-blue-600 fb:hover:bg-blue-700'
+                : 'fb:bg-white fb:text-gray-700 fb:border-gray-300 fb:hover:bg-gray-50'
             } ${
               disabled
                 ? 'fb:opacity-50 fb:cursor-not-allowed'
-                : 'fb:cursor-pointer focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:ring-offset-2'
+                : 'fb:cursor-pointer fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:ring-offset-2'
             }`}
             onClick={() => {
               form.setFieldValue(field.name, option.value === field.value ? '' : option.value);

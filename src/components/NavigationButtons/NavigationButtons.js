@@ -8,7 +8,7 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
         data-testid="back-button"
         onClick={onPrevious}
         disabled={disablePreviousButton}
-        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white hover:fb:bg-gray-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500 disabled:fb:opacity-50 disabled:fb:cursor-not-allowed"
+        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white fb:hover:bg-gray-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-offset-2 fb:focus:ring-blue-500 fb:disabled:opacity-50 fb:disabled:cursor-not-allowed"
       >
         <ArrowLeftIcon className="fb:w-5 fb:h-5 fb:mr-2" />
         Anterior
@@ -20,7 +20,7 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
               type="button"
               data-testid="add-new"
               onClick={onAddNew}
-              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white hover:fb:bg-gray-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500"
+              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:text-gray-700 fb:bg-white fb:hover:bg-gray-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-offset-2 fb:focus:ring-blue-500"
             >
               <PlusIcon className="fb:w-5 fb:h-5 fb:mr-2" />
               Agregar nuevo
@@ -31,7 +31,7 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
               type="button"
               data-testid="interrupt-survey"
               onClick={onInterrupt}
-              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-red-300 fb:rounded-md fb:text-red-700 fb:bg-white hover:fb:bg-red-50 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-red-500"
+              className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-red-300 fb:rounded-md fb:text-red-700 fb:bg-white fb:hover:bg-red-50 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-offset-2 fb:focus:ring-red-500"
             >
               <XIcon className="fb:w-5 fb:h-5 fb:mr-2" />
               Interrumpir encuesta
@@ -41,7 +41,7 @@ function NavigationButtons({onPrevious, disablePreviousButton = false, onAddNew,
       )}
       <button
         type="submit"
-        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-transparent fb:rounded-md fb:text-white fb:bg-blue-600 hover:fb:bg-blue-700 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-offset-2 focus:fb:ring-blue-500"
+        className="fb:flex fb:items-center fb:justify-center fb:px-4 fb:py-2 fb:border fb:border-transparent fb:rounded-md fb:text-white fb:bg-blue-600 fb:hover:bg-blue-700 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-offset-2 fb:focus:ring-blue-500"
       >
         Siguiente
         <ArrowRightIcon className="fb:w-5 fb:h-5 fb:ml-2" />

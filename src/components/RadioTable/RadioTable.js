@@ -36,8 +36,8 @@ function RadioTable({options, label, form, field, disabled = false, warnings = {
       <InputLabel warnings={warnings} form={form} field={field} label={label} disabled={disabled} />
       {options.map(option => (
         <div key={option.id} className="fb:space-y-2">
-          <div className="fb:flex fb:flex-col sm:fb:flex-row sm:fb:space-x-4 fb:space-y-2 sm:fb:space-y-0">
-            <div className="fb:min-w-0 sm:fb:min-w-96 sm:fb:max-w-96 fb:overflow-hidden">
+          <div className="fb:flex fb:flex-col fb:sm:flex-row fb:sm:space-x-4 fb:space-y-2 fb:sm:space-y-0">
+            <div className="fb:min-w-0 fb:sm:min-w-96 fb:sm:max-w-96 fb:overflow-hidden">
               <p
                 className={`fb:text-sm fb:font-medium fb:whitespace-normal ${
                   disabled ? 'fb:opacity-50 fb:text-gray-400' : 'fb:text-gray-900'
@@ -92,7 +92,7 @@ function RadioTable({options, label, form, field, disabled = false, warnings = {
                 <button
                   type="button"
                   onClick={() => form.setFieldValue(`${field.name}.${option.name}`, undefined)}
-                  className="fb:p-1 fb:text-red-600 hover:fb:text-red-800 hover:fb:bg-red-50 fb:rounded fb:transition-colors fb:duration-200"
+                  className="fb:p-1 fb:text-red-600 fb:hover:text-red-800 fb:hover:bg-red-50 fb:rounded fb:transition-colors fb:duration-200"
                   data-testid={`clean-option-${option.id}`}
                   aria-label="Clear selection"
                 >

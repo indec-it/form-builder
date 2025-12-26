@@ -18,7 +18,7 @@ function DateTimePickerSelector({type, onChange, value, label, disabled, placeho
     locale,
     dateFormat: [dateTypes.DATE_WITH_HOUR, dateTypes.RANGE_WITH_HOUR].includes(type) ? 'dd/MM/yyyy HH:mm' : 'dd/MM/yyyy',
     className:
-      'fb:w-full fb:px-3 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500 focus:fb:border-transparent disabled:fb:bg-gray-100 disabled:fb:cursor-not-allowed',
+      'fb:w-full fb:px-3 fb:py-2 fb:border fb:border-gray-300 fb:rounded-md fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500 fb:focus:border-transparent fb:disabled:bg-gray-100 fb:disabled:cursor-not-allowed',
     wrapperClassName: 'fb:w-full',
     ...props
   };

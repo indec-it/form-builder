@@ -106,7 +106,7 @@ function Template(args) {
               <button
                 type="button"
                 onClick={submitForm}
-                className="fb:px-4 fb:py-2 fb:bg-blue-600 fb:text-white fb:rounded hover:fb:bg-blue-700 focus:fb:outline-none focus:fb:ring-2 focus:fb:ring-blue-500"
+                className="fb:px-4 fb:py-2 fb:bg-blue-600 fb:text-white fb:rounded fb:hover:bg-blue-700 fb:focus:outline-none fb:focus:ring-2 fb:focus:ring-blue-500"
               >
                 Click to validate form
               </button>

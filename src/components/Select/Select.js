@@ -46,8 +46,8 @@ function Select({
       <div className="fb:relative fb:mt-2">
         <button
           type="button"
-          className={`fb:w-full fb:px-3 fb:py-2 fb:text-left fb:bg-white fb:border-2 fb:border-gray-400 fb:rounded-lg focus:fb:outline-none focus:fb:ring-blue-500 focus:fb:border-blue-500 fb:transition-colors fb:duration-200 ${
-            disabled ? 'fb:opacity-50 fb:cursor-not-allowed fb:bg-gray-50' : 'fb:cursor-pointer hover:fb:border-gray-500'
+          className={`fb:w-full fb:px-3 fb:py-2 fb:text-left fb:bg-white fb:border-2 fb:border-gray-400 fb:rounded-lg fb:focus:outline-none fb:focus:ring-blue-500 fb:focus:border-blue-500 fb:transition-colors fb:duration-200 ${
+            disabled ? 'fb:opacity-50 fb:cursor-not-allowed fb:bg-gray-50' : 'fb:cursor-pointer fb:hover:border-gray-500'
           }`}
           onClick={() => !disabled && setIsOpen(!isOpen)}
           onBlur={() => {
@@ -67,7 +67,7 @@ function Select({
                   e.stopPropagation();
                   handleClear();
                 }}
-                className="fb:p-1 fb:text-gray-400 hover:fb:text-gray-600 fb:rounded fb:transition-colors fb:duration-200"
+                className="fb:p-1 fb:text-gray-400 fb:hover:text-gray-600 fb:rounded fb:transition-colors fb:duration-200"
                 aria-label="Clear selection"
               >
                 <XIcon className="fb:w-4 fb:h-4" />
@@ -88,7 +88,7 @@ function Select({
                 <button
                   key={option[keyValue]}
                   type="button"
-                  className={`fb:w-full fb:px-3 fb:py-2 fb:text-left hover:fb:bg-blue-50 focus:fb:outline-none focus:fb:bg-blue-50 fb:transition-colors fb:duration-200 ${
+                  className={`fb:w-full fb:px-3 fb:py-2 fb:text-left fb:hover:bg-blue-50 fb:focus:outline-none fb:focus:bg-blue-50 fb:transition-colors fb:duration-200 ${
                     selectedValue && selectedValue[keyValue] === option[keyValue]
                       ? 'fb:bg-blue-100 fb:text-blue-900'
                       : 'fb:text-gray-900'
