@@ -31,7 +31,7 @@ export const getSubQuestions = subQuestions =>
       subQuestion.name,
       {
         id: subQuestion.id,
-        answer: {value: ''}
+        answer: {value: '', originalValue: ''}
       }
     ])
   );
@@ -39,19 +39,20 @@ export const getSubQuestions = subQuestions =>
 const buildQuestions = section => {
   const values = {[section.name]: {id: 1}};
   if (section.interruption.interruptible) {
-    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: {value: ''}};
+    values[section.name][section.interruption.name] = {id: `section-${section.id}`, answer: {value: '', originalValue: ''}};
   }
   section.questions.forEach(question => {
     const {id} = question;
     if (question.type === questionTypes.MESSAGE) {
       values[section.name][question.name] = {id};
     } else {
-      values[section.name][question.name] = {id, answer: {value: getValue(question)}};
+      values[section.name][question.name] = {id, answer: {value: getValue(question), originalValue: getValue(question)}};
       if (question.subQuestions && question.subQuestions.length > 0) {
         values[section.name][question.name] = {
           ...values[section.name][question.name],
           answer: {
             ...values[section.name][question.name].answer,
+            originalValue: values[section.name][question.name].answer.value,
             specifications: getSubQuestions(question.subQuestions)
           }
         };
@@ -59,7 +60,13 @@ const buildQuestions = section => {
       if (question.multiple) {
         values[section.name][question.name] = {
           ...values[section.name][question.name],
-          answer: [{id: 1, ...values[section.name][question.name].answer}]
+          answer: [
+            {
+              id: 1,
+              ...values[section.name][question.name].answer,
+              originalValue: values[section.name][question.name].answer.value
+            }
+          ]
         };
       }
     }
