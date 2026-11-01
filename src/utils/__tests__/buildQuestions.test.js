@@ -40,7 +40,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1I1: {
               id: 'section-1',
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -85,7 +85,7 @@ describe('buildQuestions', () => {
           expect.not.objectContaining({
             S1I1: {
               id: 'section-1',
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -167,7 +167,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: []}
+              answer: {value: [], originalValue: []}
             }
           })
         ]
@@ -215,7 +215,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -263,7 +263,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -311,7 +311,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -359,7 +359,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -420,7 +420,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: {start: '', end: ''}}
+              answer: {value: {start: '', end: ''}, originalValue: {start: '', end: ''}}
             }
           })
         ]
@@ -481,7 +481,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: {value: ''}
+              answer: {value: '', originalValue: ''}
             }
           })
         ]
@@ -614,6 +614,11 @@ describe('buildQuestions', () => {
               id: 1,
               answer: {
                 value: {
+                  S1P1O1: undefined,
+                  S1P1O2: undefined,
+                  S1P1O3: undefined
+                },
+                originalValue: {
                   S1P1O1: undefined,
                   S1P1O2: undefined,
                   S1P1O3: undefined
@@ -805,9 +810,10 @@ describe('buildQuestions', () => {
               answer: {
                 value: '',
                 specifications: {
-                  S1P1SQ1: {id: 1, answer: {value: ''}},
-                  S1P1SQ2: {id: 2, answer: {value: ''}}
-                }
+                  S1P1SQ1: {id: 1, answer: {value: '', originalValue: ''}},
+                  S1P1SQ2: {id: 2, answer: {value: '', originalValue: ''}}
+                },
+                originalValue: ''
               }
             }
           })
@@ -881,7 +887,7 @@ describe('buildQuestions', () => {
           expect.objectContaining({
             S1P1: {
               id: 1,
-              answer: [{id: 1, value: ''}]
+              answer: [{id: 1, value: '', originalValue: ''}]
             }
           })
         ]

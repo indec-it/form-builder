@@ -353,19 +353,22 @@ describe('useSectionInitialValues', () => {
           S2P1: {
             id: 1,
             answer: {
-              value: ''
+              value: '',
+              originalValue: ''
             }
           },
           S2P2: {
             id: 2,
             answer: {
-              value: ''
+              value: '',
+              originalValue: ''
             }
           },
           S2P3: {
             id: 3,
             answer: {
-              value: ''
+              value: '',
+              originalValue: ''
             }
           },
           S2P4: {
@@ -373,7 +376,8 @@ describe('useSectionInitialValues', () => {
             answer: [
               {
                 id: 1,
-                value: ''
+                value: '',
+                originalValue: ''
               }
             ]
           },
@@ -381,6 +385,10 @@ describe('useSectionInitialValues', () => {
             id: 5,
             answer: {
               value: {
+                S1P1O1: undefined,
+                S1P5O2: undefined
+              },
+              originalValue: {
                 S1P1O1: undefined,
                 S1P5O2: undefined
               }
